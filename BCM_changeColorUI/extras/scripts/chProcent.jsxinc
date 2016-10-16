@@ -1,0 +1,11 @@
+// 03ec44a0-a37e-11e4-bcd8-0800200c9a66
+var mb_Procc
+try{// check the custom option
+	var desc1Proc = app.getCustomOptions('03ec44a0-a37e-11e4-bcd8-0800200c9a66');
+		mb_Procc = parseInt(desc1Proc.getString(0));
+}catch(e){
+	var desc2Proc = new ActionDescriptor();
+	desc2Proc.putString(0, "5");
+	app.putCustomOptions('03ec44a0-a37e-11e4-bcd8-0800200c9a66', desc2Proc, true );
+	mb_Procc = 5
+}

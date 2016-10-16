@@ -1,0 +1,646 @@
+#include progressWin.jsi
+var _beforePreset = new File(Folder.temp+"/BCM_before.abr");
+var _DocBrshPreset =  new File( Folder.temp+"/BCM_Doc_Brushes.abr" );
+var _testMetadata = new File(Folder.temp + "/testMeta.abr");
+
+function MBDecode(){return "BINARY"};
+function convertToHex(){return true};
+function cTID(s){return charIDToTypeID(s)}
+function sTID(s){return stringIDToTypeID(s)}
+
+
+function addLBL(){
+	if(app.documents.length > 0){
+
+		if(hasBrsh() == true){
+
+			//========initialize the progress window....
+			var progressWindow = createProgressWindow("Please wait...", "Adding brush to layer", 0, 4,undefined, true);
+			progressWindow.show();
+			progressWindow.isDone = false;
+			progressWindow.stProgress.text = ("Adding brush to layer");
+
+			saveBeforePreset();//make backup of the current brsh presets
+			deleteAllBrshFromPreset();
+
+			progressWindow.updateProgress();
+			
+			addCrntBrshToNewPreset();
+			progressWindow.updateProgress();
+			addCrntPresetToXMPLayer();
+			
+			progressWindow.updateProgress();
+			
+			deleteAllBrshFromPreset();
+			loadBeforePreset();
+			try{
+				_beforePreset.remove();
+				_DocBrshPreset.remove();
+				_testMetadata.remove();
+			}catch(err){};
+			progressWindow.updateProgress();
+		}else{alert("the current tool doesn't use a brush")}
+
+	}else{alert("you don't have a document opened");}
+}
+
+function getLBL(){
+	if(hasBrshAttached() == true){
+
+		//========initialize the progress window....
+		var progressWindow = createProgressWindow("Please wait...", "Adding brush to layer", 0, 4,undefined, true);
+		progressWindow.show();
+		progressWindow.isDone = false;
+		progressWindow.stProgress.text = ("Getting brush from layer");
+
+		saveBeforePreset();//make backup of the current brsh presets
+		
+		if(_BCM_getLBLOptions.get_the_brush == true){deleteAllBrshFromPreset()};
+		progressWindow.updateProgress();
+		getMetadataBrhPresetasABR();
+		if(_BCM_getLBLOptions.get_the_brush == true){
+			progressWindow.updateProgress();
+			selectBrshByIDX( 1 );
+			progressWindow.updateProgress();
+			deleteAllBrshFromPreset();
+			loadBeforePreset();
+		}
+		try{
+			_beforePreset.remove();
+			_DocBrshPreset.remove();
+			_testMetadata.remove();
+		}catch(err){};
+		progressWindow.updateProgress();
+	}else{
+		alert("the layer doesn't have a brush attached to it");
+	}
+}
+
+function delLBL(){
+	if(hasBrshAttached() == true){
+
+		//========initialize the progress window....
+		var progressWindow = createProgressWindow("Please wait...", "Deleting brush to layer", 0, 2,undefined, true);
+		progressWindow.show();
+		progressWindow.isDone = false;
+		progressWindow.stProgress.text = ("Deleting brush to layer");
+		deleteMetadataBrhPresetasABR();
+		progressWindow.updateProgress();
+	}else{
+		alert("the layer doesn't have a brush attached to it");
+	}
+}
+function replLBL(){
+	if(app.documents.length > 0){
+
+		if(hasBrsh() == true){
+
+			//========initialize the progress window....
+			var progressWindow = createProgressWindow("Please wait...", "Adding brush to layer", 0, 4,undefined, true);
+			progressWindow.show();
+			progressWindow.isDone = false;
+			progressWindow.stProgress.text = ("Adding brush to layer");
+
+			saveBeforePreset();//make backup of the current brsh presets
+			deleteAllBrshFromPreset();
+
+			progressWindow.updateProgress();
+			
+			addCrntBrshToNewPreset();
+			progressWindow.updateProgress();
+			replaceCrntPresetToXMPLayer();
+			
+			progressWindow.updateProgress();
+			
+			deleteAllBrshFromPreset();
+			loadBeforePreset();
+			try{
+				_beforePreset.remove();
+				_DocBrshPreset.remove();
+				_testMetadata.remove();
+			}catch(err){};
+			progressWindow.updateProgress();
+		}else{alert("the current tool doesn't use a brush")}
+
+	}else{"you don't have a document opened"}
+}
+function hasBrshAttached(){
+	var tt = true;
+	try{ss = app.activeDocument.activeLayer.xmpMetadata.rawData}catch(err){tt=false};
+	if(ss){
+		if (ExternalObject.AdobeXMPScript == undefined) {
+		ExternalObject.AdobeXMPScript = new
+		ExternalObject('lib:AdobeXMPScript');
+		}
+		xmp = new XMPMeta(ss);
+	
+		if(xmp.doesPropertyExist(XMPConst.NS_XMP, "BCM_BrushPreset")){
+			var count  = xmp.countArrayItems(XMPConst.NS_XMP, "BCM_BrushPreset");
+			if(count > 0){
+				tt = true;
+			}else{ tt = false;}
+		}else{
+			tt=false;
+		}
+	}
+	return tt;
+}
+function getCurentBrsh(){
+	var toRet ="";
+	var ref = new ActionReference();
+		ref.putEnumerated( charIDToTypeID( "capp" ), charIDToTypeID( "Ordn" ), charIDToTypeID( "Trgt" ) );
+	var desc1 = executeActionGet(ref);
+	desc1 = desc1.getObjectValue(charIDToTypeID("CrnT"));
+	if( desc1.hasKey(charIDToTypeID("Brsh"))){
+		desc1 = desc1.getObjectValue(charIDToTypeID("Brsh"));
+		desc1 = desc1.getString(charIDToTypeID("Nm  "));
+		toRet = desc1;
+	}
+	return toRet;
+}
+function hasBrsh(){
+	var toRet = false;
+	var ref = new ActionReference();
+		ref.putEnumerated( charIDToTypeID( "capp" ), charIDToTypeID( "Ordn" ), charIDToTypeID( "Trgt" ) );
+	var desc1 = executeActionGet(ref);
+	desc1 = desc1.getObjectValue(charIDToTypeID("CrnT"));
+	if( desc1.hasKey(charIDToTypeID("Brsh"))){
+
+		toRet = true;
+	}
+	return toRet;
+}
+function getCurrentTool(){
+		var ref = new ActionReference();
+		ref.putEnumerated( charIDToTypeID( "capp" ), charIDToTypeID( "Ordn" ), charIDToTypeID( "Trgt" ) );
+	var desc1 = executeActionGet(ref);
+	desc1 = desc1.getEnumerationType(charIDToTypeID("Tool"));
+	desc1 = typeIDToStringID(desc1);
+	return desc1;
+}
+function setTool(tool){
+	// =======================================================
+	    var desc1278 = new ActionDescriptor();
+	        var ref1097 = new ActionReference();
+	        ref1097.putClass( stringIDToTypeID( tool ) );
+	    desc1278.putReference( charIDToTypeID( "null" ), ref1097 );
+	executeAction( charIDToTypeID( "slct" ), desc1278, DialogModes.NO );
+}
+function getFGColor(){
+	// var ref = new ActionReference();
+	// 	ref.putEnumerated( charIDToTypeID( "capp" ), charIDToTypeID( "Ordn" ), charIDToTypeID( "Trgt" ) );
+	// var desc1 = executeActionGet(ref);
+	// desc1 = desc1.getObjectValue(charIDToTypeID("FrgC"));
+	// 	var r = desc1.getDouble(charIDToTypeID("Rd  ")); 
+	// 	var g = desc1.getDouble(charIDToTypeID("Grn ")); 
+	// 	var b = desc1.getDouble(charIDToTypeID("Bl  ")); 
+	var tRR = [app.foregroundColor.rgb.red,app.foregroundColor.rgb.green,app.foregroundColor.rgb.blue];
+	return tRR;
+}
+function getBGColor(){
+	// var ref = new ActionReference();
+	// 	ref.putEnumerated( charIDToTypeID( "capp" ), charIDToTypeID( "Ordn" ), charIDToTypeID( "Trgt" ) );
+	// var desc1 = executeActionGet(ref);
+	// desc1 = desc1.getObjectValue(charIDToTypeID("BckC"));
+	// 	var r = desc1.getDouble(charIDToTypeID("Rd  ")); 
+	// 	var g = desc1.getDouble(charIDToTypeID("Grn ")); 
+	// 	var b = desc1.getDouble(charIDToTypeID("Bl  ")); 
+	// var tRR = [r,g,b];
+	var tRR = [app.backgroundColor.rgb.red,app.backgroundColor.rgb.green,app.backgroundColor.rgb.blue];
+
+	return tRR;
+}
+
+function saveBeforePreset(){
+	myBeforeFile = _beforePreset;
+	if(myBeforeFile.exists){
+		myBeforeFile.remove();
+	}
+	// =======================================================
+	var idsetd = charIDToTypeID( "setd" );
+	    var desc97 = new ActionDescriptor();
+	    var idnull = charIDToTypeID( "null" );
+	    desc97.putPath( idnull,  myBeforeFile);
+	    var idT = charIDToTypeID( "T   " );
+	        var ref158 = new ActionReference();
+	        var idPrpr = charIDToTypeID( "Prpr" );
+	        var idBrsh = charIDToTypeID( "Brsh" );
+	        ref158.putProperty( idPrpr, idBrsh );
+	        var idcapp = charIDToTypeID( "capp" );
+	        var idOrdn = charIDToTypeID( "Ordn" );
+	        var idTrgt = charIDToTypeID( "Trgt" );
+	        ref158.putEnumerated( idcapp, idOrdn, idTrgt );
+	    desc97.putReference( idT, ref158 );
+	executeAction( idsetd, desc97, DialogModes.NO );
+}
+function loadBeforePreset(){
+// =======================================================
+	var idsetd = charIDToTypeID( "setd" );
+	    var desc91 = new ActionDescriptor();
+	    var idnull = charIDToTypeID( "null" );
+	        var ref152 = new ActionReference();
+	        var idPrpr = charIDToTypeID( "Prpr" );
+	        var idBrsh = charIDToTypeID( "Brsh" );
+	        ref152.putProperty( idPrpr, idBrsh );
+	        var idcapp = charIDToTypeID( "capp" );
+	        var idOrdn = charIDToTypeID( "Ordn" );
+	        var idTrgt = charIDToTypeID( "Trgt" );
+	        ref152.putEnumerated( idcapp, idOrdn, idTrgt );
+	    desc91.putReference( idnull, ref152 );
+	    var idT = charIDToTypeID( "T   " );
+	    desc91.putPath( idT, _beforePreset );
+	    var idAppe = charIDToTypeID( "Appe" );
+	    desc91.putBoolean( idAppe, true );
+	executeAction( idsetd, desc91, DialogModes.NO );
+}
+
+function getBrushes(){
+    toRet = new Array();
+    var ref = new ActionReference();
+    ref.putEnumerated( charIDToTypeID( "capp" ), charIDToTypeID( "Ordn" ), charIDToTypeID( "Trgt" ) );
+    var desc = executeActionGet(ref);
+        var desc1 = desc.getList(stringIDToTypeID("presetManager"));
+        desc1 = desc1.getObjectValue(0).getList(charIDToTypeID("Nm  "));
+        ct = desc1.count;
+        for(i=0;i<ct;i++){
+            toRet.push(desc1.getString(i));
+        }
+    return toRet;
+}
+function deleteAllBrshFromPreset(){
+	var allBrsh = getBrushes();
+
+    var desc = new ActionDescriptor();
+        var list1 = new ActionList();
+        for( var ia=1; ia<=allBrsh.length; ia++){
+        	var ref2 = new ActionReference();
+        		ref2.putIndex( charIDToTypeID( "Brsh" ), ia );
+        	list1.putReference( ref2 );
+        }
+    desc.putList( charIDToTypeID( "null" ), list1 );
+	executeAction( charIDToTypeID( "Dlt " ), desc, DialogModes.NO );
+}
+function loadBCMDocBrushes(){
+// =======================================================
+	var idsetd = charIDToTypeID( "setd" );
+	    var desc91 = new ActionDescriptor();
+	    var idnull = charIDToTypeID( "null" );
+	        var ref152 = new ActionReference();
+	        var idPrpr = charIDToTypeID( "Prpr" );
+	        var idBrsh = charIDToTypeID( "Brsh" );
+	        ref152.putProperty( idPrpr, idBrsh );
+	        var idcapp = charIDToTypeID( "capp" );
+	        var idOrdn = charIDToTypeID( "Ordn" );
+	        var idTrgt = charIDToTypeID( "Trgt" );
+	        ref152.putEnumerated( idcapp, idOrdn, idTrgt );
+	    desc91.putReference( idnull, ref152 );
+	    var idT = charIDToTypeID( "T   " );
+	    desc91.putPath( idT, _DocBrshPreset );
+	    var idAppe = charIDToTypeID( "Appe" );
+	    desc91.putBoolean( idAppe, true );
+	executeAction( idsetd, desc91, DialogModes.NO );
+}
+function addCrntBrshToNewPreset(){
+	// =======================================================add a brsh
+	var idMk = charIDToTypeID( "Mk  " );
+	    var desc82 = new ActionDescriptor();
+	    var idnull = charIDToTypeID( "null" );
+	        var ref139 = new ActionReference();
+	        var idBrsh = charIDToTypeID( "Brsh" );
+	        ref139.putClass( idBrsh );
+	    desc82.putReference( idnull, ref139 );
+	    var idUsng = charIDToTypeID( "Usng" );
+	        var ref140 = new ActionReference();
+	        var idPrpr = charIDToTypeID( "Prpr" );
+	        var idCrnT = charIDToTypeID( "CrnT" );
+	        ref140.putProperty( idPrpr, idCrnT );
+	        var idcapp = charIDToTypeID( "capp" );
+	        var idOrdn = charIDToTypeID( "Ordn" );
+	        var idTrgt = charIDToTypeID( "Trgt" );
+	        ref140.putEnumerated( idcapp, idOrdn, idTrgt );
+	    desc82.putReference( idUsng, ref140 );
+	executeAction( idMk, desc82, DialogModes.NO );
+// =======================================================
+	myBCMDocFile = _DocBrshPreset;
+	if(myBCMDocFile.exists){
+		myBCMDocFile.remove();
+	}
+
+	var idsetd = charIDToTypeID( "setd" );
+	    var desc87 = new ActionDescriptor();
+	    var idnull = charIDToTypeID( "null" );
+	    desc87.putPath( idnull, myBCMDocFile );
+	    var idT = charIDToTypeID( "T   " );
+	        var ref147 = new ActionReference();
+	        var idPrpr = charIDToTypeID( "Prpr" );
+	        var idBrsh = charIDToTypeID( "Brsh" );
+	        ref147.putProperty( idPrpr, idBrsh );
+	        var idcapp = charIDToTypeID( "capp" );
+	        var idOrdn = charIDToTypeID( "Ordn" );
+	        var idTrgt = charIDToTypeID( "Trgt" );
+	        ref147.putEnumerated( idcapp, idOrdn, idTrgt );
+	    desc87.putReference( idT, ref147 );
+	executeAction( idsetd, desc87, DialogModes.NO );
+}
+
+function createMetadata(thisBrush, tool, fColor, bColor){
+	// load the library
+	if (ExternalObject.AdobeXMPScript == undefined) {
+	ExternalObject.AdobeXMPScript = new
+	ExternalObject('lib:AdobeXMPScript');
+	}
+	var myString = "{ tool:'"+tool+"', fColor:'"+fColor.toSource()+"', bColor:'"+bColor.toSource()+"', brush:'"+thisBrush+"'}";
+	try{var ss = app.activeDocument.activeLayer.xmpMetadata.rawData}catch(err){};
+
+	if(ss){
+		xmp = new XMPMeta(ss);
+	}else{xmp = new XMPMeta()}
+	
+	if(xmp.doesPropertyExist(XMPConst.NS_XMP, "BCM_BrushPreset")){
+		xmp.appendArrayItem(XMPConst.NS_XMP, "BCM_BrushPreset", myString);
+	}else{
+		xmp.setProperty(XMPConst.NS_XMP, "BCM_BrushPreset", "", XMPConst.PROP_IS_ARRAY);
+		xmp.setArrayItem(XMPConst.NS_XMP, "BCM_BrushPreset", 1, myString);
+	}
+	if(xmp.doesPropertyExist(XMPConst.NS_XMP, "BCM_BrushPresetSelected")){
+
+	}else{
+		xmp.setProperty(XMPConst.NS_XMP, "BCM_BrushPresetSelected", "1");	
+	}
+	
+	xmpStr = xmp.serialize(); // serialize the XMP packet to XML
+	// alert(xmpStr);
+	return xmpStr;
+}
+function replaceMetadata(thisBrush, tool, fColor, bColor){
+	// load the library
+	if (ExternalObject.AdobeXMPScript == undefined) {
+	ExternalObject.AdobeXMPScript = new
+	ExternalObject('lib:AdobeXMPScript');
+	}
+	var myString = "{ tool:'"+tool+"', fColor:'"+fColor.toSource()+"', bColor:'"+bColor.toSource()+"', brush:'"+thisBrush+"'}";
+	try{var ss = app.activeDocument.activeLayer.xmpMetadata.rawData}catch(err){};
+
+	if(ss){
+		xmp = new XMPMeta(ss);
+	}else{xmp = new XMPMeta()}
+	
+	if(xmp.doesPropertyExist(XMPConst.NS_XMP, "BCM_BrushPreset")){
+		if(xmp.doesPropertyExist(XMPConst.NS_XMP, "BCM_BrushPresetSelected")){
+			var count  = xmp.countArrayItems(XMPConst.NS_XMP, "BCM_BrushPreset");
+			if( _BCM_replaceLBLOptions.repalce_all != true){
+				var selBrush = xmp.getProperty(XMPConst.NS_XMP, "BCM_BrushPresetSelected");
+				selBrush = parseInt(selBrush.toString());
+				if(count > 1){
+					if(selBrush == 1 ){
+						var toDelBrush = count;
+					}else{
+						var toDelBrush = selBrush - 1;
+					}
+				}else{var toDelBrush = 1}
+				
+				xmp.deleteArrayItem(XMPConst.NS_XMP, "BCM_BrushPreset", toDelBrush);
+				xmp.insertArrayItem(XMPConst.NS_XMP, "BCM_BrushPreset", toDelBrush ,myString);
+			}else{
+				while(xmp.countArrayItems(XMPConst.NS_XMP, "BCM_BrushPreset") > 0){
+					try{xmp.deleteArrayItem(XMPConst.NS_XMP, "BCM_BrushPreset", 1)}catch(err){};
+				}
+				xmp.appendArrayItem(XMPConst.NS_XMP, "BCM_BrushPreset", myString);
+				xmp.setProperty(XMPConst.NS_XMP, "BCM_BrushPresetSelected", "1");
+			}
+		}
+	}
+	xmpStr = xmp.serialize(); // serialize the XMP packet to XML
+	return xmpStr;
+}
+function addCrntPresetToXMPLayer(){
+	//open the file preset as binary and save it as string in the xmp of the layer
+	var myFile = _DocBrshPreset ;
+		// myFile.encoding = "BINARY";
+		myFile.encoding = MBDecode();
+		myFile.lineFeed = "unix";
+		myFile.open('r');
+		str = myFile.read();
+		myFile.close();
+		str = convertToHex() == true?stringToHex(str):str;
+		var theTool = getCurrentTool();
+		var frColor = getFGColor();
+		var bgColor = getBGColor();
+
+		var xmpStr = createMetadata(str, theTool, frColor, bgColor);
+		app.activeDocument.activeLayer.xmpMetadata.rawData = xmpStr;
+}
+function replaceCrntPresetToXMPLayer(){
+		var myFile = _DocBrshPreset ;
+		// myFile.encoding = "BINARY";
+		myFile.encoding = MBDecode();
+		myFile.lineFeed = "unix";
+		myFile.open('r');
+		str = myFile.read();
+		myFile.close();
+		str = convertToHex() == true?stringToHex(str):str;
+		var theTool = getCurrentTool();
+		var frColor = getFGColor();
+		var bgColor = getBGColor();
+		var xmpStr = replaceMetadata(str, theTool, frColor, bgColor);
+		app.activeDocument.activeLayer.xmpMetadata.rawData = xmpStr;
+}
+function getMetadataBrhPresetasABR(){
+	if (ExternalObject.AdobeXMPScript == undefined) {
+		ExternalObject.AdobeXMPScript = new
+		ExternalObject('lib:AdobeXMPScript');
+	}
+	xmp = new XMPMeta(app.activeDocument.activeLayer.xmpMetadata.rawData);
+
+	if(xmp.doesPropertyExist(XMPConst.NS_XMP, "BCM_BrushPreset")){
+		if(xmp.doesPropertyExist(XMPConst.NS_XMP, "BCM_BrushPresetSelected")){
+			var selBrush = xmp.getProperty(XMPConst.NS_XMP, "BCM_BrushPresetSelected");
+			selBrush = parseInt(selBrush.toString());
+			var count  = xmp.countArrayItems(XMPConst.NS_XMP, "BCM_BrushPreset");
+
+			var cBrshXMP =  xmp.getArrayItem(XMPConst.NS_XMP, "BCM_BrushPreset", selBrush);
+	    	var tStr = ("var cBrushOBJ = "+cBrshXMP.toString());
+	    	eval(tStr);
+			if(count >= selBrush + 1 ){
+				var nextBrush = selBrush + 1;
+			}else{
+				var nextBrush = 1;
+			}
+			xmp.setProperty(XMPConst.NS_XMP, "BCM_BrushPresetSelected", nextBrush.toString());
+		}
+		app.activeDocument.activeLayer.xmpMetadata.rawData = xmp.serialize();//put back the xmp with the nextBrush modified
+
+		if(_BCM_getLBLOptions.get_the_brush == true){
+			//======================================get the brush
+			//======================================get the brush
+			var mtFile = _testMetadata;
+			mtFile.encoding = MBDecode();
+			mtFile.lineFeed = "unix";
+			mtFile.open('w');
+			str = convertToHex() == true?hex2bin(cBrushOBJ.brush):cBrushOBJ.brush;
+			mtFile.write(str);
+			mtFile.close();
+
+			// =======================================================
+			var idsetd = charIDToTypeID( "setd" );
+			    var desc31 = new ActionDescriptor();
+			    var idnull = charIDToTypeID( "null" );
+			        var ref25 = new ActionReference();
+			        var idPrpr = charIDToTypeID( "Prpr" );
+			        var idBrsh = charIDToTypeID( "Brsh" );
+			        ref25.putProperty( idPrpr, idBrsh );
+			        var idcapp = charIDToTypeID( "capp" );
+			        var idOrdn = charIDToTypeID( "Ordn" );
+			        var idTrgt = charIDToTypeID( "Trgt" );
+			        ref25.putEnumerated( idcapp, idOrdn, idTrgt );
+			    desc31.putReference( idnull, ref25 );
+			    var idT = charIDToTypeID( "T   " );
+			    desc31.putPath( idT, _testMetadata );
+			executeAction( idsetd, desc31, DialogModes.NO );
+		}
+
+		if(_BCM_getLBLOptions.get_the_tool == true){
+			//=================== select the tool
+			setTool(cBrushOBJ.tool);
+		}
+		if(_BCM_getLBLOptions.get_foreground_color == true){
+			//=================== set foreground color
+			eval('var fcBrushOBJ = '+ cBrushOBJ.fColor);
+			app.foregroundColor.rgb.red = fcBrushOBJ[0];
+			app.foregroundColor.rgb.green = fcBrushOBJ[1];
+			app.foregroundColor.rgb.blue = fcBrushOBJ[2];
+		}
+		if(_BCM_getLBLOptions.get_background_color == true){
+			//=================== set background color
+			eval('var bcBrushOBJ = '+ cBrushOBJ.bColor);
+			app.backgroundColor.rgb.red = bcBrushOBJ[0];
+			app.backgroundColor.rgb.green = bcBrushOBJ[1];
+			app.backgroundColor.rgb.blue = bcBrushOBJ[2];
+		}
+	}else{
+		alert("this layer doesn't have a brush linked to it");
+	}
+}
+function deleteMetadataBrhPresetasABR(){
+	if (ExternalObject.AdobeXMPScript == undefined) {
+		ExternalObject.AdobeXMPScript = new
+		ExternalObject('lib:AdobeXMPScript');
+	}
+	xmp = new XMPMeta(app.activeDocument.activeLayer.xmpMetadata.rawData);
+
+	if(xmp.doesPropertyExist(XMPConst.NS_XMP, "BCM_BrushPreset")){
+		if(xmp.doesPropertyExist(XMPConst.NS_XMP, "BCM_BrushPresetSelected")){
+			var count  = xmp.countArrayItems(XMPConst.NS_XMP, "BCM_BrushPreset");
+			if( _BCM_deleteLBLOptions.delete_all != true){
+				var selBrush = xmp.getProperty(XMPConst.NS_XMP, "BCM_BrushPresetSelected");
+				selBrush = parseInt(selBrush.toString());
+				if(count > 1){
+					if(selBrush == 1 ){
+						var toDelBrush = count;
+					}else{
+						var toDelBrush = selBrush - 1;
+					}
+				}else{var toDelBrush = 1}
+				
+				xmp.deleteArrayItem(XMPConst.NS_XMP, "BCM_BrushPreset", toDelBrush);
+				if(selBrush == count){
+					var nextBrsh =  1;
+					xmp.setProperty(XMPConst.NS_XMP, "BCM_BrushPresetSelected", "1");
+				}
+			}else{
+				while(xmp.countArrayItems(XMPConst.NS_XMP, "BCM_BrushPreset") > 0){
+					try{xmp.deleteArrayItem(XMPConst.NS_XMP, "BCM_BrushPreset", 1)}catch(err){};
+				}
+				xmp.setProperty(XMPConst.NS_XMP, "BCM_BrushPresetSelected", "1");
+			}
+		}
+		app.activeDocument.activeLayer.xmpMetadata.rawData = xmp.serialize();//put back the xmp with the nextBrush modified
+	}
+}
+
+function selectBrshByIDX( IDX ){
+	    var desc3 = new ActionDescriptor();
+	        var ref1 = new ActionReference();
+	        ref1.putIndex( charIDToTypeID( "Brsh" ), IDX );
+	    desc3.putReference( charIDToTypeID( "null" ), ref1 );
+	executeAction( charIDToTypeID( "slct" ), desc3, DialogModes.NO );
+}
+function d2h(d) {
+    return d.toString(16);
+}
+function h2d (h) {
+    return parseInt(h, 16);
+}
+function h2decimal (h) {
+    return parseInt(h, 10);
+}
+function stringToHex (tmp) {
+    var str = '', tmp_len = tmp.length,c;
+    // var cPorgress = progressWindow.bar.value;
+
+
+    for (i=0; i < tmp_len; i += 1) {
+		c = tmp.charCodeAt(i);
+		if(d2h(c).toUpperCase().length == 1)
+		{
+			str += "0"+d2h(c).toUpperCase() + '';
+			
+		}
+		else{
+			str += d2h(c).toUpperCase() + '';
+		}
+		// alert("__c :"+c.toString().length+" __str: "+str);
+		// progressWindow.updateProgress(cPorgress + i*(17/tmp_len));
+    }
+    return str;
+}
+function hex2bin(hex)
+{
+    var bytes = [], str;
+
+    for(var i=0; i< hex.length-1; i+=2)
+        bytes.push(parseInt(hex.substr(i, 2), 16));
+
+    return String.fromCharCode.apply(String, bytes);    
+}
+function hasBackground(){
+    var res = undefined;
+    try{
+        var ref = new ActionReference();
+        ref.putProperty( cTID("Prpr") , cTID("Nm  ")); 
+        ref.putIndex( cTID("Lyr "), 0 );
+        executeActionGet(ref).getString(cTID("Nm  ") ); 
+        res = true;
+    }catch(e){ res = false}
+    return res;
+}
+function isLocked() {
+   var m_Ref01 = new ActionReference();
+   m_Ref01.putEnumerated( sTID( "layer" ), cTID( "Ordn" ), cTID( "Trgt" ));
+   var m_Dsc01= executeActionGet( m_Ref01 );
+   a = m_Dsc01.getObjectValue(sTID('layerLocking'));
+   return a.getBoolean(sTID('protectAll'));
+}
+function getSelectedLayersIdx(){
+     var selectedLayers = new Array;
+     var ref = new ActionReference();
+     ref.putEnumerated( charIDToTypeID('Dcmn'), charIDToTypeID('Ordn'), charIDToTypeID('Trgt') );
+     var desc = executeActionGet(ref);
+     var add = 1;
+     if(hasBackground()){add = 0}
+     if( desc.hasKey( stringIDToTypeID( 'targetLayers' ) ) ){
+          desc = desc.getList( stringIDToTypeID( 'targetLayers' ));
+          var c = desc.count 
+          var selectedLayers = new Array();
+          for(var i=0;i<c;i++){
+               selectedLayers.push(  (desc.getReference( i ).getIndex())+add);
+          }
+     }else{
+          var ref = new ActionReference(); 
+          ref.putProperty( charIDToTypeID('Prpr') , charIDToTypeID( 'ItmI' )); 
+          ref.putEnumerated( charIDToTypeID('Lyr '), charIDToTypeID('Ordn'), charIDToTypeID('Trgt') );
+          srs = hasBackground()?executeActionGet(ref).getInteger(charIDToTypeID( 'ItmI' ))-1:executeActionGet(ref).getInteger(charIDToTypeID( 'ItmI' ));
+          selectedLayers.push( srs);
+     }
+     return selectedLayers;
+}

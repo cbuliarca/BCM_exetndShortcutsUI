@@ -1,0 +1,90 @@
+function runScript_Fnct_Arguments(args){
+    // alert(args);
+    //theScriptpath;command;
+    //arguments examples:
+        //{0:[1,2,3], 1:'yellow'} -- for functions( array, string )
+        //[[1,2,3],'yellow', true] -- for functions( array, string, boolean )
+        //[1,2,3] -- for functions( number, number , number )
+        //'yellow' -- for functions( string )
+        // 1 -- for functions( number )
+        // true -- for functions( boolean )
+
+    var c = 0;
+    var indexes = new Array;
+    var sss = args;
+    var index = sss.indexOf(";");
+    while (index >= 0) {
+        indexes[c] =  index;
+        index = sss.indexOf(";", index + 1);
+        c++;
+    }
+    var script = args.substring(0,indexes[0]);
+    var cmd = args.substring(indexes[0]+1, indexes[1]);
+    var arg = args.substring(indexes[1]+1, args.length);
+    
+    if(arg != ''){
+        eval('var arg2 = '+ arg);
+        switch(typeof arg2) {
+            case 'object':
+                var argum = [];
+                if(arg2.constructor != Array){// it's object
+                    for(a in arg2){ 
+                        var as = arg2[a];
+                        eval('var as1 = '+as.toSource()+';');
+                        argum.push(as1);
+                    }
+                }else{// it's an array, the arrays will take arguments one after other 
+                    var argum0 = [];
+                    var argum = argum0.concat(arg2);
+                }
+                break;
+            case 'number':
+                // alert('nb');
+                // alert(arg2.constructor);
+                var argum = [arg2];
+                break;
+            case 'string':
+                var argum = [arg2];
+                break;
+            case 'boolean':
+                var argum = [arg2];
+                break;
+        }
+    }else{
+        var argum = [''];
+    }
+
+    var theScript = script;
+    if(cmd =="")//if there is not a command the script will be triggered
+    {
+        //  =======================================================
+        var idAdobeScriptAutomationScripts = stringIDToTypeID( "AdobeScriptAutomation Scripts" );
+            var desc1 = new ActionDescriptor();
+            var idjsCt = charIDToTypeID( "jsCt" );
+            desc1.putPath( idjsCt, new File( theScript) );
+            var idjsMs = charIDToTypeID( "jsMs" );
+            desc1.putString( idjsMs, """undefined""" );
+        executeAction( idAdobeScriptAutomationScripts, desc1, DialogModes.NO );
+    }
+    else//run the command
+    {
+        $.evalFile(theScript);
+        strsd = cmd+"(";
+        for( var f=0; f<argum.length; f++){
+            // alert(argum[f].constructor);
+            if(argum[f].constructor == Object){
+                strsd += argum[f].toSource() +', ';
+            }else if(argum[f].constructor == Array){
+                strsd += argum[f].toSource() +', ';
+            }else if(argum[f].constructor == String){
+                strsd += '"'+argum[f] +'", ';
+            }else{
+                strsd += argum[f] +', ';
+            }
+        }
+        strsd = strsd.substring(0, strsd.length - 2);
+        strsd += ")";
+        // alert(strsd);
+        eval(strsd);
+    }
+}

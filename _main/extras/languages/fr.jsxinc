@@ -1,0 +1,65 @@
+/*please don't modify this file if you want to translate it, you can duplicate it rename it with the language 
+you want to and change it by replacing in sublimeText with regularExpression on: 
+(\s=\s\{en:)("[a-zA-z \\\".\r\n,():@'+/=%0-9?]*)(\};)
+with :
+.fr = \2;
+*/
+//localized strings:================
+firstLookHelpLCZ.fr = "Clic droit ou double-cliquez ici pour ouvrir le dialogue \" Ajouter un autre bouton \". \
+Dans ce dialogue, vous pouvez définir un bouton qui réagir à un raccourci clavier, et vous pouvez le configurer à \
+jouer une action, un fichier de script java, ou vous pouvez le configurer pour choisir une brosse de votre Brosse Preset. \
+\r Pour modifier la position d'une bouton appuyez sur la touche CTRL( Commande ) et faites-la glisser vers la nouvelle position. ";
+
+alertAboutFlash.fr = "Ce script utilise le lecteur Flash. Si vous ne pouvez faire rien pour la première \
+temps que vous ouvrez le script c'est parce que le script vient d'ajouter le chemin de confiance à votre "+ File(resolveCfgFilePath()).fsName +" et vous devez redémarrer Photoshop. ";
+
+clkToMailTip.fr = "cliquez ici pour envoyer un mail à buliarca@yahoo.com";
+createdByLCZ.fr = "créé par Buliarca Cristian";
+btnDelLcz.fr = "Supprimer le bouton";
+btnDelToolTipLcz.fr = "supprimer le bouton de la première fenêtre";
+btnAddLcz.fr = "Ajouter un autre bouton";
+btnAddToolTipLcz.fr = "ajouter un bouton avec les paramètres suivants:";
+pnlPropLcz.fr = "Propreties:";
+lbTLcz.fr = "Label:";
+lbTToolTipLcz.fr = "l'étiquette du bouton";
+asGroupBtnLcz.fr = "comme Nouveau Group";
+descTLcz.fr = "Description:";
+descToolTipLcz.fr = "une brève description qui apparaitra lorsque vous passez la souris sur le bouton, comme une pointe de l'outil";
+iconTLcz.fr = "Icône:";
+iconToolTipLcz.fr = "le chemin pour l'image du bouton";
+browseTLcz.fr = "Parcourir";
+broseToolTipLcz.fr = "rechercher l'image du bouton";
+editTLcz.fr = "Modifier l'image";
+editToolTipLcz.fr = "ouvre l'image à éditer";
+shTLcz.fr = "Raccourci:";
+shToolTipLcz.fr = "définir un raccourci pour votre bouton, appuyez sur une touche ou une combinaison de touches Ctrl + Maj + Alt + une touche";
+comTLcz.fr = "Commande:";
+comToolTipLcz.fr = "la commande qui sera déclenchée lorsque vous appuyez sur le bouton\
+Des variables et des fonctions utiles: \
+     _gESHFolder - objet dossier pour le chemin de dossier principal \
+     _gMainESHui - objet fichier pour le script main.jsx \
+     _gCurrentESHui - objet de fichier pour le script qui ouvre l'interface utilisateur actuelle \
+     runScript_Fnct_Arguments () - exécuter une fonction avec des arguments à partir d'un fichier de script .Prends comme argument une string sous cette forme: \
+       \"Le chemin du script, la fonction, les arguments comme string \" \
+  ";
+brsFroTLcz.fr = "Parcourir pour:";
+scrBtLcz.fr = "Script";
+scrBtToolTipLcz.fr = "vous pouvez exécuter un fichier .jsx. Parcourez pour lui..";
+helpCodeAddedLcz.fr = "// ============ code ajouté par le bouton Parcourir pour ouvrir un fichier .jsx ================";
+helpCodeAddEndedLcz.fr = "// ============ fin du code ajouté par le bouton de navigation ======================= ===== ";
+actTLcz.fr = "Action";
+actTtToolTipLcz.fr = "vous pouvez exécuter un fichier .jsx. Parcourez pour lui..";
+brshTLcz.fr = "Brosse";
+brshTtToolTipLcz.fr = "vous pouvez choisir une brosse. Parcourez pour lui.";
+cancelTLcz.fr = "Annuler";
+applyTLcz.fr = "Appliquer";
+actWinTLcz.fr = "Sélectionnez une action";
+actSetTLcz.fr = "Set:";
+actT2Lcz.fr = "Action:";
+okTLcz.fr = "Ok";
+helpCodeAddedActionLcz.fr = "// =========== code ajouté par l'action bouton de navigation";
+helpCodePlayActLcz.fr = "// jouer l'action:";
+helpCodeFromSetLcz.fr = "du jeu:";
+helpCodeEndActionLcz.fr = "// =========== code ajouté par l'action bouton de navigation";
+shortcutExistsLcz.fr = "Le bouton \"%1 \"a déjà le raccourci: \"%2\". Voulez-vous continuer à utiliser \"%2 \" comme raccourci pour ce bouton ?\
+Si oui le bouton \"%1 \" restera sans un raccourci \n Si vous ne le faites pas, alors vous pouvez essayer une autre touche de raccourci ";

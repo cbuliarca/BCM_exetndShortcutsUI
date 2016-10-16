@@ -1,0 +1,9 @@
+var BCMtheButtonsUI = new Array();
+BCMtheButtonsUI[0]={image:"", shortcut:"1", label:"toogle events\nMagic Wand", command:"runScript_Fnct_Arguments(_gCurrentESHui.path+\"/extras/~addNotifyer.jsx;toogle_EventsBCM_MagicWand;\");", toolTip:"this script creates the notifiers for the maic wand uses. Jut open File>Scripts>Script Events Manger to see them.\
+             After adding these notifiers on each use of the magic wand the ~getEventMagicWand.jsx will be triggered then if the user has the key Accent(`) pressed the script will select area from the defined hotLayer if not the magic wand will work like it suposed to. The user can also use the Alt or Shift to substarct or add to selection.\
+         Also if the user press the Divide key and clicks with the magic wand selecte anywhere on the document it will set the selected layer as a hotLayer\
+                Pressing CapsLock when clicking with the magic wand the user can toggle visibilty for the hotLayer", x:0, y:0};
+BCMtheButtonsUI[1]={image:"", shortcut:"Z", label:"toggleVisibility\nHot Layer", command:"runScript_Fnct_Arguments(_gCurrentESHui.path+\"/extras/~getEventMagicWand.jsx;showOnlyHotLayer;false\" );\
+", toolTip:"shows only the hot layer", x:330, y:0};
+BCMtheButtonsUI[2]={image:"", shortcut:"2", label:"set Layer\nas hot", command:"runScript_Fnct_Arguments(_gCurrentESHui.path+\"/extras/~getEventMagicWand.jsx;setCurentLayerAsHot;false\");", toolTip:"set the selected layer as hot.\
+This is  the layer the the magic wand will sample.", x:440, y:0};

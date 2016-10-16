@@ -1,0 +1,62 @@
+function Vector(x, y){
+    this.x = x;
+    this.y = y;
+}
+Vector.prototype = {
+    add: function(other){
+        if( other instanceof Vector){
+            return new Vector(this.x + other.x, this.y + other.y);
+        }else{
+            return new Vector(this.x + parseFloat(other), this.y + parseFloat(other));
+        }
+    },
+    sub: function(other){
+        if( other instanceof Vector){
+            return new Vector(this.x - other.x, this.y - other.y);
+        }else{
+            return new Vector(this.x - parseFloat(other), this.y - parseFloat(other));
+        }
+    },
+    mul: function(scalar){
+        return new Vector(this.x * scalar, this.y * scalar);
+    },
+    mag: function(){
+        return (Math.sqrt(this.x*this.x + this.y*this.y));
+    },
+    normalize: function(){
+        vectorLength = this.mag();
+        return new Vector(this.x/vectorLength, this.y/vectorLength);
+    },
+    dot:function (other){
+        return other.x * this.x + other.y * this.y;
+    },
+    angle:function(other){
+        // return Math.acos(this.dot(other) / (this.mag() * other.mag()))
+        // var rr = Math.atan2(this.y - this.y, other.x - other.x) * 180 / Math.PI;
+        rr = (Math.atan2((other.x-this.x),(this.y-other.y))) * (360.0/(2.0*Math.PI));
+        qq = rr;
+        return qq;
+    },
+    angle2:function(){
+        ac = Math.acos( this.x / this.mag() ) * (360.0/(2.0*Math.PI));
+        // if(this.y > 0){
+        //     ac = ac + 180;
+        // }
+        return ac;
+    },
+    rotate:function( angle ){
+        theta = angle * ((2.0*Math.PI)/360);// to radians
+        cs = Math.cos(theta);
+        sn = Math.sin(theta);
+        px = this.x * cs - this.y * sn; 
+        py = this.x * sn + this.y * cs;
+        return new Vector(px, py);
+    },
+    perpendicular:function(dir){// 1 or -1
+        if(dir == 1){
+            return new Vector(this.y, -this.x);
+        }else{
+            return new Vector(-this.y, this.x);
+        }
+    }
+}

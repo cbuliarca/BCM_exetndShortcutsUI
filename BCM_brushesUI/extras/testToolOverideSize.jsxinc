@@ -1,0 +1,173 @@
+var _beforePreset = new File(Folder.temp+"/BCM_before.abr");
+var _DocBrshPreset =  new File( Folder.temp+"/BCM_Doc_Brushes.abr" );
+
+
+// setToolOverides("Op_SizePressed");
+// setToolOverides("None_Pressed");
+// setToolOverides("OpacityPressed");
+// setToolOverides("Size_Pressed");
+
+function setToolOverides( stt ){
+  setOp_SizePressed( "None_Pressed" );
+  saveBeforePreset();//make backup of the current brsh presets
+  deleteAllBrshFromPreset();
+  addCrntBrshToNewPreset();
+  setOp_SizePressed( stt );
+  selectBrshByIDX( 1 );
+  deleteAllBrshFromPreset();
+  loadBeforePreset();
+}
+
+function setOp_SizePressed( st ){
+  try{
+    var idslct = charIDToTypeID( "slct" );
+        var desc7 = new ActionDescriptor();
+        var idnull = charIDToTypeID( "null" );
+            var ref7 = new ActionReference();
+            var idtoolPreset = stringIDToTypeID( "toolPreset" );
+            ref7.putName( idtoolPreset, st );
+        desc7.putReference( idnull, ref7 );
+    executeAction( idslct, desc7, DialogModes.NO );
+  }catch(err){
+    alert( 'For this to work you have to create 4 tools presets named: "Op_SizePressed" (opacity and size pressed)\
+"None_Pressed", "OpacityPressed"(only opacity), "Size_Pressed(only size)"');
+  }
+}
+
+function saveBeforePreset(){
+  myBeforeFile = _beforePreset;
+  if(myBeforeFile.exists){
+    myBeforeFile.remove();
+  }
+  // =======================================================
+  var idsetd = charIDToTypeID( "setd" );
+      var desc97 = new ActionDescriptor();
+      var idnull = charIDToTypeID( "null" );
+      desc97.putPath( idnull,  myBeforeFile);
+      var idT = charIDToTypeID( "T   " );
+          var ref158 = new ActionReference();
+          var idPrpr = charIDToTypeID( "Prpr" );
+          var idBrsh = charIDToTypeID( "Brsh" );
+          ref158.putProperty( idPrpr, idBrsh );
+          var idcapp = charIDToTypeID( "capp" );
+          var idOrdn = charIDToTypeID( "Ordn" );
+          var idTrgt = charIDToTypeID( "Trgt" );
+          ref158.putEnumerated( idcapp, idOrdn, idTrgt );
+      desc97.putReference( idT, ref158 );
+  executeAction( idsetd, desc97, DialogModes.NO );
+}
+function loadBeforePreset(){
+// =======================================================
+  var idsetd = charIDToTypeID( "setd" );
+      var desc91 = new ActionDescriptor();
+      var idnull = charIDToTypeID( "null" );
+          var ref152 = new ActionReference();
+          var idPrpr = charIDToTypeID( "Prpr" );
+          var idBrsh = charIDToTypeID( "Brsh" );
+          ref152.putProperty( idPrpr, idBrsh );
+          var idcapp = charIDToTypeID( "capp" );
+          var idOrdn = charIDToTypeID( "Ordn" );
+          var idTrgt = charIDToTypeID( "Trgt" );
+          ref152.putEnumerated( idcapp, idOrdn, idTrgt );
+      desc91.putReference( idnull, ref152 );
+      var idT = charIDToTypeID( "T   " );
+      desc91.putPath( idT, _beforePreset );
+      var idAppe = charIDToTypeID( "Appe" );
+      desc91.putBoolean( idAppe, true );
+  executeAction( idsetd, desc91, DialogModes.NO );
+}
+function deleteAllBrshFromPreset(){
+  var allBrsh = getBrushes();
+
+    var desc = new ActionDescriptor();
+        var list1 = new ActionList();
+        for( var ia=1; ia<=allBrsh.length; ia++){
+          var ref2 = new ActionReference();
+            ref2.putIndex( charIDToTypeID( "Brsh" ), ia );
+          list1.putReference( ref2 );
+        }
+    desc.putList( charIDToTypeID( "null" ), list1 );
+  executeAction( charIDToTypeID( "Dlt " ), desc, DialogModes.NO );
+}
+function addCrntBrshToNewPreset(){
+  // =======================================================add a brsh
+  var idMk = charIDToTypeID( "Mk  " );
+      var desc82 = new ActionDescriptor();
+      var idnull = charIDToTypeID( "null" );
+          var ref139 = new ActionReference();
+          var idBrsh = charIDToTypeID( "Brsh" );
+          ref139.putClass( idBrsh );
+      desc82.putReference( idnull, ref139 );
+      var idUsng = charIDToTypeID( "Usng" );
+          var ref140 = new ActionReference();
+          var idPrpr = charIDToTypeID( "Prpr" );
+          var idCrnT = charIDToTypeID( "CrnT" );
+          ref140.putProperty( idPrpr, idCrnT );
+          var idcapp = charIDToTypeID( "capp" );
+          var idOrdn = charIDToTypeID( "Ordn" );
+          var idTrgt = charIDToTypeID( "Trgt" );
+          ref140.putEnumerated( idcapp, idOrdn, idTrgt );
+      desc82.putReference( idUsng, ref140 );
+  executeAction( idMk, desc82, DialogModes.NO );
+// =======================================================
+  myBCMDocFile = _DocBrshPreset;
+  if(myBCMDocFile.exists){
+    myBCMDocFile.remove();
+  }
+
+  var idsetd = charIDToTypeID( "setd" );
+      var desc87 = new ActionDescriptor();
+      var idnull = charIDToTypeID( "null" );
+      desc87.putPath( idnull, myBCMDocFile );
+      var idT = charIDToTypeID( "T   " );
+          var ref147 = new ActionReference();
+          var idPrpr = charIDToTypeID( "Prpr" );
+          var idBrsh = charIDToTypeID( "Brsh" );
+          ref147.putProperty( idPrpr, idBrsh );
+          var idcapp = charIDToTypeID( "capp" );
+          var idOrdn = charIDToTypeID( "Ordn" );
+          var idTrgt = charIDToTypeID( "Trgt" );
+          ref147.putEnumerated( idcapp, idOrdn, idTrgt );
+      desc87.putReference( idT, ref147 );
+  executeAction( idsetd, desc87, DialogModes.NO );
+}
+function selectBrshByIDX( IDX ){
+      var desc3 = new ActionDescriptor();
+          var ref1 = new ActionReference();
+          ref1.putIndex( charIDToTypeID( "Brsh" ), IDX );
+      desc3.putReference( charIDToTypeID( "null" ), ref1 );
+  executeAction( charIDToTypeID( "slct" ), desc3, DialogModes.NO );
+}
+function loadBeforePreset(){
+// =======================================================
+  var idsetd = charIDToTypeID( "setd" );
+      var desc91 = new ActionDescriptor();
+      var idnull = charIDToTypeID( "null" );
+          var ref152 = new ActionReference();
+          var idPrpr = charIDToTypeID( "Prpr" );
+          var idBrsh = charIDToTypeID( "Brsh" );
+          ref152.putProperty( idPrpr, idBrsh );
+          var idcapp = charIDToTypeID( "capp" );
+          var idOrdn = charIDToTypeID( "Ordn" );
+          var idTrgt = charIDToTypeID( "Trgt" );
+          ref152.putEnumerated( idcapp, idOrdn, idTrgt );
+      desc91.putReference( idnull, ref152 );
+      var idT = charIDToTypeID( "T   " );
+      desc91.putPath( idT, _beforePreset );
+      var idAppe = charIDToTypeID( "Appe" );
+      desc91.putBoolean( idAppe, true );
+  executeAction( idsetd, desc91, DialogModes.NO );
+}
+function getBrushes(){
+    toRet = new Array();
+    var ref = new ActionReference();
+    ref.putEnumerated( charIDToTypeID( "capp" ), charIDToTypeID( "Ordn" ), charIDToTypeID( "Trgt" ) );
+    var desc = executeActionGet(ref);
+        var desc1 = desc.getList(stringIDToTypeID("presetManager"));
+        desc1 = desc1.getObjectValue(0).getList(charIDToTypeID("Nm  "));
+        ct = desc1.count;
+        for(i=0;i<ct;i++){
+            toRet.push(desc1.getString(i));
+        }
+    return toRet;
+}

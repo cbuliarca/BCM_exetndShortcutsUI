@@ -1,0 +1,66 @@
+/*please don't modify this file if you want to translate it, you can duplicate it rename it with the language 
+you want to and change it by replacing in sublimeText with regularExpression on: 
+(\s=\s\{en:)("[a-zA-z \\\".\r\n,():@'+/=%0-9?]*)(\};)
+with :
+.it = \2;
+*/
+//localized strings italian:================
+firstLookHelpLCZ.it =" Clicca col tasto destro del mouse oppure fai doppio clic in questa finestra per aprire la\"finestra di dialogo.\"\
+All'interno della finestra di dialogo è possibile impostare il pulsante ad un tasto di scelta rapida,\
+avviare un'azione, un file di scripts, oppure è possibile impostare e scegliere un pennello dai pennelli predefiniti. \
+\r Per modificare la posizione di un pulsante premere il tasto CTRL (Command) e trascinarlo nella nuova posizione.";
+
+alertAboutFlash.it ="Questo script utilizza flash player, se non e' installato non puo' funzionare\
+Al primo utilizzo non potrebbe funzionare chiudere photoshop" + File(resolveCfgFilePath()).fsName +" e riavviare Photoshop.";
+
+clkToMailTip.it = "";
+createdByLCZ.it ="";
+btnDelLcz.it ="Cancella Pulsante";
+btnDelToolTipLcz.it = "Clicca col tasto dx sul pulsante da eliminare";
+btnAddLcz.it = "Aggiungi Pulsante";
+btnAddToolTipLcz.it = "Clicca col tasto dx su un punto qualsiasi della finestra per creare un nuovo pulsante:";
+pnlPropLcz.it = "Riquadro Proprieta'";
+lbTLcz.it = "Nome";
+lbTToolTipLcz.it = "Inserisci un nome al pulsante.";
+asGroupBtnLcz.it = "as New Group";
+descTLcz.it = "Descrizione";
+descToolTipLcz.it = "Evidenzia una breve descrizione che sarà visualizzato quando si passa il mouse sul pulsante, come un suggerimento";
+iconTLcz.it = "Icona";
+iconToolTipLcz.it = "Percorso per l'immagine del pulsante";
+browseTLcz.it = "Sfoglia";
+broseToolTipLcz.it = "Cerca l'immagine del pulsante.";
+editTLcz.it = "Modifica";
+editToolTipLcz.it = "Apre l'immagine da modificare";
+shTLcz.it = "Scorciatoia";
+shToolTipLcz.it = "Impostare una scorciatoia per il pulsante, premere un tasto o una combinazione di tasti Ctrl+ Shift+ Alt+ una lettera a piacere";
+comTLcz.it = "Comando";
+comToolTipLcz.it = "Il comando verrà attivato quando si premere il pulsante (Scripts o Azione).\
+variabili Utili e funzioni: \
+     _gESHFolder - oggetto cartella per il percorso della cartella principale \
+     _gMainESHui - oggetto file per lo script main.jsx \
+     _gCurrentESHui - oggetto file per lo script che si aprono l'attuale interfaccia utente \
+     runScript_Fnct_Arguments () - eseguire una funzione con gli argomenti da un file di script .Prendere come argomento una stringa in questa forma: \
+       \"Il percorso dello script, la funzione, gli argomenti come stringa \" \
+";
+brsFroTLcz.it = "Scegli tra";
+scrBtLcz.it = "Scripts";
+scrBtToolTipLcz.it = "E' possibile eseguire un file jsx.. Sfoglia per inserirlo nel pulsante";
+helpCodeAddedLcz.it = "//============ Codice aggiunto per il pulsante Sfoglia per aprire un file jsx.================";
+helpCodeAddEndedLcz.it = "//============ Fine del codice aggiunto per il pulsante Sfoglia ============================";
+actTLcz.it = "Azione";
+actTtToolTipLcz.it = "E' possibile eseguire un file jsx.. Sfoglia per inserirlo nel pulsante";
+brshTLcz.it = "Pennello";
+brshTtToolTipLcz.it = "E' possibile eseguire cegliere un pennello. Sfoglia per inserirlo nel pulsante";
+cancelTLcz.it = "Cancella";
+applyTLcz.it = "Applica";
+actWinTLcz.it = "Seleziona un azione";
+actSetTLcz.it = "Serie";
+actT2Lcz.it = "Azione";
+okTLcz.it = "Ok";
+helpCodeAddedActionLcz .it = "// =========== Codice aggiunto per il pulsante Sfoglia azione";
+helpCodePlayActLcz.it = "// Avvia Azione";
+helpCodeFromSetLcz.it = "Dal Set";
+helpCodeEndActionLcz .it = "// =========== Codice aggiunto per il pulsante Sfoglia azione";
+shortcutExistsLcz.it = "The button %1 already has the shortcut: %2. Do you still want to use %2 as shortcut for this button?\
+If so the button %1 will remain without a shortcut.\n If you don't then you can try anoter shortcut key";
+//end localized strings ====================================================================

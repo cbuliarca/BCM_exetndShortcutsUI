@@ -1,0 +1,46 @@
+﻿
+/*
+<javascriptresource>
+  <name>BCM> Utils...</name>
+  <category>BCM</category>
+</javascriptresource>
+*/
+
+#include "../../../_main/extras/_libs/layerIdAM.jsxinc"
+
+function getIDXwithsameColor(TheColor){// search and return a list of indexes for the layers with the specified color
+    var ref = new ActionReference();
+    var toRet = [];
+    try{activeDocument.backgroundLayer;var a=0 }catch(e){ var a = 1; };
+    while(true){
+      ref = new ActionReference();
+      ref.putIndex( charIDToTypeID( 'Lyr ' ), a );
+      try{var desc = executeActionGet(ref);}catch(err){break;}
+        var cl = desc.getEnumerationValue(charIDToTypeID("Clr "));
+        cl = typeIDToStringID(cl);
+        var ls = desc.getEnumerationValue(stringIDToTypeID("layerSection"));
+        ls = typeIDToStringID(ls);
+        if(ls != 'layerSectionEnd'){
+          if(cl == TheColor){
+            toRet.push(a);
+          }
+        }
+      a++;
+    }
+    return toRet;
+}
+
+function selectAllByColor(TheColor){// main function
+  theSameClIDX = getIDXwithsameColor(TheColor);
+  multiSelectByIDX(theSameClIDX, false);
+}
+//...example::
+
+// selectAllByColor("none");
+// selectAllByColor("red");
+// selectAllByColor("orange");
+// selectAllByColor("yellowColor");
+// selectAllByColor("grain");
+// selectAllByColor("blue");
+// selectAllByColor("violet");
+// selectAllByColor("gray");

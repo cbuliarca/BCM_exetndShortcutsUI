@@ -1,0 +1,938 @@
+function getSelectedLayersIds(){
+  // get the selected layers identifiers
+  //( these id's are unique and they will not change if the layer name is changed or it's position in the layers editor will change)
+  var idxs = getSelectedLayersIdx();// first get the indexes
+  var selectedLayersIds = [];
+  //for each index get the layer id
+  for( var i=0;i<idxs.length;i++){
+    selectedLayersIds.push(getIdfromIdx(idxs[i]));
+  }
+  return selectedLayersIds;
+}
+// function hasBackground(){// function to check if there is a background layer
+//     var res = undefined;
+//     try{w
+//         var ref = new ActionReference();
+//         ref.putProperty( charIDToTypeID("Prpr") , charIDToTypeID("Nm  ")); 
+//         ref.putIndex( charIDToTypeID("Lyr "), 0 );
+//         executeActionGet(ref).getString(charIDToTypeID("Nm  ") ); 
+//         res = true;
+//     }catch(e){ res = false}
+//     return res;
+// }
+function getIdfromIdx( idx ){// get the id from index
+	var ref = new ActionReference();
+	ref.putIndex(charIDToTypeID('Lyr '), idx);
+    var desc = executeActionGet(ref);
+    	desc = desc.getInteger(charIDToTypeID("LyrI"));
+    	return desc;
+}
+function getIdxfromId( id ){// get the idx from id
+  var ref = new ActionReference();
+  ref.putIdentifier(charIDToTypeID('Lyr '), id);
+    var desc = executeActionGet(ref);
+      desc = desc.getInteger(charIDToTypeID( 'ItmI' ));
+      return desc;
+}
+function getSelectedLayersIdx1(){// get the selected layers index( positon in layer editor)
+     var selectedLayers = new Array;
+     var ref = new ActionReference();
+    // =======================================================duplicate the selected layers into a new document
+      var idMk = charIDToTypeID( "Mk  " );
+          var desc18 = new ActionDescriptor();
+          var idnull = charIDToTypeID( "null" );
+              var ref8 = new ActionReference();
+              var idDcmn = charIDToTypeID( "Dcmn" );
+              ref8.putClass( idDcmn );
+          desc18.putReference( idnull, ref8 );
+          var idUsng = charIDToTypeID( "Usng" );
+              var ref9 = new ActionReference();
+              var idLyr = charIDToTypeID( "Lyr " );
+              var idOrdn = charIDToTypeID( "Ordn" );
+              var idTrgt = charIDToTypeID( "Trgt" );
+              ref9.putEnumerated( idLyr, idOrdn, idTrgt );
+          desc18.putReference( idUsng, ref9 );
+              // var id58 = charIDToTypeID( "MkVs" );
+          desc18.putBoolean( charIDToTypeID( "MkVs" ), false );
+          var idVrsn = charIDToTypeID( "Vrsn" );
+          desc18.putInteger( idVrsn, 5 );
+      executeAction( idMk, desc18, DialogModes.NO );
+
+      // =======================================================
+      var idHd = charIDToTypeID( "Hd  " );
+          var desc55 = new ActionDescriptor();
+          var idnull = charIDToTypeID( "null" );
+              var list6 = new ActionList();
+                  var ref33 = new ActionReference();
+                  var idLyr = charIDToTypeID( "Lyr " );
+                  var idOrdn = charIDToTypeID( "Ordn" );
+                  var idTrgt = charIDToTypeID( "Trgt" );
+                  ref33.putEnumerated( idLyr, idOrdn, idTrgt );
+              list6.putReference( ref33 );
+          desc55.putList( idnull, list6 );
+      executeAction( idHd, desc55, DialogModes.NO );
+
+
+
+      // throw('err');
+
+      var slLayersNb = getLayersNb();
+      //================close 
+      var idCls = charIDToTypeID( "Cls " );
+      var desc21 = new ActionDescriptor();
+      var idSvng = charIDToTypeID( "Svng" );
+      var idYsN = charIDToTypeID( "YsN " );
+      var idN = charIDToTypeID( "N   " );
+      desc21.putEnumerated( idSvng, idYsN, idN );
+      var idforceNotify = stringIDToTypeID( "forceNotify" );
+      desc21.putBoolean( idforceNotify, true );
+      executeAction( idCls, desc21, DialogModes.NO );
+
+      var selectedLayers = new Array();
+
+      if(slLayersNb > 1){
+        ref.putProperty(charIDToTypeID('Prpr'), stringIDToTypeID('targetLayers'));
+        ref.putEnumerated( charIDToTypeID('Dcmn'), charIDToTypeID('Ordn'), charIDToTypeID('Trgt') );
+        var desc = executeActionGet(ref);
+        desc = desc.getList( stringIDToTypeID( 'targetLayers' ));
+        var add = 1;
+        if(hasBackground()){add = 0}
+        var c = desc.count 
+        var selectedLayers = new Array();
+        for(var i=0;i<c;i++){
+             selectedLayers.push(  (desc.getReference( i ).getIndex()) + add);
+        }
+
+      }else{
+          var ref = new ActionReference(); 
+          ref.putProperty( charIDToTypeID('Prpr') , charIDToTypeID( 'ItmI' )); 
+          ref.putEnumerated( charIDToTypeID('Lyr '), charIDToTypeID('Ordn'), charIDToTypeID('Trgt') );
+          srs = hasBackground()?executeActionGet(ref).getInteger(charIDToTypeID( 'ItmI' ))-1:executeActionGet(ref).getInteger(charIDToTypeID( 'ItmI' ));
+          selectedLayers.push( srs);
+     }
+     return selectedLayers;
+}
+
+function getSelectedLayersIdx(){// get the selected layers index( positon in layer editor)
+     var selectedLayers = new Array;
+     var ref = new ActionReference();
+     ref.putProperty(charIDToTypeID('Prpr'), stringIDToTypeID('targetLayers'));
+     ref.putEnumerated( charIDToTypeID('Dcmn'), charIDToTypeID('Ordn'), charIDToTypeID('Trgt') );
+     var desc = executeActionGet(ref);
+     var add = 1;
+     if(hasBackground()){add = 0}
+     if( desc.hasKey( stringIDToTypeID( 'targetLayers' ) ) ){
+          desc = desc.getList( stringIDToTypeID( 'targetLayers' ));
+          var c = desc.count 
+          var selectedLayers = new Array();
+          for(var i=0;i<c;i++){
+               selectedLayers.push(  (desc.getReference( i ).getIndex()) + add);
+          }
+     }else{
+          var ref = new ActionReference(); 
+          ref.putProperty( charIDToTypeID('Prpr') , charIDToTypeID( 'ItmI' )); 
+          ref.putEnumerated( charIDToTypeID('Lyr '), charIDToTypeID('Ordn'), charIDToTypeID('Trgt') );
+          srs = hasBackground()?executeActionGet(ref).getInteger(charIDToTypeID( 'ItmI' ))-1:executeActionGet(ref).getInteger(charIDToTypeID( 'ItmI' ));
+          selectedLayers.push( srs);
+     }
+     return selectedLayers;
+}
+
+function doesIdExists( id ){// function to check if the id exists 
+	var res = true;
+	var ref = new ActionReference();
+	ref.putIdentifier(charIDToTypeID('Lyr '), id);
+    try{var desc = executeActionGet(ref)}catch(err){res = false};
+    return res;
+}
+function multiSelectByIDs(ids) {
+  if( ids.constructor != Array ) ids = [ ids ];
+    var layers = new Array();
+    var id54 = charIDToTypeID( "slct" );
+    var desc12 = new ActionDescriptor();
+    var id55 = charIDToTypeID( "null" );
+    var ref9 = new ActionReference();
+    for (var i = 0; i < ids.length; i++) {
+    	if(doesIdExists(ids[i]) == true){// a check to see if the id stil exists
+	        layers[i] = charIDToTypeID( "Lyr " );
+	        ref9.putIdentifier(layers[i], ids[i]);
+    	}
+    }
+    desc12.putReference( id55, ref9 );
+    var id58 = charIDToTypeID( "MkVs" );
+    desc12.putBoolean( id58, false );
+    executeAction( id54, desc12, DialogModes.NO );
+}
+
+function multiSelectByIDX(idxs) {
+  if( idxs.constructor != Array ) idxs = [ idxs ];
+    var layers = new Array();
+    var id54 = charIDToTypeID( "slct" );
+    var desc12 = new ActionDescriptor();
+    var id55 = charIDToTypeID( "null" );
+    var ref9 = new ActionReference();
+    for (var i = 0; i < idxs.length; i++) {
+        layers[i] = charIDToTypeID( "Lyr " );
+        // ref9.putName(layers[i], layerNames[i]);
+        ref9.putIndex(layers[i], idxs[i])
+    }
+    desc12.putReference( id55, ref9 );
+    var id58 = charIDToTypeID( "MkVs" );
+    desc12.putBoolean( id58, false );
+    executeAction( id54, desc12, DialogModes.NO );
+}
+
+
+function showByID( id ){
+  // =======================================================
+    var idShw = charIDToTypeID( "Shw " );
+        var desc808 = new ActionDescriptor();
+        var idnull = charIDToTypeID( "null" );
+            var list11 = new ActionList();
+                var ref647 = new ActionReference();
+                ref647.putIdentifier(charIDToTypeID( "Lyr " ), id);
+            list11.putReference( ref647 );
+        desc808.putList( idnull, list11 );
+    executeAction( idShw, desc808, DialogModes.NO );
+}
+function hideByID( id ){
+  // =======================================================
+    var idShw = charIDToTypeID( "Hd  " );
+        var desc808 = new ActionDescriptor();
+        var idnull = charIDToTypeID( "null" );
+            var list11 = new ActionList();
+                var ref647 = new ActionReference();
+                ref647.putIdentifier(charIDToTypeID( "Lyr " ), id);
+            list11.putReference( ref647 );
+        desc808.putList( idnull, list11 );
+    executeAction( idShw, desc808, DialogModes.NO );
+}
+function getVisibleforID(id){
+  var ref = new ActionReference();
+   ref.putIdentifier( charIDToTypeID('Lyr '), id );
+   var vis = executeActionGet(ref).getInteger(stringIDToTypeID('visible'));
+   return vis;
+}
+
+function getNamefromIdx( idx ){// get the name from index
+  var ref = new ActionReference();
+  ref.putIndex(charIDToTypeID('Lyr '), idx);
+    var desc = executeActionGet(ref);
+      desc = desc.getString(charIDToTypeID("Nm  "));
+      return desc;
+}
+function getNamefromId( id ){// get the name from id
+  var ref = new ActionReference();
+  ref.putIdentifier(charIDToTypeID('Lyr '), id);
+    var desc = executeActionGet(ref);
+      desc = desc.getString(charIDToTypeID("Nm  "));
+      return desc;
+}
+
+function isLayerSet( idx ) {
+     var propName = stringIDToTypeID( 'layerSection' );
+     var ref = new ActionReference(); 
+     ref.putProperty( charIDToTypeID( "Prpr" ) , propName);
+     ref.putIndex( charIDToTypeID ( "Lyr " ), idx );
+     var desc =  executeActionGet( ref );
+     var type = desc.getEnumerationValue( propName );
+     var res = typeIDToStringID( type ); 
+     return res == 'layerSectionStart' ? true:false;
+}
+
+function isAdjustLayerID( id ){
+  var ref = new ActionReference(); 
+    ref.putIdentifier( charIDToTypeID ( "Lyr " ), id );
+  var desc =  executeActionGet( ref );
+  return desc.hasKey( charIDToTypeID("Adjs"));
+}
+
+function isSolidColorID( id ){
+  var ref = new ActionReference(); 
+    ref.putIdentifier( charIDToTypeID ( "Lyr " ), id );
+  var desc =  executeActionGet( ref );
+  return desc.hasKey( charIDToTypeID("Adjs"));
+}
+function isSmartObjectID( id ){
+  var ref = new ActionReference(); 
+    ref.putIdentifier( charIDToTypeID ( "Lyr " ), id );
+  var desc =  executeActionGet( ref );
+  return desc.hasKey( stringIDToTypeID("smartObject"));
+}
+
+function getLayerTypeByIDX( idx ) {
+     var propName = stringIDToTypeID( 'layerSection' );
+     var ref = new ActionReference(); 
+      ref.putIndex( charIDToTypeID ( "Lyr " ), idx );
+     var desc =  executeActionGet( ref );
+     var type = desc.getEnumerationValue( propName );
+     var res = typeIDToStringID( type ); 
+     return res;
+}
+
+function getLayerTypeByID( idx ) {
+     var propName = stringIDToTypeID( 'layerSection' );
+     var ref = new ActionReference(); 
+      ref.putIdentifier( charIDToTypeID ( "Lyr " ), idx );
+     var desc =  executeActionGet( ref );
+     var type = desc.getEnumerationValue( propName );
+     var res = typeIDToStringID( type ); 
+     return res;
+}
+
+function hasBackground(){
+  return app.activeDocument.layers[app.activeDocument.layers.length - 1].isBackgroundLayer;
+}
+function getLayersNb()//function to find out if the number of layers in the document
+{
+    var ref = new ActionReference();
+    ref.putProperty( charIDToTypeID( 'Prpr' ), stringIDToTypeID('numberOfLayers') );
+    ref.putEnumerated( charIDToTypeID( "Dcmn" ), charIDToTypeID( "Ordn" ), charIDToTypeID( "Trgt" ) );
+    var desc = executeActionGet(ref);
+    var numberOfLayers = desc.getInteger(stringIDToTypeID('numberOfLayers'));
+    return numberOfLayers;
+}
+function isLayerSet( idx ) {
+     var propName = stringIDToTypeID( 'layerSection' );
+     var ref = new ActionReference(); 
+     ref.putProperty( charIDToTypeID( "Prpr" ) , propName);
+     ref.putIndex( charIDToTypeID ( "Lyr " ), idx );
+     var desc =  executeActionGet( ref );
+     var type = desc.getEnumerationValue( propName );
+     var res = typeIDToStringID( type ); 
+     return res == 'layerSectionStart' ? true:false;
+}
+function getLayerGroupByName(what, startFrom){
+  var checkExist1 = {idx:null, id:null, name:what};
+  var count = startFrom;
+  i = count;
+  fin = 1;
+  hasBackground()?fin=0:fin=1;
+    for(i; i>=fin; i--){
+        ref = new ActionReference();
+        ref.putIndex( charIDToTypeID( 'Lyr ' ), i );
+        var desc = executeActionGet(ref);
+        var layerName = desc.getString(charIDToTypeID( 'Nm  ' ));
+        var ls = desc.getEnumerationValue(stringIDToTypeID("layerSection"));
+        var id = desc.getInteger(stringIDToTypeID( 'layerID' ));
+        if(layerName == what && isLayerSet(i)){
+          checkExist1 = {idx:i, id:id, name:what}
+        }
+  }
+  return checkExist1;
+}
+
+function cTID(s){return charIDToTypeID(s)}
+function sTID(s){return stringIDToTypeID(s)}
+
+function isVisibleIDX(idx){
+  var m_Ref01 = new ActionReference();
+   m_Ref01.putIndex( charIDToTypeID( "Lyr " ), idx);
+   var m_Dsc01= executeActionGet( m_Ref01 );
+   return m_Dsc01.getBoolean(stringIDToTypeID('visible'));
+}
+function showByIDX(idx){
+  // =======================================================
+    var idShw = charIDToTypeID( "Shw " );
+        var desc808 = new ActionDescriptor();
+        var idnull = charIDToTypeID( "null" );
+            var list11 = new ActionList();
+                var ref647 = new ActionReference();
+                ref647.putIndex( charIDToTypeID( "Lyr " ), idx);
+            list11.putReference( ref647 );
+        desc808.putList( idnull, list11 );
+    executeAction( idShw, desc808, DialogModes.NO );
+}
+function hideByIDX( idx ){
+    var idHd = charIDToTypeID( "Hd  " );
+      var desc809 = new ActionDescriptor();
+      var idnull = charIDToTypeID( "null" );
+          var list12 = new ActionList();
+              var ref648 = new ActionReference();
+        ref648.putIndex( charIDToTypeID( "Lyr " ), idx);
+          list12.putReference( ref648 );
+      desc809.putList( idnull, list12 );
+  executeAction( idHd, desc809, DialogModes.NO );
+}
+function isVisibleID(id){
+  var m_Ref01 = new ActionReference();
+   m_Ref01.putIdentifier( charIDToTypeID( "Lyr " ), id);
+   var m_Dsc01= executeActionGet( m_Ref01 );
+   return m_Dsc01.getBoolean(stringIDToTypeID('visible'));
+}
+
+function getLayerName(idx){
+  var m_Ref01 = new ActionReference();
+      m_Ref01.putIndex( charIDToTypeID( "Lyr " ), idx);
+   var m_Dsc01= executeActionGet( m_Ref01 );
+   return m_Dsc01.getString(charIDToTypeID( 'Nm  ' ));
+}
+
+function getParents( idx ){
+  xx = false;
+  var count  = getLayersNb();
+
+   currINDEX = idx;
+    var parents = [];
+    var i = currINDEX+1;
+  //adding the selected obj if that is a layerGroup
+        ref0 = new ActionReference();
+        ref0.putIndex( charIDToTypeID( 'Lyr ' ), idx );
+        var desc0 = executeActionGet(ref0);
+        var layerName0 = desc0.getString(charIDToTypeID( 'Nm  ' ));
+        var Id0 = desc0.getInteger(stringIDToTypeID( 'layerID' ));
+        var ls0 = desc0.getEnumerationValue(stringIDToTypeID("layerSection"));
+        ls0 = typeIDToStringID(ls0);
+        var vis0 = desc0.getInteger(stringIDToTypeID( 'visible' ));
+        if(ls0 == "layerSectionStart"){
+          var objPar0 = {id:Id0, idx:idx, name:layerName0, vis:vis0};
+            parents.push(objPar0);
+        }
+
+    var nb = NaN;
+    var x = 0;
+    var y = 0;
+    var r = 0;
+    var pp = -1;
+    // alert(i + " count: "+count);
+   for(i; i <= count ; i++){
+        ref = new ActionReference();
+        ref.putIndex( charIDToTypeID( 'Lyr ' ), i );
+        var desc = executeActionGet(ref);
+        var layerName = desc.getString(charIDToTypeID( 'Nm  ' ));
+        var Id = desc.getInteger(stringIDToTypeID( 'layerID' ));
+        var ls = desc.getEnumerationValue(stringIDToTypeID("layerSection"));
+        ls = typeIDToStringID(ls);
+        var vis = desc.getInteger(stringIDToTypeID( 'visible' ));
+        if(ls == "layerSectionEnd"){x++};
+        if(ls == "layerSectionStart")
+          {
+            y++;
+          }
+        r = x - y;
+
+        // alert(ls +" r:: "+ r + " i:: "+ i + " name:: "+layerName);
+        if(r == pp && ls == "layerSectionStart")
+        {
+          var objPar = {id:Id, idx:i, name:layerName, vis:vis};
+          parents.push(objPar);
+          // alert(":::: "+layerName);
+          pp --;
+          // break;
+        }
+
+      }
+    return parents.reverse();
+}
+
+
+
+function isLayerSetID( id ) {
+     var propName = stringIDToTypeID( 'layerSection' );
+     var ref = new ActionReference(); 
+     ref.putProperty( charIDToTypeID( "Prpr" ) , propName);
+     ref.putIdentifier( charIDToTypeID ( "Lyr " ), id );
+     var desc =  executeActionGet( ref );
+     var type = desc.getEnumerationValue( propName );
+     var res = typeIDToStringID( type ); 
+     return res == 'layerSectionStart' ? true:false;
+}
+
+function getGroupies(startFrom){
+  var count = startFrom;
+  i = count+1;
+  fin = 1;
+  var grpies = [];
+  hasBackground()?fin=0:fin=1;
+    for(i; i<getLayersNb(); i++){
+        ref = new ActionReference();
+        ref.putIndex( charIDToTypeID( 'Lyr ' ), i );
+        var desc = executeActionGet(ref);
+        var layerName = desc.getString(charIDToTypeID( 'Nm  ' ));
+        var ls = desc.getEnumerationValue(stringIDToTypeID("layerSection"));
+        var id = desc.getInteger(stringIDToTypeID( 'layerID' ));
+        if(ls == "layerSectionEnd"){// means that it is a group and stop
+          break;
+        }else{
+          var gr = desc.getBoolean(charIDToTypeID("Grup"));
+          if(gr == true){
+            var so = {name:layerName, id:id, idx:i, groupieOfIDX:startFrom, groupieOfID:getIdfromIdx(startFrom)};
+            grpies.push(so);
+          }else{
+            break;
+          }
+        }
+  }
+    return grpies.reverse();
+}
+
+
+function getGroupiesByID( id ){
+  return getGroupies( getIdxfromId(id));
+}
+
+function isGroupieByID( id ){
+  ref = new ActionReference();
+  ref.putIdentifier( charIDToTypeID( 'Lyr ' ), id );
+  var desc = executeActionGet(ref);
+  var gr = desc.getBoolean(charIDToTypeID("Grup"));
+  return gr;
+}
+
+function ungroupByID( id ){
+  var idUngr = charIDToTypeID( "Ungr" );
+      var desc285 = new ActionDescriptor();
+      var idnull = charIDToTypeID( "null" );
+          var ref246 = new ActionReference();
+          var idLyr = charIDToTypeID( "Lyr " );
+          ref246.putIdentifier( idLyr, id );
+      desc285.putReference( idnull, ref246 );
+  executeAction( idUngr, desc285, DialogModes.NO );
+}
+
+function getOpacityIDX(idx){
+  var m_Ref01 = new ActionReference();
+      m_Ref01.putIndex( charIDToTypeID( "Lyr " ), idx);
+   var m_Dsc01= executeActionGet( m_Ref01 );
+   return m_Dsc01.getInteger(charIDToTypeID( "Opct" ));
+}
+function setOpacityIDX(idx, value){
+  var procVal = (100*parseFloat(value))/255;
+  // =======================================================
+  var idsetd = charIDToTypeID( "setd" );
+      var desc260 = new ActionDescriptor();
+      var idnull = charIDToTypeID( "null" );
+          var ref249 = new ActionReference();
+          ref249.putIndex( charIDToTypeID( "Lyr " ), idx);
+      desc260.putReference( idnull, ref249 );
+      var idT = charIDToTypeID( "T   " );
+          var desc261 = new ActionDescriptor();
+          var idOpct = charIDToTypeID( "Opct" );
+          var idPrc = charIDToTypeID( "#Prc" );
+          desc261.putUnitDouble( idOpct, idPrc, procVal );
+      var idLyr = charIDToTypeID( "Lyr " );
+      desc260.putObject( idT, idLyr, desc261 );
+  executeAction( idsetd, desc260, DialogModes.NO );
+
+}
+function getFillOpacityIDX(idx){
+  var m_Ref01 = new ActionReference();
+      m_Ref01.putIndex( charIDToTypeID( "Lyr " ), idx);
+   var m_Dsc01= executeActionGet( m_Ref01 );
+   return m_Dsc01.getInteger(stringIDToTypeID( "fillOpacity" ));
+}
+function setFillOpacityIDX(idx, value){
+  var procVal = (100*parseFloat(value))/255;
+  // =======================================================
+  var idsetd = charIDToTypeID( "setd" );
+      var desc260 = new ActionDescriptor();
+      var idnull = charIDToTypeID( "null" );
+          var ref249 = new ActionReference();
+          ref249.putIndex( charIDToTypeID( "Lyr " ), idx);
+      desc260.putReference( idnull, ref249 );
+      var idT = charIDToTypeID( "T   " );
+          var desc261 = new ActionDescriptor();
+          var idOpct = stringIDToTypeID( "fillOpacity" );
+          var idPrc = charIDToTypeID( "#Prc" );
+          desc261.putUnitDouble( idOpct, idPrc, procVal );
+      var idLyr = charIDToTypeID( "Lyr " );
+      desc260.putObject( idT, idLyr, desc261 );
+  executeAction( idsetd, desc260, DialogModes.NO );
+
+}
+function isChannelMaskSelectedID(id){
+    var ret = false;
+    if(hasLayerMaskID(id) == true){
+        if(getChannelMaskSelID(id) == true)
+        {
+            ret = true;
+        }
+    else{ret = false}
+    }
+    return ret;
+};
+
+function getChannelMaskSelID( id ){
+    var ref = new ActionReference();
+    ref.putProperty( charIDToTypeID( 'Prpr' ), stringIDToTypeID('numberOfChannels') );
+    ref.putEnumerated( charIDToTypeID( "Dcmn" ), charIDToTypeID( "Ordn" ), charIDToTypeID( "Trgt" ) );
+    var desc = executeActionGet(ref);
+    var numberOfChannels = desc.getInteger(stringIDToTypeID('numberOfChannels'));
+    var ref = new ActionReference();
+    ref.putProperty( charIDToTypeID( 'Prpr' ), stringIDToTypeID( 'targetChannels' ) );
+    ref.putEnumerated( app.charIDToTypeID( 'Lyr ' ), app.charIDToTypeID( 'Ordn' ), app.charIDToTypeID( 'Trgt' ) );
+    ref.putIdentifier(app.charIDToTypeID( 'Lyr ' ), id)
+    var desc = executeActionGet( ref );
+    var list = desc.getList( stringIDToTypeID( 'targetChannels' ) );
+    var firstIndex = list.getReference(0).getIndex();
+    return list.count == 1 && firstIndex == numberOfChannels+1;
+}
+function selectMaskByID( id ){
+  var idslct = charIDToTypeID( "slct" );
+      var desc4293 = new ActionDescriptor();
+      var idnull = charIDToTypeID( "null" );
+          var ref1795 = new ActionReference();
+          var idChnl = charIDToTypeID( "Chnl" );
+          var idChnl = charIDToTypeID( "Chnl" );
+          var idMsk = charIDToTypeID( "Msk " );
+          ref1795.putEnumerated( idChnl, idChnl, idMsk );
+          var idLyr = charIDToTypeID( "Lyr " );
+          ref1795.putIdentifier( idLyr, id );
+      desc4293.putReference( idnull, ref1795 );
+      var idMkVs = charIDToTypeID( "MkVs" );
+      desc4293.putBoolean( idMkVs, false );
+  executeAction( idslct, desc4293, DialogModes.NO );
+}
+
+function hasLayerMaskID(id) {
+   var m_Ref01 = new ActionReference();
+   m_Ref01.putIdentifier( sTID( "layer" ), id);
+   var m_Dsc01= executeActionGet( m_Ref01 );
+   return m_Dsc01.hasKey(cTID('Usrs'));
+}
+
+function isLayerMaskLinkedID(id) {
+   var m_Ref01 = new ActionReference();
+   m_Ref01.putIdentifier( sTID( "layer" ), id);
+   var m_Dsc01= executeActionGet( m_Ref01 );
+   return m_Dsc01.getBoolean(cTID('Usrs'));
+}
+
+function isLayerMaskDisabledID(id) {
+   var m_Ref01 = new ActionReference();
+   m_Ref01.putIdentifier( sTID( "layer" ), id);
+   var m_Dsc01= executeActionGet( m_Ref01 );
+   return m_Dsc01.getBoolean(cTID('UsrM'));
+}
+
+
+
+function setMaskLinkedID(id, foo){
+
+    var idsetd = charIDToTypeID( "setd" );
+      var desc31 = new ActionDescriptor();
+      var idnull = charIDToTypeID( "null" );
+          var ref16 = new ActionReference();
+          ref16.putIdentifier( charIDToTypeID( "Lyr " ), id);
+      desc31.putReference( idnull, ref16 );
+      var idT = charIDToTypeID( "T   " );
+          var desc32 = new ActionDescriptor();
+          var idUsrs = charIDToTypeID( "Usrs" );
+          desc32.putBoolean( idUsrs, true );
+      var idLyr = charIDToTypeID( "Lyr " );
+      desc31.putObject( idT, idLyr, desc32 );
+  executeAction( idsetd, desc31, DialogModes.NO );
+}
+
+function setMaskDisabledID(id, foo){
+
+    var idsetd = charIDToTypeID( "setd" );
+      var desc31 = new ActionDescriptor();
+      var idnull = charIDToTypeID( "null" );
+          var ref16 = new ActionReference();
+          ref16.putIdentifier( charIDToTypeID( "Lyr " ), id);
+      desc31.putReference( idnull, ref16 );
+      var idT = charIDToTypeID( "T   " );
+          var desc32 = new ActionDescriptor();
+          var idUsrs = charIDToTypeID( "UsrM" );
+          desc32.putBoolean( idUsrs, foo );
+      var idLyr = charIDToTypeID( "Lyr " );
+      desc31.putObject( idT, idLyr, desc32 );
+  executeAction( idsetd, desc31, DialogModes.NO );
+}
+
+
+
+function getBlendingModeID(id){
+  var m_Ref01 = new ActionReference();
+      m_Ref01.putIdentifier( charIDToTypeID( "Lyr " ), id);
+   var m_Dsc01= executeActionGet( m_Ref01 );
+   return typeIDToCharID(m_Dsc01.getEnumerationValue(charIDToTypeID("Md  ")));
+}
+
+function setBlendingModeID(id, value){
+    var idsetd = charIDToTypeID( "setd" );
+      var desc101 = new ActionDescriptor();
+      var idnull = charIDToTypeID( "null" );
+          var ref88 = new ActionReference();
+          var idLyr = charIDToTypeID( "Lyr " );
+          var idOrdn = charIDToTypeID( "Ordn" );
+          var idTrgt = charIDToTypeID( "Trgt" );
+          ref88.putIdentifier( idLyr, id );
+      desc101.putReference( idnull, ref88 );
+      var idT = charIDToTypeID( "T   " );
+          var desc102 = new ActionDescriptor();
+          var idMd = charIDToTypeID( "Md  " );
+          var idBlnM = charIDToTypeID( "BlnM" );
+          var idSftL = charIDToTypeID( value );
+          desc102.putEnumerated( idMd, idBlnM, idSftL );
+      var idLyr = charIDToTypeID( "Lyr " );
+      desc101.putObject( idT, idLyr, desc102 );
+  executeAction( idsetd, desc101, DialogModes.NO );
+}
+function getOpacityID(id){
+  var m_Ref01 = new ActionReference();
+      m_Ref01.putIdentifier( charIDToTypeID( "Lyr " ), id);
+   var m_Dsc01= executeActionGet( m_Ref01 );
+   return m_Dsc01.getInteger(charIDToTypeID( "Opct" ));
+}
+function setOpacityID(id, value){
+  var procVal = (100*parseFloat(value))/255;
+  // =======================================================
+  var idsetd = charIDToTypeID( "setd" );
+      var desc260 = new ActionDescriptor();
+      var idnull = charIDToTypeID( "null" );
+          var ref249 = new ActionReference();
+          ref249.putIdentifier( charIDToTypeID( "Lyr " ), id);
+      desc260.putReference( idnull, ref249 );
+      var idT = charIDToTypeID( "T   " );
+          var desc261 = new ActionDescriptor();
+          var idOpct = charIDToTypeID( "Opct" );
+          var idPrc = charIDToTypeID( "#Prc" );
+          desc261.putUnitDouble( idOpct, idPrc, procVal );
+      var idLyr = charIDToTypeID( "Lyr " );
+      desc260.putObject( idT, idLyr, desc261 );
+  executeAction( idsetd, desc260, DialogModes.NO );
+
+}
+function getFillOpacityID(id){
+  var m_Ref01 = new ActionReference();
+      m_Ref01.putIdentifier( charIDToTypeID( "Lyr " ), id);
+   var m_Dsc01= executeActionGet( m_Ref01 );
+   return m_Dsc01.getInteger(stringIDToTypeID( "fillOpacity" ));
+}
+function setFillOpacityID(id, value){
+  var procVal = (100*parseFloat(value))/255;
+  // =======================================================
+  var idsetd = charIDToTypeID( "setd" );
+      var desc260 = new ActionDescriptor();
+      var idnull = charIDToTypeID( "null" );
+          var ref249 = new ActionReference();
+          ref249.putIdentifier( charIDToTypeID( "Lyr " ), id);
+      desc260.putReference( idnull, ref249 );
+      var idT = charIDToTypeID( "T   " );
+          var desc261 = new ActionDescriptor();
+          var idOpct = stringIDToTypeID( "fillOpacity" );
+          var idPrc = charIDToTypeID( "#Prc" );
+          desc261.putUnitDouble( idOpct, idPrc, procVal );
+      var idLyr = charIDToTypeID( "Lyr " );
+      desc260.putObject( idT, idLyr, desc261 );
+  executeAction( idsetd, desc260, DialogModes.NO );
+
+}
+
+function deleteMaskByID( id ){
+  var idDlt = charIDToTypeID( "Dlt " );
+      var desc74 = new ActionDescriptor();
+      var idnull = charIDToTypeID( "null" );
+          var ref80 = new ActionReference();
+          var idChnl = charIDToTypeID( "Chnl" );
+          var idChnl = charIDToTypeID( "Chnl" );
+          var idMsk = charIDToTypeID( "Msk " );
+          ref80.putEnumerated( idChnl, idChnl, idMsk );
+          ref80.putIdentifier( charIDToTypeID( "Lyr " ), id );
+      desc74.putReference( idnull, ref80 );
+  try{
+    executeAction( idDlt, desc74, DialogModes.NO );
+  }catch(err){}
+}
+
+function applyMaskByID( id ){
+    var idDlt = charIDToTypeID( "Dlt " );
+    var desc23 = new ActionDescriptor();
+    var idnull = charIDToTypeID( "null" );
+        var ref10 = new ActionReference();
+        var idChnl = charIDToTypeID( "Chnl" );
+        var idChnl = charIDToTypeID( "Chnl" );
+        var idMsk = charIDToTypeID( "Msk " );
+        ref10.putEnumerated( idChnl, idChnl, idMsk );
+        ref10.putIdentifier( charIDToTypeID( "Lyr " ), id );
+    desc23.putBoolean( charIDToTypeID( "Aply" ), true );
+    desc23.putReference( idnull, ref10 );
+  executeAction( idDlt, desc23, DialogModes.NO );
+}
+
+function makeSelectionFromMaskByID( id, mode ){
+  if (mode == 'add'){
+        var desc = new ActionDescriptor();
+            var ref = new ActionReference();
+            ref.putEnumerated( charIDToTypeID( "Chnl" ), 
+                                  charIDToTypeID( "Chnl" ), 
+                                  charIDToTypeID( "Msk " ) );
+            ref.putIdentifier( charIDToTypeID( "Lyr " ), id );
+        desc.putReference( charIDToTypeID( "null" ), ref );
+            var ref2 = new ActionReference();
+            ref2.putProperty( charIDToTypeID( "Chnl" ), 
+                                charIDToTypeID( "fsel" ) );
+        desc.putReference( charIDToTypeID( "T   " ), ref2 );
+    executeAction( charIDToTypeID( 'Add ' ), desc, DialogModes.NO );
+  
+  }else if( mode == 'set'){
+
+      var desc = new ActionDescriptor();
+          var ref = new ActionReference();
+          ref.putProperty( charIDToTypeID( "Chnl" ), 
+                              charIDToTypeID( "fsel" ) );
+      desc.putReference( charIDToTypeID( "null" ), ref );
+          var ref2 = new ActionReference();
+          ref2.putEnumerated( charIDToTypeID( "Chnl" ), 
+                                charIDToTypeID( "Chnl" ), 
+                                charIDToTypeID( "Msk " ) );
+          ref2.putIdentifier( charIDToTypeID( "Lyr " ), id );
+      desc.putReference( charIDToTypeID( "T   " ), ref2 );
+    executeAction( charIDToTypeID( "setd" ), desc, DialogModes.NO );
+    
+  }
+}
+
+function makeMaskFromLayerOpacity( ){
+  
+  var idsetd = charIDToTypeID( "setd" );
+    var desc381 = new ActionDescriptor();
+    var idnull = charIDToTypeID( "null" );
+        var ref163 = new ActionReference();
+        var idChnl = charIDToTypeID( "Chnl" );
+        var idfsel = charIDToTypeID( "fsel" );
+        ref163.putProperty( idChnl, idfsel );
+    desc381.putReference( idnull, ref163 );
+    var idT = charIDToTypeID( "T   " );
+        var ref164 = new ActionReference();
+        var idChnl = charIDToTypeID( "Chnl" );
+        var idChnl = charIDToTypeID( "Chnl" );
+        var idTrsp = charIDToTypeID( "Trsp" );
+        ref164.putEnumerated( idChnl, idChnl, idTrsp );
+    desc381.putReference( idT, ref164 );
+  executeAction( idsetd, desc381, DialogModes.NO );
+
+    var idMk = charIDToTypeID( "Mk  " );
+      var desc382 = new ActionDescriptor();
+      var idNw = charIDToTypeID( "Nw  " );
+      var idChnl = charIDToTypeID( "Chnl" );
+      desc382.putClass( idNw, idChnl );
+      var idAt = charIDToTypeID( "At  " );
+          var ref165 = new ActionReference();
+          var idChnl = charIDToTypeID( "Chnl" );
+          var idChnl = charIDToTypeID( "Chnl" );
+          var idMsk = charIDToTypeID( "Msk " );
+          ref165.putEnumerated( idChnl, idChnl, idMsk );
+      desc382.putReference( idAt, ref165 );
+      var idUsng = charIDToTypeID( "Usng" );
+      var idUsrM = charIDToTypeID( "UsrM" );
+      var idRvlS = charIDToTypeID( "RvlS" );
+      desc382.putEnumerated( idUsng, idUsrM, idRvlS );
+  executeAction( idMk, desc382, DialogModes.NO );
+
+
+}
+
+function deleteVectorMaskByID( id ){
+  var idDlt = charIDToTypeID( "Dlt " );
+      var desc74 = new ActionDescriptor();
+      var idnull = charIDToTypeID( "null" );
+          var ref80 = new ActionReference();
+          var idPath = charIDToTypeID( "Path" );
+          var idPath = charIDToTypeID( "Path" );
+          var idvectorMask = stringIDToTypeID( "vectorMask" );
+          ref80.putEnumerated( idPath, idPath, idvectorMask );
+          ref80.putIdentifier( charIDToTypeID( "Lyr " ), id );
+      desc74.putReference( idnull, ref80 );
+  try{
+    executeAction( idDlt, desc74, DialogModes.NO );
+  }catch(err){}
+}
+
+function clearLayerStyleByID( id ){
+  var iddisableLayerStyle = stringIDToTypeID( "disableLayerStyle" );
+    var desc156 = new ActionDescriptor();
+    var idnull = charIDToTypeID( "null" );
+        var ref148 = new ActionReference();
+        ref148.putIdentifier( charIDToTypeID( "Lyr " ), id );
+    desc156.putReference( idnull, ref148 );
+  try{
+    executeAction( iddisableLayerStyle, desc156, DialogModes.NO );
+  }catch(err){}
+}
+
+function groupLayerIDX( idx){
+
+  var idGrpL = charIDToTypeID( "GrpL" );
+        var desc1417 = new ActionDescriptor();
+        var idnull = charIDToTypeID( "null" );
+            var ref908 = new ActionReference();
+            ref908.putIndex( charIDToTypeID( "Lyr " ), idx);
+        desc1417.putReference( idnull, ref908 );
+    executeAction( idGrpL, desc1417, DialogModes.NO );
+}
+function groupLayerID( id){
+    // groupLayerIDX(getIdxfromId(id));
+  // alert('sss:'+id+':ssss');
+  var idGrpL = charIDToTypeID( "GrpL" );
+        var desc1417 = new ActionDescriptor();
+        var idnull = charIDToTypeID( "null" );
+            var ref908 = new ActionReference();
+            ref908.putIdentifier( charIDToTypeID( "Lyr " ), parseInt(id));
+        desc1417.putReference( idnull, ref908 );
+    executeAction( idGrpL, desc1417, DialogModes.NO );
+}
+function getFirstFromParentByName(parent,name){
+  // alert('search in::'+parent.idx+ ' for: '+name);
+  var i = getLayersNb();
+  var x = 1;
+  if(parent.id != 'mainParent'){
+    i = getIdxfromId(parent.id);
+    x = 0;
+  }
+
+
+      var y = 0;
+      var r = 0;
+      var tr = {idx:null, id:null, name:'', vis:0};
+  for(i; i > 0 ; i--){
+    // alert(i);
+    ref = new ActionReference();
+    ref.putIndex( charIDToTypeID( 'Lyr ' ), i );
+    var desc = executeActionGet(ref);
+    var layerName = desc.getString(charIDToTypeID( 'Nm  ' ));
+    var Id = desc.getInteger(stringIDToTypeID( 'layerID' ));
+    var ls = desc.getEnumerationValue(stringIDToTypeID("layerSection"));
+    ls = typeIDToStringID(ls);
+    var vis = desc.getInteger(stringIDToTypeID( 'visible' ));
+    // alert(layerName);
+    if(ls == "layerSectionEnd"){y++};
+    if(ls == "layerSectionStart")
+    {
+      x++;
+    }
+            // alert(ls +" r:: "+ r + " i:: "+ i + " name:: "+layerName);
+            r = x - y;
+            if(r == 0 && ls == "layerSectionEnd"){//end of childrens
+            // alert("end");
+              break;
+            }
+            if(layerName == name){//found
+              // alert('found');
+              tr = {idx:i, id:Id, name:layerName, vis:vis};
+            break;
+            }
+  }
+  return tr;
+}
+
+function getTheBigestID(){
+  var i = getLayersNb();
+  theBigID = 0;
+  for(i; i > 0 ; i--){
+    ref = new ActionReference();
+    ref.putIndex( charIDToTypeID( 'Lyr ' ), i );
+    var desc = executeActionGet(ref);
+    var layerName = desc.getString(charIDToTypeID( 'Nm  ' ));
+    var Id = desc.getInteger(stringIDToTypeID( 'layerID' ));
+    alert(Id);
+    if(Id > theBigID){
+      theBigID = Id;
+    }
+  }
+  // alert('theBigest;;'+theBigID);
+  return theBigID;
+
+}

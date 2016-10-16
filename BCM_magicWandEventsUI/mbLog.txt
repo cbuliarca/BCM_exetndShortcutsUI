@@ -1,0 +1,23 @@
+
+addEvents: 
+events added 
+winCreated
+win.pnl0
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:994, h:167})
+on Activate:
+ firstResz: 1
+000000
+addButtons
+onMove
+showButtons
+on Activate:
+ firstResz: 1
+on Activate:
+ firstResz: 1
+onClose

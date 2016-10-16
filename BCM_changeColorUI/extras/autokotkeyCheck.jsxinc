@@ -1,0 +1,39 @@
+
+//--------autohotkey check and run
+
+try{// check the custom option
+	var desc1MB = app.getCustomOptions('6dbf01a0-a36b-11e4-bcd8-0800200c9a66');
+		isAHKInstalled = desc1MB.getString(0);
+		// alert(isAHKInstalled);
+		if(isAHKInstalled == 'YES'){
+			var gestFile = new File( File($.fileName).path + '/extras/my_Gestures_forPS/Gestures.ahk' );// in order for this to work you need to have installed the autohotkey application
+			gestFile.execute();
+		}
+
+}catch(e){// this will perform a chec to see if autohotkey is installed and create a custom option in ps
+var yesAHKFile = new File( File($.fileName).path + '/my_Gestures_forPS/~yesAHK.jsx' );
+var noAHKFile = new File( File($.fileName).path + '/my_Gestures_forPS/~noAHK.jsx' );
+var mbBATAHKCheck = 'REG QUERY HKLM\\SOFTWARE\\AUTOHOTKEY\\\
+if %ERRORLEVEL% EQU 0 goto VIRTUAL\
+if %ERRORLEVEL% EQU 1 goto PHYSICAL\
+\
+:PHYSICAL\
+CLS\
+\"'+app.path.fsName+'\\Photoshop.exe\" \"'+noAHKFile.fsName+'\"\
+ECHO NO\
+EXIT\
+\
+:VIRTUAL\
+CLS\
+\"'+app.path.fsName+'\\Photoshop.exe\" \"'+yesAHKFile.fsName+'\"\
+ECHO YES\
+EXIT\
+\
+';
+var testbatFile = new File( Folder.temp + '/~BCMcheckAHK.bat');
+testbatFile.open('w');
+testbatFile.write(mbBATAHKCheck);
+testbatFile.close();
+testbatFile.execute();
+}
+

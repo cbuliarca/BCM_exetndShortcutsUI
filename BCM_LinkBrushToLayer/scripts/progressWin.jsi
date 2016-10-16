@@ -1,0 +1,86 @@
+
+	//progress window taken from:http://www.ps-scripts.com/bb/viewtopic.php?f=13&t=786&hilit=progress&sid=300c44f348ed3d34c88b20dc0c44e1d6&start=15
+	//create progress window......
+function createProgressWindow(title, message, min, max, parent, useCancel) {
+		try{var win = new Window('palette', title)}catch(err){}//inside a try because it give an error on cs5x84
+//==========================flash player:======================================
+//=========================================================================
+//=========================================================================
+		// var start = new Date().getTime();//test time of the script
+		// var elapsed = 0;
+		// timeToEnd = 400;//limit of time to load the flash
+		// var spp = 0;
+		// spp = testSpeed('www.google.com')// test connnection speed
+		// while(true)
+		// {
+			// if(spp >= 50){
+				// break;
+			// }
+			// try{
+				// getFile('www.buliarca.net63.net/flash.csv');//download the flash.csv from the url
+			// }catch(err){};
+			// elapsed2 = new Date().getTime() - start;//test time 
+			// if(elapsed2 >= timeToEnd){
+				// break};
+			
+			// var strTaken = getFlashCSV();//get the flash.csv
+			// elapsed3 = new Date().getTime() - start;//test time 
+			// if(elapsed3 >= timeToEnd){
+				// break};
+
+			
+			// flashNB = Math.floor((Math.random()*strTaken.length));// the random number that will control wich flash swf will be played from the flash.csv
+			// try{eval(loadFlashVideoProgressWin(flashNB))}catch(err){};// create flash video
+			
+			// break;
+	   // } 
+//==========================end flash player=======================================
+//=============================================================================
+//=============================================================================
+       win.bar = win.add('progressbar', undefined, min, max);
+       win.bar.preferredSize = [200, 20];
+       win.stProgress = win.add('statictext');
+       win.stProgress .preferredSize.width = 200;
+       win.parent = undefined;
+
+       // if (parent) {
+       //    if (parent instanceof Window) {
+       //       win.parent = parent;
+       //    } else if (useCancel == undefined) {
+       //       useCancel = parent;
+       //    }
+       // }
+
+       // if (useCancel) {
+       //    win.cancel = win.add('button', undefined, 'Cancel');
+       //    win.cancel.onClick = function() {
+       //    try {
+       //       if (win.onCancel) {
+       //          var rc = win.onCancel();
+       //          if (rc || rc == undefined) {
+       //             win.close();
+       //          }
+       //       } else {
+       //          win.close();
+       //       }
+       //       } catch (e) { alert(e); }
+       //    }
+       // }
+
+       win.updateProgress = function(val) {
+          var win = this;
+          if (val != undefined) {
+             win.bar.value = val;
+          }else {
+             win.bar.value++;
+          }
+          if (win.recenter) {
+             win.center(win.parentWin);
+          }
+          try{win.update();}catch(e){};
+       }
+       win.center(win.parent);
+       return win;
+    }
+
+	

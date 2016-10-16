@@ -1,0 +1,201 @@
+var BCMtheButtonsUI = new Array();
+BCMtheButtonsUI[0]={image:"", shortcut:"B", label:"Bright/Contrsat", command:"var idMk = charIDToTypeID( \"Mk  \" );\
+    var desc5 = new ActionDescriptor();\
+    var idnull = charIDToTypeID( \"null\" );\
+        var ref1 = new ActionReference();\
+        var idAdjL = charIDToTypeID( \"AdjL\" );\
+        ref1.putClass( idAdjL );\
+    desc5.putReference( idnull, ref1 );\
+    var idUsng = charIDToTypeID( \"Usng\" );\
+        var desc6 = new ActionDescriptor();\
+        var idType = charIDToTypeID( \"Type\" );\
+            var desc7 = new ActionDescriptor();\
+            var iduseLegacy = stringIDToTypeID( \"useLegacy\" );\
+            desc7.putBoolean( iduseLegacy, false );\
+        var idBrgC = charIDToTypeID( \"BrgC\" );\
+        desc6.putObject( idType, idBrgC, desc7 );\
+    var idAdjL = charIDToTypeID( \"AdjL\" );\
+    desc5.putObject( idUsng, idAdjL, desc6 );\
+executeAction( idMk, desc5, DialogModes.NO );", toolTip:"", x:0, y:0};
+BCMtheButtonsUI[1]={image:"", shortcut:"L", label:"Levels", command:"var idMk = charIDToTypeID( \"Mk  \" );\
+    var desc13 = new ActionDescriptor();\
+    var idnull = charIDToTypeID( \"null\" );\
+        var ref6 = new ActionReference();\
+        var idAdjL = charIDToTypeID( \"AdjL\" );\
+        ref6.putClass( idAdjL );\
+    desc13.putReference( idnull, ref6 );\
+    var idUsng = charIDToTypeID( \"Usng\" );\
+        var desc14 = new ActionDescriptor();\
+        var idType = charIDToTypeID( \"Type\" );\
+            var desc15 = new ActionDescriptor();\
+            var idpresetKind = stringIDToTypeID( \"presetKind\" );\
+            var idpresetKindType = stringIDToTypeID( \"presetKindType\" );\
+            var idpresetKindDefault = stringIDToTypeID( \"presetKindDefault\" );\
+            desc15.putEnumerated( idpresetKind, idpresetKindType, idpresetKindDefault );\
+        var idLvls = charIDToTypeID( \"Lvls\" );\
+        desc14.putObject( idType, idLvls, desc15 );\
+    var idAdjL = charIDToTypeID( \"AdjL\" );\
+    desc13.putObject( idUsng, idAdjL, desc14 );\
+executeAction( idMk, desc13, DialogModes.NO );", toolTip:"", x:110, y:0};
+BCMtheButtonsUI[2]={image:"", shortcut:"C", label:"Curves", command:"// =======================================================\
+var idMk = charIDToTypeID( \"Mk  \" );\
+    var desc16 = new ActionDescriptor();\
+    var idnull = charIDToTypeID( \"null\" );\
+        var ref7 = new ActionReference();\
+        var idAdjL = charIDToTypeID( \"AdjL\" );\
+        ref7.putClass( idAdjL );\
+    desc16.putReference( idnull, ref7 );\
+    var idUsng = charIDToTypeID( \"Usng\" );\
+        var desc17 = new ActionDescriptor();\
+        var idType = charIDToTypeID( \"Type\" );\
+            var desc18 = new ActionDescriptor();\
+            var idpresetKind = stringIDToTypeID( \"presetKind\" );\
+            var idpresetKindType = stringIDToTypeID( \"presetKindType\" );\
+            var idpresetKindDefault = stringIDToTypeID( \"presetKindDefault\" );\
+            desc18.putEnumerated( idpresetKind, idpresetKindType, idpresetKindDefault );\
+        var idCrvs = charIDToTypeID( \"Crvs\" );\
+        desc17.putObject( idType, idCrvs, desc18 );\
+    var idAdjL = charIDToTypeID( \"AdjL\" );\
+    desc16.putObject( idUsng, idAdjL, desc17 );\
+executeAction( idMk, desc16, DialogModes.NO );", toolTip:"", x:220, y:0};
+BCMtheButtonsUI[3]={image:"", shortcut:"G", label:"InvertGreen", command:"// =======================================================\
+var idMk = charIDToTypeID( \"Mk  \" );\
+    var desc16 = new ActionDescriptor();\
+    var idnull = charIDToTypeID( \"null\" );\
+        var ref7 = new ActionReference();\
+        var idAdjL = charIDToTypeID( \"AdjL\" );\
+        ref7.putClass( idAdjL );\
+    desc16.putReference( idnull, ref7 );\
+    var idUsng = charIDToTypeID( \"Usng\" );\
+        var desc17 = new ActionDescriptor();\
+        var idType = charIDToTypeID( \"Type\" );\
+            var desc18 = new ActionDescriptor();\
+            var idpresetKind = stringIDToTypeID( \"presetKind\" );\
+            var idpresetKindType = stringIDToTypeID( \"presetKindType\" );\
+            var idpresetKindDefault = stringIDToTypeID( \"presetKindDefault\" );\
+            desc18.putEnumerated( idpresetKind, idpresetKindType, idpresetKindDefault );\
+        var idCrvs = charIDToTypeID( \"Crvs\" );\
+        desc17.putObject( idType, idCrvs, desc18 );\
+    var idAdjL = charIDToTypeID( \"AdjL\" );\
+    desc16.putObject( idUsng, idAdjL, desc17 );\
+executeAction( idMk, desc16, DialogModes.NO );\
+\
+//=======\
+\
+var desc1 = new ActionDescriptor();\
+    var ref1 = new ActionReference();\
+        ref1.putEnumerated(charIDToTypeID('AdjL'), charIDToTypeID('Ordn'), charIDToTypeID('Trgt'));\
+desc1.putReference(charIDToTypeID('null'), ref1);\
+    var desc2 = new ActionDescriptor();\
+        desc2.putEnumerated(stringIDToTypeID(\"presetKind\"), stringIDToTypeID(\"presetKindType\"), stringIDToTypeID(\"presetKindCustom\"));\
+var list1 = new ActionList();\
+var desc3 = new ActionDescriptor();\
+    var ref2 = new ActionReference();\
+        ref2.putEnumerated(charIDToTypeID('Chnl'), charIDToTypeID('Chnl'), charIDToTypeID('Grn '));\
+    desc3.putReference(charIDToTypeID('Chnl'), ref2);\
+var list2 = new ActionList();\
+    var desc4 = new ActionDescriptor();\
+        desc4.putDouble(charIDToTypeID('Hrzn'), 0);\
+        desc4.putDouble(charIDToTypeID('Vrtc'), 255);\
+        list2.putObject(charIDToTypeID('Pnt '), desc4);\
+    var desc5 = new ActionDescriptor();\
+        desc5.putDouble(charIDToTypeID('Hrzn'), 255);\
+        desc5.putDouble(charIDToTypeID('Vrtc'), 0);\
+    list2.putObject(charIDToTypeID('Pnt '), desc5);\
+    desc3.putList(charIDToTypeID('Crv '), list2);\
+    list1.putObject(charIDToTypeID('CrvA'), desc3);\
+    desc2.putList(charIDToTypeID('Adjs'), list1);\
+    desc1.putObject(charIDToTypeID('T   '), charIDToTypeID('Crvs'), desc2);\
+    executeAction(charIDToTypeID('setd'), desc1, DialogModes.NO);\
+\
+app.activeDocument.activeLayer.name = \"InvertGreen\";", toolTip:"", x:330, y:0};
+BCMtheButtonsUI[4]={image:"", shortcut:"BACKSLASH", label:"Blue50%", command:"// =======================================================\
+var idMk = charIDToTypeID( \"Mk  \" );\
+    var desc16 = new ActionDescriptor();\
+    var idnull = charIDToTypeID( \"null\" );\
+        var ref7 = new ActionReference();\
+        var idAdjL = charIDToTypeID( \"AdjL\" );\
+        ref7.putClass( idAdjL );\
+    desc16.putReference( idnull, ref7 );\
+    var idUsng = charIDToTypeID( \"Usng\" );\
+        var desc17 = new ActionDescriptor();\
+        var idType = charIDToTypeID( \"Type\" );\
+            var desc18 = new ActionDescriptor();\
+            var idpresetKind = stringIDToTypeID( \"presetKind\" );\
+            var idpresetKindType = stringIDToTypeID( \"presetKindType\" );\
+            var idpresetKindDefault = stringIDToTypeID( \"presetKindDefault\" );\
+            desc18.putEnumerated( idpresetKind, idpresetKindType, idpresetKindDefault );\
+        var idCrvs = charIDToTypeID( \"Crvs\" );\
+        desc17.putObject( idType, idCrvs, desc18 );\
+    var idAdjL = charIDToTypeID( \"AdjL\" );\
+    desc16.putObject( idUsng, idAdjL, desc17 );\
+executeAction( idMk, desc16, DialogModes.NO );\
+\
+//=======\
+\
+var desc1 = new ActionDescriptor();\
+    var ref1 = new ActionReference();\
+        ref1.putEnumerated(charIDToTypeID('AdjL'), charIDToTypeID('Ordn'), charIDToTypeID('Trgt'));\
+desc1.putReference(charIDToTypeID('null'), ref1);\
+    var desc2 = new ActionDescriptor();\
+        desc2.putEnumerated(stringIDToTypeID(\"presetKind\"), stringIDToTypeID(\"presetKindType\"), stringIDToTypeID(\"presetKindCustom\"));\
+var list1 = new ActionList();\
+var desc3 = new ActionDescriptor();\
+    var ref2 = new ActionReference();\
+        ref2.putEnumerated(charIDToTypeID('Chnl'), charIDToTypeID('Chnl'), charIDToTypeID('Bl  '));\
+    desc3.putReference(charIDToTypeID('Chnl'), ref2);\
+var list2 = new ActionList();\
+    var desc4 = new ActionDescriptor();\
+        desc4.putDouble(charIDToTypeID('Hrzn'), 0);\
+        desc4.putDouble(charIDToTypeID('Vrtc'), 0);\
+        list2.putObject(charIDToTypeID('Pnt '), desc4);\
+    var desc5 = new ActionDescriptor();\
+        desc5.putDouble(charIDToTypeID('Hrzn'), 255);\
+        desc5.putDouble(charIDToTypeID('Vrtc'), 128);\
+    list2.putObject(charIDToTypeID('Pnt '), desc5);\
+    desc3.putList(charIDToTypeID('Crv '), list2);\
+    list1.putObject(charIDToTypeID('CrvA'), desc3);\
+    desc2.putList(charIDToTypeID('Adjs'), list1);\
+    desc1.putObject(charIDToTypeID('T   '), charIDToTypeID('Crvs'), desc2);\
+    executeAction(charIDToTypeID('setd'), desc1, DialogModes.NO);\
+\
+app.activeDocument.activeLayer.name = \"Blue_50%\";", toolTip:"", x:440, y:0};
+BCMtheButtonsUI[5]={image:"", shortcut:"H", label:"Hue/Saturation", command:"var idMk = charIDToTypeID( \"Mk  \" );\
+    var desc19 = new ActionDescriptor();\
+    var idnull = charIDToTypeID( \"null\" );\
+        var ref8 = new ActionReference();\
+        var idAdjL = charIDToTypeID( \"AdjL\" );\
+        ref8.putClass( idAdjL );\
+    desc19.putReference( idnull, ref8 );\
+    var idUsng = charIDToTypeID( \"Usng\" );\
+        var desc20 = new ActionDescriptor();\
+        var idType = charIDToTypeID( \"Type\" );\
+            var desc21 = new ActionDescriptor();\
+            var idpresetKind = stringIDToTypeID( \"presetKind\" );\
+            var idpresetKindType = stringIDToTypeID( \"presetKindType\" );\
+            var idpresetKindDefault = stringIDToTypeID( \"presetKindDefault\" );\
+            desc21.putEnumerated( idpresetKind, idpresetKindType, idpresetKindDefault );\
+            var idClrz = charIDToTypeID( \"Clrz\" );\
+            desc21.putBoolean( idClrz, false );\
+        var idHStr = charIDToTypeID( \"HStr\" );\
+        desc20.putObject( idType, idHStr, desc21 );\
+    var idAdjL = charIDToTypeID( \"AdjL\" );\
+    desc19.putObject( idUsng, idAdjL, desc20 );\
+executeAction( idMk, desc19, DialogModes.NO );", toolTip:"", x:550, y:0};
+BCMtheButtonsUI[6]={image:"", shortcut:"I", label:"Invert", command:"var idMk = charIDToTypeID( \"Mk  \" );\
+    var desc22 = new ActionDescriptor();\
+    var idnull = charIDToTypeID( \"null\" );\
+        var ref9 = new ActionReference();\
+        var idAdjL = charIDToTypeID( \"AdjL\" );\
+        ref9.putClass( idAdjL );\
+    desc22.putReference( idnull, ref9 );\
+    var idUsng = charIDToTypeID( \"Usng\" );\
+        var desc23 = new ActionDescriptor();\
+        var idType = charIDToTypeID( \"Type\" );\
+        var idInvr = charIDToTypeID( \"Invr\" );\
+        desc23.putClass( idType, idInvr );\
+    var idAdjL = charIDToTypeID( \"AdjL\" );\
+    desc22.putObject( idUsng, idAdjL, desc23 );\
+executeAction( idMk, desc22, DialogModes.NO );\
+", toolTip:"", x:660, y:0};
+BCMtheButtonsUI[7]={image:"", shortcut:"Q", label:"SolidColor", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_toolsUI/extras/scripts/~bcm_solidColor.jsx;;\");", toolTip:"", x:770, y:0};

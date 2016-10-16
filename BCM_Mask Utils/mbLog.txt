@@ -1,0 +1,54 @@
+
+addEvents: 
+events added 
+winCreated
+win.pnl0
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:191})
+on Activate:
+ firstResz: 1
+000000
+addButtons
+onMove
+showButtons
+ optionsWin: 508 , 537.5 , 4 , 0 , 0
+on Activate:
+ firstResz: 1
+on Activate:
+ firstResz: 1
+ optionsWin: 618 , 537.5 , 0 , 110 , 0
+on Activate:
+ firstResz: 1
+on Activate:
+ firstResz: 1
+ optionsWin: 728 , 537.5 , 5 , 220 , 0
+on Activate:
+ firstResz: 1
+on Activate:
+ firstResz: 1
+ optionsWin: 838 , 537.5 , 3 , 330 , 0
+on Activate:
+ firstResz: 1
+on Activate:
+ firstResz: 1
+ optionsWin: 948 , 537.5 , 6 , 440 , 0
+on Activate:
+ firstResz: 1
+on Activate:
+ firstResz: 1
+ optionsWin: 1168 , 537.5 , 1 , 660 , 0
+on Activate:
+ firstResz: 1
+on Activate:
+ firstResz: 1
+ optionsWin: 1278 , 537.5 , 2 , 770 , 0
+on Activate:
+ firstResz: 1
+on Activate:
+ firstResz: 1
+onClose

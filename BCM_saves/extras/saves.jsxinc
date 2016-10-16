@@ -1,0 +1,133 @@
+// saveQ('minor');
+// saveQ('major');
+// saveQ('save');
+// saveQ('saveAs');
+function saveQ ( state ){
+	var doc  = app.activeDocument;
+	var Dname = doc.name;
+	var Dname = Dname.substring( 0, Dname.lastIndexOf('.'));
+	var mbVers = Dname.split("_v");
+	var PSDSaveOptions =  new PhotoshopSaveOptions;
+		PSDSaveOptions.alphaChannels = true;
+		PSDSaveOptions.annotations = true;
+		PSDSaveOptions.embedColorProfile = true;
+		PSDSaveOptions.layers = true;
+		PSDSaveOptions.spotColors = true;
+	mbVers = mbVers.length > 1?checkArray(mbVers):mbVers;
+	if(state == 'minor'){
+		if(mbVers.length  > 2){
+			var nIdx = (parseInt( mbVers[mbVers.length-1])+1)<10?'0'+(parseInt( mbVers[mbVers.length-1])+1):(parseInt( mbVers[mbVers.length-1])+1);
+			var newDocName = mbVers[0];
+			for( var t = 1; t<mbVers.length-2; t++  ){
+				newDocName += ("_v"+ mbVers[t]);
+			}
+			newDocName += ("_v"+mbVers[mbVers.length-2]+"_v"+nIdx+".psd");
+		}
+		if(mbVers.length  == 2){
+			var newDocName = mbVers[0] + "_v"+mbVers[1]+"_v01.psd";
+		}
+		if(mbVers.length == 1){
+			mbVers[0] = mbVers[0][mbVers[0].length-1] == "_"?mbVers[0].substring(0,mbVers[0].length-1):mbVers[0];
+			var newDocName = mbVers[0] + "_v01_v01.psd";
+		}
+		var docNPath = new File(doc.path + "/"+ newDocName);
+		doc.saveAs( docNPath, PSDSaveOptions, false, Extension.LOWERCASE);
+	}
+	if(state == 'major'){
+		if(mbVers.length  > 2){
+			var nIdx = (parseInt( mbVers[mbVers.length-2])+1)<10?'0'+(parseInt( mbVers[mbVers.length-2])+1):(parseInt( mbVers[mbVers.length-2])+1);
+			var newDocName = mbVers[0];
+			for( var t = 1; t<mbVers.length-2; t++){
+				newDocName += ("_v"+ mbVers[t]);
+			}
+			newDocName += ("_v"+nIdx+"_v01.psd");
+		}
+		if(mbVers.length  == 2){
+			var nIdx = (parseInt( mbVers[mbVers.length-1])+1)<10?'0'+(parseInt( mbVers[mbVers.length-1])+1):(parseInt( mbVers[mbVers.length-1])+1);
+			var newDocName = mbVers[0] + "_v"+nIdx+"_v01.psd";
+		}
+		if(mbVers.length == 1){
+			mbVers[0] = mbVers[0][mbVers[0].length-1] == "_"?mbVers[0].substring(0,mbVers[0].length-1):mbVers[0];
+			var newDocName = mbVers[0] + "_v01_v01.psd";
+		}
+		// alert(newDocName);
+		var docNPath = new File( doc.path + "/"+ newDocName);
+		doc.saveAs( docNPath, PSDSaveOptions, false, Extension.LOWERCASE);
+	}
+	if(state == 'save'){
+		doc.save();
+	}
+	if( state == 'saveAs'){
+		var sas = File.saveDialog();
+		if( sas ){
+			doc.saveAs( sas, PSDSaveOptions, false, Extension.LOWERCASE);
+		}
+	}
+}
+function checkArray( arr ){
+	retArray = [arr[0]];
+	var previousArr = [];
+	var ff = 1;
+	for(var w = 1; w < arr.length; w++){
+		var isNb = true;
+		for( var as = 0; as<arr[w].length; as++ ){
+			if( isNaN(parseInt(arr[w][as])) == true){
+				isNb =  false;
+				break;
+			}
+		}
+		if(isNb != true){
+			if(previousArr.length > 0){// for scenarios like this: prj_v01_v02_view;
+				var qr = 0;
+				while(previousArr.length != 0){
+					retArray[0] += ("_v"+retArray[previousArr[0] - qr]);
+					retArray.splice((previousArr[0]-qr), 1);
+					previousArr.splice(0, 1);
+					ff--;
+					qr++;
+				}
+			}
+			retArray[0] += ("_v"+arr[w]);
+			ff--;
+		}else{
+			retArray[ff] = arr[w];
+			previousArr.push(ff);
+		}
+		ff++;
+	}
+	return retArray;
+}
+function splitNumbers(Dname){
+	var number = [];
+	var splitPoints = [];
+	
+	for(var a = 0; a < Dname.length; a++){
+		nmb = Dname[a];
+		if(isNaN(parseInt(nmb)) == false){
+			number.push(a);
+		}
+	}
+	var lastNb = number[0];
+	var splitPoints = [{pos0:lastNb, pos1:lastNb}];
+	var cr = 0;
+	var qq = 1;
+	for( var q = 1; q < number.length; q++){
+		// alert((lastNb + qq)+" == "+number[q]);
+		if( (lastNb + qq) == number[q] ){
+			splitPoints[cr] = {pos0:lastNb, pos1:lastNb + qq};
+		}else{
+			lastNb = number[q];
+			qq = 0;
+			cr++;
+		}
+		qq ++;
+	}
+	var splitedName = [];
+	splitedName.push(Dname.substring(0,splitPoints[0].pos0));
+	for( var d = 0; d<splitPoints.length-1; d++){
+		splitedName.push(Dname.substring(splitPoints[d].pos0, splitPoints[d].pos1 +1));
+		splitedName.push(Dname.substring(splitPoints[d].pos1+1, splitPoints[d+1].pos0));
+	}
+	splitedName.push(Dname.substring(splitPoints[splitPoints.length-1].pos0, splitPoints[splitPoints.length-1].pos1+1));
+	return splitedName;
+}

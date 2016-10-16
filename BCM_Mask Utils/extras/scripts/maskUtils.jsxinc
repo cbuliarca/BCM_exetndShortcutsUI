@@ -1,0 +1,226 @@
+#include "../../../_main/extras/_libs/layerIdAM.jsxinc"
+
+
+// app.activeDocument.suspendHistory("bcm_makeMask", "makeMask()");
+// app.activeDocument.suspendHistory("bcm_makeMask", "toogleLinkMask()");
+// app.activeDocument.suspendHistory("bcm_makeMask", "toogleConformLinkMasks()");
+// app.activeDocument.suspendHistory("bcm_makeMask", "toogleDisabledMask()");
+// app.activeDocument.suspendHistory("bcm_makeMask", "toogleConformDisabledMasks()");
+// app.activeDocument.suspendHistory("bcm_makeMask", "deleteAllMask()");
+
+function makeMask(){
+	var sel = getSelectedLayersIds();
+	var isSel = isSelection();
+	for(var i = 0; i<sel.length; i++){
+		if(hasLayerMaskID(sel[i]) == false){//if the layer doesn't already has a mask
+			if(isSel == true){// if there is a selection in the document
+				if(i == 0){//select first layer and make a mask from selection
+					multiSelectByIDs(sel[i]);
+					makeMaskFromSelection();
+					
+				}else{//duplicate mask made for the first layer
+					duplicateMaskFromIDToID( sel[0], sel[i]);
+				}
+			}else{// if there is not selection in the document
+				if(i == 0){//select first layer and make empty mask
+					multiSelectByIDs(sel[i]);
+					makeEmptyMask();
+				}else{//duplicate mask made for the first layer
+					duplicateMaskFromIDToID( sel[0], sel[i]);
+				}
+			}
+		}
+	}
+	multiSelectByIDs(sel);
+}
+
+function toogleLinkMask(){
+	var sel = getSelectedLayersIds();
+	for(var i = 0; i<sel.length; i++){
+		if(hasLayerMaskID(sel[i]) == true){
+			if(isLayerMaskLinkedID(sel[i])){
+				setMaskLinkedID(sel[i], false);
+			}else{
+				setMaskLinkedID(sel[i], true);
+			}
+		}
+	}
+}
+
+function toogleConformLinkMasks(){
+	var sel = getSelectedLayersIds();
+	value = false;
+	if(hasLayerMaskID(sel[0]) == true){
+		value = isLayerMaskLinkedID(sel[0])?false:true;
+	}
+	for(var i = 0; i<sel.length; i++){
+		if(hasLayerMaskID(sel[i]) == true){
+			setMaskLinkedID(sel[i], value);
+		}
+	}
+}
+
+
+function toogleDisabledMask(){
+	var sel = getSelectedLayersIds();
+	for(var i = 0; i<sel.length; i++){
+		if(hasLayerMaskID(sel[i]) == true){
+			if(isLayerMaskDisabledID(sel[i])){
+				setMaskDisabledID(sel[i], false);
+			}else{
+				setMaskDisabledID(sel[i], true);
+			}
+		}
+	}
+}
+
+function toogleConformDisabledMasks(){
+	var sel = getSelectedLayersIds();
+	value = false;
+	if(hasLayerMaskID(sel[0]) == true){
+		value = isLayerMaskDisabledID(sel[0])?false:true;
+	}
+	for(var i = 0; i<sel.length; i++){
+		if(hasLayerMaskID(sel[i]) == true){
+			setMaskDisabledID(sel[i], value);
+		}
+	}
+}
+
+function deleteAllMask(){
+	var sel = getSelectedLayersIds();
+	for(var i = 0; i<sel.length; i++){
+		deleteMaskByID(sel[i]);
+	}
+}
+
+function applyAllMask(){
+	var sL = getSelectedLayersIds();
+	for (var i=0; i<sL.length; i++){
+		multiSelectByIDs(sL[i]);
+		try{
+			applyMaskByID(sL[i]);
+			
+		}catch(ere){}
+	}
+	multiSelectByIDs(sL);
+}
+
+function makeSelectionFromAllMask(){
+	var sL = getSelectedLayersIds();
+	var q = 0;
+	for (var i=0; i<sL.length; i++){
+		if(hasLayerMaskID(sL[i]) == true){
+			multiSelectByIDs(sL[i]);
+			if(q == 0){
+				makeSelectionFromMaskByID(sL[i], 'set');
+				q ++;
+			}else{
+				makeSelectionFromMaskByID(sL[i], 'add');
+			}
+		}
+	}
+	multiSelectByIDs(sL);
+}
+
+function makeMasksFromLayersOpacity(){
+	var sL = getSelectedLayersIds();
+	// makeMaskFromLayerOpacity();
+	for (var i=0; i<sL.length; i++){
+		var norm = true;
+		if(isAdjustLayerID(sL[i]) == true){
+			norm = false;
+		}else if(isLayerSetID(sL[i]) == true){
+			norm = false;
+		}
+		if(norm == true){
+			if(hasLayerMaskID(sL[i]) == false){
+				multiSelectByIDs(sL[i]);
+				makeMaskFromLayerOpacity();
+			}else{
+				multiSelectByIDs(sL[i]);
+				deleteMaskByID(sL[i]);
+				makeMaskFromLayerOpacity();
+			}
+		}
+	}
+	multiSelectByIDs(sL);
+}
+
+function isSelection(){
+	var ref = new ActionReference();
+	ref.putProperty(charIDToTypeID('Prpr'), stringIDToTypeID('selection'));
+	ref.putEnumerated( charIDToTypeID("Dcmn") , charIDToTypeID( "Ordn" ), charIDToTypeID( "Trgt" ) );
+	desc1 = executeActionGet(ref);
+	return desc1.hasKey(stringIDToTypeID('selection'))?true:false;
+}
+function makeMaskFromSelection(){
+	var idMk = charIDToTypeID( "Mk  " );
+	    var desc181 = new ActionDescriptor();
+	    var idNw = charIDToTypeID( "Nw  " );
+	    var idChnl = charIDToTypeID( "Chnl" );
+	    desc181.putClass( idNw, idChnl );
+	    var idAt = charIDToTypeID( "At  " );
+	        var ref26 = new ActionReference();
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idMsk = charIDToTypeID( "Msk " );
+	        ref26.putEnumerated( idChnl, idChnl, idMsk );
+	        // ref26.putIdentifier( charIDToTypeID("Lyr "), id);
+	    desc181.putReference( idAt, ref26 );
+	    var idUsng = charIDToTypeID( "Usng" );
+	    var idUsrM = charIDToTypeID( "UsrM" );
+	    var idRvlS = charIDToTypeID( "RvlS" );
+	    desc181.putEnumerated( idUsng, idUsrM, idRvlS );
+	executeAction( idMk, desc181, DialogModes.NO );
+}
+
+function makeEmptyMask(){
+	var idMk = charIDToTypeID( "Mk  " );
+    var desc183 = new ActionDescriptor();
+    var idNw = charIDToTypeID( "Nw  " );
+    var idChnl = charIDToTypeID( "Chnl" );
+    desc183.putClass( idNw, idChnl );
+    var idAt = charIDToTypeID( "At  " );
+        var ref28 = new ActionReference();
+        var idChnl = charIDToTypeID( "Chnl" );
+        var idChnl = charIDToTypeID( "Chnl" );
+        var idMsk = charIDToTypeID( "Msk " );
+        ref28.putEnumerated( idChnl, idChnl, idMsk );
+        // ref28.putIdentifier( charIDToTypeID("Lyr "), id);
+    desc183.putReference( idAt, ref28 );
+    var idUsng = charIDToTypeID( "Usng" );
+    var idUsrM = charIDToTypeID( "UsrM" );
+    var idRvlA = charIDToTypeID( "RvlA" );
+    desc183.putEnumerated( idUsng, idUsrM, idRvlA );
+	executeAction( idMk, desc183, DialogModes.NO );
+}
+
+function duplicateMaskFromIDToID(from, to){
+	var idMk = charIDToTypeID( "Mk  " );
+	    var desc292 = new ActionDescriptor();
+	    var idNw = charIDToTypeID( "Nw  " );
+	    var idChnl = charIDToTypeID( "Chnl" );
+	    desc292.putClass( idNw, idChnl );
+	    var idAt = charIDToTypeID( "At  " );
+	        var ref61 = new ActionReference();
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idMsk = charIDToTypeID( "Msk " );
+	        ref61.putEnumerated( idChnl, idChnl, idMsk );
+	        ref61.putIdentifier( charIDToTypeID("Lyr "), to);
+	    desc292.putReference( idAt, ref61 );
+	    var idUsng = charIDToTypeID( "Usng" );
+	        var ref62 = new ActionReference();
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idMsk = charIDToTypeID( "Msk " );
+	        ref62.putEnumerated( idChnl, idChnl, idMsk );
+			ref62.putIdentifier( charIDToTypeID("Lyr "), from);
+	    desc292.putReference( idUsng, ref62 );
+	    var idDplc = charIDToTypeID( "Dplc" );
+	    desc292.putBoolean( idDplc, true );
+	executeAction( idMk, desc292, DialogModes.NO );
+
+}
+

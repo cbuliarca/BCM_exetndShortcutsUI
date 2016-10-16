@@ -1,0 +1,61 @@
+function bcm_infoWin( message, offset ) {
+      // offset = 0;
+      try{var winInfo = new Window('palette', 'INFO:::')}catch(err){}//inside a try because it give an error on cs5x84
+
+      g = winInfo.graphics;
+      var myBrush = g.newBrush(g.BrushType.SOLID_COLOR, [0.1, 0.1, 0.1, 1]);
+      g.backgroundColor = myBrush;
+      g.disabledBackgroundColor = myBrush;
+      
+      var myPen = g.newPen(g.PenType.SOLID_COLOR, [1, 0.6, 0.3, 1], 20); // this is the font color
+      var shortcutFont = ScriptUI.newFont("Tahoma","BOLD",16);
+      g.foregroundColor = myPen;
+      g.disabledForegroundColor = myPen;
+      g.font = shortcutFont;
+
+      winInfo.opacity =.97;
+      winInfo.msg = winInfo.add('statictext',undefined, ('            '+message+'            '), {multiline:true, scrolling:false, truncate:true});
+      // winInfo.msg.preferredSize = [800,100];
+      winInfo.msg.justify = 'center';
+      winInfo.msg.graphics.font = shortcutFont;
+      var oldBnds = [];
+      if(parseInt(app.version) >= 16){
+            // winInfo.cancel = winInfo.add('button', undefined, 'Close');
+            // winInfo.cancel.preferredSize = [200,10];
+            // winInfo.cancelElement = winInfo.cancel;
+
+            // winInfo.cancel.onClick = function() {
+
+            //       winInfo.hide();
+            // }
+      }
+      winInfo.setMessage = function( strMessage ){
+                  winInfo.msg.text = (strMessage);
+            }
+      winInfo.onResize = function(){
+            oldBnds = winInfo.bounds;
+            winInfo.bounds = [oldBnds[0]+ offset.y, oldBnds[1]+ offset.x, oldBnds[2]+ offset.y, oldBnds[3]+offset.x];
+
+      }
+      winInfo.reposition = function(){
+
+            winInfo.bounds = oldBnds;
+      }
+
+
+      return winInfo;
+    }
+
+function bcm_infoWin0(message, ofst, sec){
+      wM = bcm_infoWin(message, ofst);
+      wM.show();
+      var ss = 0;
+      while (true){
+            if ( ss == sec){
+                  break;
+            }
+            $.sleep(100)
+            ss ++;
+      }
+
+}

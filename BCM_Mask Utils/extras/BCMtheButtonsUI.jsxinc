@@ -1,0 +1,9 @@
+var BCMtheButtonsUI = new Array();
+BCMtheButtonsUI[0]={image:"", shortcut:"ACCENT", label:"make Masks", command:"\
+runScript_Fnct_Arguments(_gESHFolder + \"/BCM_Mask Utils/extras/scripts/BCM19_ makeMask.jsx;;\" );", toolTip:"", x:110, y:0};
+BCMtheButtonsUI[1]={image:"", shortcut:"2", label:"toggle\nDisable Masks", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_Mask Utils/extras/scripts/BCM20_ toggleDisableMasks.jsx;;\" );", toolTip:"", x:660, y:0};
+BCMtheButtonsUI[2]={image:"", shortcut:"3", label:"toggle_Link Masks", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_Mask Utils/extras/scripts/BCM21_ toggleLinkMasks.jsx;;\" );", toolTip:"", x:770, y:0};
+BCMtheButtonsUI[3]={image:"", shortcut:"1", label:"Delete Masks", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_Mask Utils/extras/scripts/BCM22_deleteMasks.jsx;;\" );", toolTip:"", x:330, y:0};
+BCMtheButtonsUI[4]={image:"", shortcut:"A", label:"apply Masks", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_Mask Utils/extras/scripts/BCM23_applyMasks.jsx;;\" );", toolTip:"", x:0, y:0};
+BCMtheButtonsUI[5]={image:"", shortcut:"S", label:"select from\nMasks", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_Mask Utils/extras/scripts/BCM24_selectFromMasks.jsx;;\" );", toolTip:"", x:220, y:0};
+BCMtheButtonsUI[6]={image:"", shortcut:"C", label:"create \nmasks from \ntransparency", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_Mask Utils/extras/scripts/BCM25_masksFromLayers.jsx;;\" );", toolTip:"", x:440, y:0};

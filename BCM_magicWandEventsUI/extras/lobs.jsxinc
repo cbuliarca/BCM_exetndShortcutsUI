@@ -1,0 +1,33 @@
+#include "../../_main/extras/_libs/infoWin.jsxinc"
+
+function putCustomMagicWand( val )
+{
+	var desc2MW = new ActionDescriptor();
+	if (val == true){
+		desc2MW.putString(0, "ON"); 
+	}else{
+		desc2MW.putString(0, "OFF"); 
+	}	
+	app.putCustomOptions('21b6dc60-9059-11e6-bdf4-0800200c9a66', desc2MW, false );
+}
+
+function getCustomMagicWand(){
+	tret = false
+	try{
+		var desc1Proc = app.getCustomOptions('21b6dc60-9059-11e6-bdf4-0800200c9a66');
+		mb_Procc = desc1Proc.getString(0);
+		if(mb_Procc == "ON"){
+			tret = true
+		}
+	}catch(err){}
+	return tret
+}
+function toogle_BCM_Mode(){
+	if(getCustomMagicWand() == true){
+		putCustomMagicWand( false );
+		bcm_infoWin0("BCM_MagicWand is OFF", {x:0, y:0}, 7);
+	}else{
+		putCustomMagicWand( true );
+		bcm_infoWin0("BCM_MagicWand is ON", {x:0, y:0}, 7);
+	}
+}

@@ -1,0 +1,397 @@
+#include 'vector.jsxinc'
+// http://stackoverflow.com/questions/4058979/find-a-point-a-given-distance-along-a-simple-cubic-bezier-curve-on-an-iphone
+// http://gamedev.stackexchange.com/questions/5373/moving-ships-between-two-planets-along-a-bezier-missing-some-equations-for-acce
+function Bezier(a, b, c, d) {
+    this.a = a;
+    this.b = b;
+    this.c = c;
+    this.d = d;
+    
+    this.len = 500;//precision
+    this.arcLengths = new Array(this.len + 1);
+    this.arcLengths[0] = 0;
+    
+    var ox = this.x(0);
+    var oy = this.y(0); 
+    var clen = 0;
+    for(var i = 1; i <= this.len; i += 1) {
+        var x = this.x(i/this.len), y = this.y(i/this.len);
+        var dx = ox - x, dy = oy - y;        
+        clen += Math.sqrt(dx * dx + dy * dy);
+        this.arcLengths[i] = clen;
+        ox = x, oy = y;
+    }
+    this.length = clen;    
+}
+ 
+Bezier.prototype = {
+    lengthAt: function(u){
+        return this.length * u;
+    },
+    uFromLength: function(len){
+        return len / this.length;
+    },
+    map: function(u) {
+        var targetLength = u * this.arcLengths[this.len];
+        var low = 0, high = this.len, index = 0;
+        while (low < high) {
+            index = low + (((high - low) / 2) | 0);
+            if (this.arcLengths[index] < targetLength) {
+                low = index + 1;
+            
+            } else {
+                high = index;
+            }
+        }
+        if (this.arcLengths[index] > targetLength) {
+            index--;
+        }
+        
+        var lengthBefore = this.arcLengths[index];
+        if (lengthBefore === targetLength) {
+            return index / this.len;
+        
+        } else {
+            return (index + (targetLength - lengthBefore) / (this.arcLengths[index + 1] - lengthBefore)) / this.len;
+        }
+    },
+    
+    mx: function (u) {
+        return this.x(this.map(u));
+        // return this.x(u);
+    },
+    my: function (u) {
+        return this.y(this.map(u));
+        // return this.y(u);
+    },
+    x: function (t) {
+        return ((1 - t) * (1 - t) * (1 - t)) * this.a.x 
+               + 3 * ((1 - t) * (1 - t)) * t * this.b.x
+               + 3 * (1 - t) * (t * t) * this.c.x
+               + (t * t * t) * this.d.x;
+    },
+    
+    y: function (t) {
+        return ((1 - t) * (1 - t) * (1 - t)) * this.a.y
+               + 3 * ((1 - t) * (1 - t)) * t * this.b.y
+               + 3 * (1 - t) * (t * t) * this.c.y
+               + (t * t * t) * this.d.y;
+    },
+    tan:function(t){
+        t = this.map(t);    
+        var C1x = ( this.d.x - (3.0 * this.c.x) + (3.0 * this.b.x) - this.a.x );
+        var C2x = ( (3.0 * this.c.x) - (6.0 * this.b.x) + (3.0 * this.a.x) );
+        var C3x = ( (3.0 * this.b.x) - (3.0 * this.a.x) );
+        var C4x = ( this.a.x );
+
+        var C1y = ( this.d.y - (3.0 * this.c.y) + (3.0 * this.b.y) - this.a.y );
+        var C2y = ( (3.0 * this.c.y) - (6.0 * this.b.y) + (3.0 * this.a.y) );
+        var C3y = ( (3.0 * this.b.y) - (3.0 * this.a.y) );
+        var C4y = ( this.a.y );
+        return new Vector((( 3.0 * C1x * t * t ) + ( 2.0 * C2x * t ) + C3x),(( 3.0 * C1y * t * t ) + ( 2.0 * C2y * t ) + C3y));
+    },
+    // http://blog.avangardo.com/2010/10/c-implementation-of-bezier-curvature-calculation/::
+
+    getDerivate:function(t){
+        tSquared = t * t;
+        s0 = -3 + 6 * t - 3 * tSquared;
+        s1 = 3 - 12 * t + 9 * tSquared;
+        s2 = 6 * t - 9 * tSquared;
+        s3 = 3 * tSquared;
+        resultX = this.a.x * s0 + this.b.x * s1 + this.c.x * s2 + this.d.x * s3;
+        resultY = this.a.y * s0 + this.b.y * s1 + this.c.y * s2 + this.d.y * s3;
+        return new Vector(resultX, resultY);
+    },
+    getSecondDerivate:function(t){
+        s0 = 6 - 6 * t;
+        s1 = -12 + 18 * t;
+        s2 = 6 - 18 * t;
+        s3 = 6 * t;
+        resultX = this.a.x * s0 + this.b.x * s1 + this.c.x * s2 + this.d.x * s3;
+        resultY = this.a.y * s0 + this.b.y * s1 + this.c.y * s2 + this.d.y * s3;
+        return new Vector(resultX, resultY);
+    },
+    getCurvatureRadius:function(t){
+        d1 = this.getDerivate(t);
+        d2 = this.getSecondDerivate(t);
+        r1 = Math.sqrt(Math.pow(d1.x * d1.x + d1.y * d1.y, 3));
+        r2 = Math.abs(d1.x * d2.y - d2.x * d1.y);
+        return r1 / r2;
+    },
+    toPSPath:function( add ){// true or false if I want to add the path
+        //to psd path
+        var lineArray3 = new Array()
+        lineArray3[0] = new PathPointInfo
+        lineArray3[0].kind = PointKind.CORNERPOINT
+        lineArray3[0].anchor = Array(this.a.x, this.a.y)
+        lineArray3[0].leftDirection = Array(this.b.x, this.b.y)
+        lineArray3[0].rightDirection = Array(this.a.x, this.a.y)
+        lineArray3[1] = new PathPointInfo
+        lineArray3[1].kind = PointKind.CORNERPOINT
+        lineArray3[1].anchor = Array(this.d.x, this.d.y)
+        lineArray3[1].rightDirection = Array(this.c.x, this.c.y)
+        lineArray3[1].leftDirection = Array(this.d.x, this.d.y)
+
+        var lineSubPathArray = new Array()
+
+        lineSubPathArray[0] = new SubPathInfo()
+        lineSubPathArray[0].operation = ShapeOperation.SHAPEXOR
+        lineSubPathArray[0].closed = false
+        lineSubPathArray[0].entireSubPath = lineArray3
+        if( add == true){
+            var suffix = 0;
+            for( var i=0; i<app.activeDocument.pathItems.length; i++){
+                var pth = app.activeDocument.pathItems[i].name.toString();
+                if( pth.search("BCM_Bezier_") != -1 ){
+                    var ss = pth.split("BCM_Bezier_");
+                    suffix = parseInt(ss[1]) + 1;
+                }
+            }
+            var myPathItem = app.activeDocument.pathItems.add(("BCM_Bezier_"+suffix), lineSubPathArray);
+
+            kk = app.activeDocument.pathItems.length -1;
+
+            if(kk < 1){//no path to add to
+                alert('no path to add to');
+            }else{
+                tcPthN = app.activeDocument.pathItems[kk].name;
+                ttrgPthN = app.activeDocument.pathItems[kk - 1].name;
+                // =======================================================select the new path
+                    var desc264 = new ActionDescriptor();
+                        var ref206 = new ActionReference();
+                        ref206.putName( charIDToTypeID( "Path" ), tcPthN );
+                    desc264.putReference( charIDToTypeID( "null" ), ref206 );
+                executeAction( charIDToTypeID( "slct" ), desc264, DialogModes.NO );
+                // =======================================================copy
+                var idcopy = charIDToTypeID( "copy" );
+                executeAction( idcopy, undefined, DialogModes.NO );
+                // =======================================================select the targhet path
+                    var desc264 = new ActionDescriptor();
+                        var ref206 = new ActionReference();
+                        ref206.putName( charIDToTypeID( "Path" ), ttrgPthN );
+                    desc264.putReference( charIDToTypeID( "null" ), ref206 );
+                executeAction( charIDToTypeID( "slct" ), desc264, DialogModes.NO );
+                // =======================================================paste the paths
+                var idpast = charIDToTypeID( "past" );
+                executeAction( idpast, undefined, DialogModes.NO );
+                // =======================================================delete the new path
+                var idDlt = charIDToTypeID( "Dlt " );
+                    var desc48 = new ActionDescriptor();
+                    var idnull = charIDToTypeID( "null" );
+                        var ref42 = new ActionReference();
+                        ref42.putName( charIDToTypeID( "Path" ), tcPthN );
+                    desc48.putReference( idnull, ref42 );
+                executeAction( idDlt, desc48, DialogModes.NO );
+            }
+
+        }else{
+            var suffix = 0;
+            for( var i=0; i<app.activeDocument.pathItems.length; i++){
+                var pth = app.activeDocument.pathItems[i].name.toString();
+                if( pth.search("BCM_Bezier_") != -1 ){
+                    var ss = pth.split("BCM_Bezier_");
+                    suffix = parseInt(ss[1]) + 1;
+                }
+            }
+            var myPathItem = app.activeDocument.pathItems.add(("BCM_Bezier_"+suffix), lineSubPathArray);
+        }
+    }
+};
+
+
+// http://polymathprogrammer.com/downloads/bezierinterpolation.c
+// http://polymathprogrammer.com/2007/06/27/reverse-engineering-bezier-curves/
+function getControlPolyPoints( p0x, p0y, u,  p1x,  p1y, v,  p2x,  p2y, p3x,  p3y){
+
+    pos = [{x:0,y:0},{x:0,y:0},{x:0,y:0},{x:0,y:0}];
+    q1 = {x:0,y:0}
+    q2 = {x:0,y:0}
+    
+    if ( (u<=0.0) || (u>=1.0) || (v<=0.0) || (v>=1.0) || (u>=v) ){
+      return 0; /* failure */
+    }
+
+    a = 3*(1-u)*(1-u)*u; 
+    b = 3*(1-u)*u*u;
+    c = 3*(1-v)*(1-v)*v; 
+    d = 3*(1-v)*v*v;
+    
+    det = a*d - b*c;
+    /* unnecessary, but just in case... */
+    if (det == 0.0){ return 0;} /* failure */
+    pos[0].x = p0x; pos[0].y = p0y;
+    pos[3].x = p3x; pos[3].y = p3y;
+
+    q1.x = p1x - ( (1-u)*(1-u)*(1-u)*p0x + u*u*u*p3x );
+    q1.y = p1y - ( (1-u)*(1-u)*(1-u)*p0y + u*u*u*p3y );
+    
+    q2.x = p2x - ( (1-v)*(1-v)*(1-v)*p0x + v*v*v*p3x );
+    q2.y = p2y - ( (1-v)*(1-v)*(1-v)*p0y + v*v*v*p3y );
+
+    pos[1].x = d*q1.x - b*q2.x;
+    pos[1].y = d*q1.y - b*q2.y;
+    pos[1].x /= det;
+    pos[1].y /= det;
+
+    pos[2].x = (-c)*q1.x + a*q2.x;
+    pos[2].y = (-c)*q1.y + a*q2.y;
+    pos[2].x /= det;
+    pos[2].y /= det;
+
+    return pos; /* success */
+
+}
+
+// https://www.particleincell.com/2013/cubic-line-intersection/
+
+function cubicRoots(P)
+{
+    var a=P[0];
+    var b=P[1];
+    var c=P[2];
+    var d=P[3];
+ 
+    var A=b/a;
+    var B=c/a;
+    var C=d/a;
+ 
+    var Q, R, D, S, T, Im;
+ 
+    var Q = (3*B - Math.pow(A, 2))/9;
+    var R = (9*A*B - 27*C - 2*Math.pow(A, 3))/54;
+    var D = Math.pow(Q, 3) + Math.pow(R, 2);    // polynomial discriminant
+ 
+    var t=Array();
+ 
+    if (D >= 0)                                 // complex or duplicate roots
+    {
+        var S = sgn(R + Math.sqrt(D))*Math.pow(Math.abs(R + Math.sqrt(D)),(1/3));
+        var T = sgn(R - Math.sqrt(D))*Math.pow(Math.abs(R - Math.sqrt(D)),(1/3));
+ 
+        t[0] = -A/3 + (S + T);                    // real root
+        t[1] = -A/3 - (S + T)/2;                  // real part of complex root
+        t[2] = -A/3 - (S + T)/2;                  // real part of complex root
+        Im = Math.abs(Math.sqrt(3)*(S - T)/2);    // complex part of root pair   
+ 
+        /*discard complex roots*/
+        if (Im!=0)
+        {
+            t[1]=-1;
+            t[2]=-1;
+        }
+ 
+    }
+    else                                          // distinct real roots
+    {
+        var th = Math.acos(R/Math.sqrt(-Math.pow(Q, 3)));
+ 
+        t[0] = 2*Math.sqrt(-Q)*Math.cos(th/3) - A/3;
+        t[1] = 2*Math.sqrt(-Q)*Math.cos((th + 2*Math.PI)/3) - A/3;
+        t[2] = 2*Math.sqrt(-Q)*Math.cos((th + 4*Math.PI)/3) - A/3;
+        Im = 0.0;
+    }
+ 
+    /*discard out of spec roots*/
+    for (var i=0;i<3;i++) 
+        if (t[i]<0 || t[i]>1.0) t[i]=-1;
+ 
+    /*sort but place -1 at the end*/
+    t=sortSpecial(t);
+ 
+    // console.log(t[0]+" "+t[1]+" "+t[2]);
+    return t;
+}
+
+/*computes intersection between a cubic spline and a line segment*/
+
+function computeIntersections(px,py,lx,ly)
+// px is array of 4 bezier control points at x
+// lx is array of the 2 points of the line at x
+{
+    var X=Array();
+ 
+    var A=ly[1]-ly[0];      //A=y2-y1
+    var B=lx[0]-lx[1];      //B=x1-x2
+    var C=lx[0]*(ly[0]-ly[1]) + 
+          ly[0]*(lx[1]-lx[0]);  //C=x1*(y1-y2)+y1*(x2-x1)
+ 
+    var bx = bezierCoeffs(px[0],px[1],px[2],px[3]);
+    var by = bezierCoeffs(py[0],py[1],py[2],py[3]);
+ 
+    var P = Array();
+    P[0] = A*bx[0]+B*by[0];     /*t^3*/
+    P[1] = A*bx[1]+B*by[1];     /*t^2*/
+    P[2] = A*bx[2]+B*by[2];     /*t*/
+    P[3] = A*bx[3]+B*by[3] + C; /*1*/
+ 
+    var r=cubicRoots(P);
+ 
+    /*verify the roots are in bounds of the linear segment*/ 
+    returned = [];   
+    for (var i=0;i<3;i++)
+    {
+        t=r[i];
+ 
+        X[0]=bx[0]*t*t*t+bx[1]*t*t+bx[2]*t+bx[3];
+        X[1]=by[0]*t*t*t+by[1]*t*t+by[2]*t+by[3];            
+ 
+        /*above is intersection point assuming infinitely long line segment,
+          make sure we are also in bounds of the line*/
+        var s;
+        if ((lx[1]-lx[0])!=0)           /*if not vertical line*/
+            s=(X[0]-lx[0])/(lx[1]-lx[0]);
+        else
+            s=(X[1]-ly[0])/(ly[1]-ly[0]);
+ 
+        /*in bounds?*/
+        if (t<0 || t>1.0 || s<0 || s>1.0)
+        {
+            X[0]=-100;  /*move off screen*/
+            X[1]=-100;
+        }
+ 
+        /*move intersection point*/
+        returned.push({x:X[0], y:X[1]});
+        // I[i].setAttributeNS(null,"cx",X[0]);
+        // I[i].setAttributeNS(null,"cy",X[1]);
+    }
+    return returned;
+
+}
+function sortSpecial(a)
+{
+    var flip;
+    var temp;
+    
+    do {
+        flip=false;
+        for (var i=0;i<a.length-1;i++)
+        {
+            if ((a[i+1]>=0 && a[i]>a[i+1]) ||
+                (a[i]<0 && a[i+1]>=0))
+            {
+                flip=true;
+                temp=a[i];
+                a[i]=a[i+1];
+                a[i+1]=temp;
+                
+            }
+        }
+    } while (flip);
+    return a;
+}
+// sign of number
+function sgn( x )
+{
+    if (x < 0.0) return -1;
+    return 1;
+}
+function bezierCoeffs(P0,P1,P2,P3)
+{
+    var Z = Array();
+    Z[0] = -P0 + 3*P1 + -3*P2 + P3; 
+    Z[1] = 3*P0 - 6*P1 + 3*P2;
+    Z[2] = -3*P0 + 3*P1;
+    Z[3] = P0;
+    return Z;
+}

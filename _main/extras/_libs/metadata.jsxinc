@@ -1,0 +1,662 @@
+#include layerIdAM.jsxinc
+
+function testMetadata(){
+     var metadataStrID = stringIDToTypeID("metadata");
+   var ref = new ActionReference();
+   ref.putProperty(charIDToTypeID('Prpr'), metadataStrID);
+   ref.putEnumerated(charIDToTypeID('Lyr '), charIDToTypeID('Ordn'),
+                                       charIDToTypeID('Trgt'));
+// ref.putIdentifier(charIDToTypeID('Lyr '), id);
+   var desc = executeActionGet(ref);
+   
+   if (desc.hasKey(metadataStrID)){
+      var descMetadata = desc.getObjectValue( metadataStrID );
+      for( var i=0; i<descMetadata.count; i++){
+
+        var gKey = typeIDToStringID(descMetadata.getKey(i));
+        var gType = descMetadata.getType(stringIDToTypeID(typeIDToStringID(descMetadata.getKey(i))));
+       alert( gKey +' of type: '+gType); 
+      }
+    }
+}
+
+
+function showLayerMetadata(){
+   var metadataStrID = stringIDToTypeID("metadata");
+   var ref = new ActionReference();
+   ref.putProperty(charIDToTypeID('Prpr'), metadataStrID);
+   ref.putEnumerated(charIDToTypeID('Lyr '), charIDToTypeID('Ordn'),
+                                       charIDToTypeID('Trgt'));
+
+   var desc = executeActionGet(ref);
+   
+   if (desc.hasKey(metadataStrID)){
+      var descMetadata = desc.getObjectValue( metadataStrID );
+      if(descMetadata.hasKey(stringIDToTypeID("layerXMP"))){
+        var xmpStr = descMetadata.getString(stringIDToTypeID("layerXMP"));
+        alert( xmpStr);
+      }else{
+        alert( ' no metadata for this layer ');
+      }
+
+   }else{
+      alert( ' no metadata for this layer ');
+   }
+}
+
+
+function getTimeForSelLayer( ){
+   var metadataStrID = stringIDToTypeID("metadata");
+   var ref = new ActionReference();
+   ref.putProperty(charIDToTypeID('Prpr'), metadataStrID);
+   ref.putEnumerated(charIDToTypeID('Lyr '), charIDToTypeID('Ordn'),
+                                       charIDToTypeID('Trgt'));
+   var desc = executeActionGet(ref);
+   
+   if (desc.hasKey(metadataStrID)){
+      var descMetadata = desc.getObjectValue( metadataStrID );
+      var timeInSeconds = descMetadata.getDouble(stringIDToTypeID("layerTime"));
+      var d = new Date();
+      d.setTime(timeInSeconds*1000.0);
+      return d;
+   }else{
+      return '';
+   }
+}
+
+
+
+function getLayerXMPByID( id ){
+  if(doesIdExists(id) == true){
+    var metadataStrID = stringIDToTypeID("metadata");
+    var ref = new ActionReference();
+    ref.putProperty(charIDToTypeID('Prpr'), metadataStrID);
+    // ref.putEnumerated(charIDToTypeID('Lyr '), charIDToTypeID('Ordn'),
+    //                                     charIDToTypeID('Trgt'));
+    ref.putIdentifier(charIDToTypeID('Lyr '), id);
+    var desc = executeActionGet(ref);
+   
+    if (desc.hasKey(metadataStrID)){
+       var descMetadata = desc.getObjectValue( metadataStrID );
+       if(descMetadata.hasKey(stringIDToTypeID("layerXMP"))){
+         var xmpStr = descMetadata.getString(stringIDToTypeID("layerXMP"));
+         return xmpStr;
+       }else{
+         return '';
+       }
+
+    }else{
+       return '';
+    }
+  }else{
+    return '';
+  }
+}
+
+function setMetadataByID( id, xmpStr ){// the xmpStr needs to be a xmp string
+    var desc = new ActionDescriptor();
+        var ref = new ActionReference();
+        ref.putProperty( charIDToTypeID( "Prpr" ), stringIDToTypeID( "metadata" ) );
+        ref.putIdentifier(charIDToTypeID('Lyr '), id)
+    desc.putReference( charIDToTypeID( "null" ), ref );
+        var desc2 = new ActionDescriptor();
+        desc2.putString( stringIDToTypeID( "layerXMP" ), xmpStr );
+    desc.putObject( charIDToTypeID( "T   " ), stringIDToTypeID( "metadata" ), desc2 );
+   executeAction( charIDToTypeID( "setd" ), desc, DialogModes.NO );
+}
+
+
+
+
+function createMetadata( ids){
+    // load the library
+   if (ExternalObject.AdobeXMPScript == undefined) {
+   ExternalObject.AdobeXMPScript = new
+   ExternalObject('lib:AdobeXMPScript');
+   }
+   var myString = ids.toSource();
+
+   xmp = new XMPMeta();
+
+   xmp.setProperty(XMPConst.NS_XMP, "BCM_BLinks", "", XMPConst.PROP_IS_ARRAY);
+      xmp.setArrayItem(XMPConst.NS_XMP, "BCM_BLinks", 1, myString);
+
+   xmpStr = xmp.serialize(); // serialize the XMP packet to XML
+   // alert(xmpStr);
+   return xmpStr;
+}
+
+
+function createOrReplaceMetadata( ids ){
+   // load the library
+   if (ExternalObject.AdobeXMPScript == undefined) {
+   ExternalObject.AdobeXMPScript = new
+   ExternalObject('lib:AdobeXMPScript');
+   }
+
+
+   var myString = ids.toSource();
+   try{var ss = app.activeDocument.activeLayer.xmpMetadata.rawData}catch(err){};
+
+   if(ss){
+      xmp = new XMPMeta(ss);
+   }else{xmp = new XMPMeta();}
+   
+   if(xmp.doesPropertyExist(XMPConst.NS_XMP, "BCM_BLinks")){
+      // xmp.appendArrayItem(XMPConst.NS_XMP, "BCM_BLinks", myString);
+      xmp.deleteArrayItem(XMPConst.NS_XMP, "BCM_BLinks", 1);
+      xmp.insertArrayItem(XMPConst.NS_XMP, "BCM_BLinks", 1 ,myString);
+
+   }else{
+      xmp.setProperty(XMPConst.NS_XMP, "BCM_BLinks", "", XMPConst.PROP_IS_ARRAY);
+      xmp.setArrayItem(XMPConst.NS_XMP, "BCM_BLinks", 1, myString);
+   }
+   xmpStr = xmp.serialize(); // serialize the XMP packet to XML
+   // alert(xmpStr);
+   return xmpStr;
+}
+
+
+function myDuplicate(){
+  var sourcesIds = getSelectedLayersIds();
+
+  var idDplc = charIDToTypeID( "Dplc" );
+    var desc18 = new ActionDescriptor();
+    var idnull = charIDToTypeID( "null" );
+        var ref17 = new ActionReference();
+        var idLyr = charIDToTypeID( "Lyr " );
+        var idOrdn = charIDToTypeID( "Ordn" );
+        var idTrgt = charIDToTypeID( "Trgt" );
+        ref17.putEnumerated( idLyr, idOrdn, idTrgt );
+    desc18.putReference( idnull, ref17 );
+    var idVrsn = charIDToTypeID( "Vrsn" );
+    desc18.putInteger( idVrsn, 5 );
+executeAction( idDplc, desc18, DialogModes.NO );
+
+  var targetIds = getSelectedLayersIds();
+  // var allIDs = sourcesIds.concat(targetIds);
+  // multiSelectByIDs(allIDs); 
+  var duplInfo = {sources:sourcesIds, duplicates:targetIds};
+  return duplInfo;
+
+}
+// alert(getSelectedLayersIds());
+// addBLinksToDuplicates();
+function addBLinksToDuplicates(){
+  BDup = myDuplicate();
+  pSources = processDuplicates(BDup.sources);
+  pDuplicates = processDuplicates(BDup.duplicates);
+  // multiSelectByIDs(pDuplicates);
+  if(pSources.length == pDuplicates.length){
+    for(var a=0; a<pSources.length; a++){
+      //check if metadata already has some ids
+      arrToADD = [pSources[a]]
+      existentArrSources = getBLinksIDsFromMetadata(getLayerXMPByID(pSources[a]));
+      existentArrSources = removeNonExistenIDs(existentArrSources);
+      arrToADD = arrToADD.concat(existentArrSources);
+      arrToADD.push(pDuplicates[a]);
+      existentArrDuplicates = getBLinksIDsFromMetadata(getLayerXMPByID(pDuplicates[a]));
+      existentArrDuplicates = removeNonExistenIDs(existentArrDuplicates);
+      arrToADD = arrToADD.concat(existentArrDuplicates);
+      arrToADD=remove_duplicates(arrToADD);
+      arrToADD=removeNonExistenIDs(arrToADD);
+      //set the metadata
+      setOrUpdateMetadataBLinksByID(pSources[a], arrToADD);
+      setOrUpdateMetadataBLinksByID(pDuplicates[a], arrToADD);
+
+      // multiSelectByIDs(arrToADD);
+      // linkLayersByID(arrToADD);
+      //update the old id's as well:
+      for(var q=0; q<existentArrSources.length; q++){
+        setOrUpdateMetadataBLinksByID(existentArrSources[q], arrToADD);
+      }
+      for(var q=0; q<existentArrDuplicates.length; q++){
+        setOrUpdateMetadataBLinksByID(existentArrDuplicates[q], arrToADD);
+      }
+    }
+  }
+}
+function removeNonExistenIDs( arr ){
+  var rr = [];
+  for(var i=0; i<arr.length; i++){
+    if(doesIdExists(arr[i]) == true){
+      rr.push(arr[i]);
+    }
+  }
+  return rr;
+}
+function linkLayersByID(ids){
+  var layers = new Array();
+  var idlinkSelectedLayers = stringIDToTypeID( "linkSelectedLayers" );
+    var desc52 = new ActionDescriptor();
+    var idnull = charIDToTypeID( "null" );
+        var ref41 = new ActionReference();
+      for (var i = 0; i < ids.length; i++) {
+        if(doesIdExists(ids[i]) == true){// a check to see if the id stil exists
+            layers[i] = charIDToTypeID( "Lyr " );
+            ref41.putIdentifier(layers[i], ids[i]);
+        }
+      }
+    desc52.putReference( idnull, ref41 );
+executeAction( idlinkSelectedLayers, desc52, DialogModes.NO );
+}
+
+function setOrUpdateMetadataBLinksByID ( id, idsToAdd ){
+  // load the library
+  if (ExternalObject.AdobeXMPScript == undefined) {
+  	ExternalObject.AdobeXMPScript = new
+  	ExternalObject('lib:AdobeXMPScript');
+  }
+  prevMetadata = getLayerXMPByID(id);
+  myString = idsToAdd.toSource();
+  if(prevMetadata != ''){
+  	xmp = new XMPMeta(prevMetadata);
+  }else{
+  	xmp = new XMPMeta();
+  }
+  if(xmp.doesPropertyExist(XMPConst.NS_XMP, "BCM_BLinks")){
+  	  // xmp.appendArrayItem(XMPConst.NS_XMP, "BCM_BLinks", myString);
+  	  xmp.deleteArrayItem(XMPConst.NS_XMP, "BCM_BLinks", 1);
+  	  xmp.insertArrayItem(XMPConst.NS_XMP, "BCM_BLinks", 1 ,myString);
+
+  }else{
+  	xmp.setProperty(XMPConst.NS_XMP, "BCM_BLinks", "", XMPConst.PROP_IS_ARRAY);
+  	xmp.setArrayItem(XMPConst.NS_XMP, "BCM_BLinks", 1, myString);
+  }
+  xmpStr = xmp.serialize(); // serialize the XMP packet to XML
+
+  setMetadataByID(id, xmpStr);
+
+}
+
+
+function getBLinksIDsFromMetadata( metadata ){
+  // load the library
+  if (ExternalObject.AdobeXMPScript == undefined) {
+  ExternalObject.AdobeXMPScript = new
+  ExternalObject('lib:AdobeXMPScript');
+  }
+  strRet ='';
+  tRet = [];
+  if(metadata != ''){
+    xmp = new XMPMeta(metadata);
+    if(xmp.doesPropertyExist(XMPConst.NS_XMP, "BCM_BLinks")){
+      strRet = xmp.getArrayItem(XMPConst.NS_XMP, "BCM_BLinks", 1);
+    }
+    qq = strRet.toString();
+    qq = qq.substring(1,qq.length-1);
+    tRet0 = qq.split(",");
+    for( var f=0; f<tRet0.length; f++){
+      tRet.push(parseInt(tRet0[f]));
+    }
+  }
+  return tRet;
+}
+
+function processDuplicates(ids){
+  allIDs = [];
+  for( var j = 0; j<ids.length; j++){
+    allIDs.push(ids[j]);
+    if(isLayerSetID( ids[j]) == true){
+     allIDs = allIDs.concat( getAllChildrensByID(ids[j]));
+    }
+  }
+  return allIDs;
+}
+
+// multiSelectByIDs(getAllChildrensByID(getSelectedLayersIds()[0]));
+function getAllChildrensByID(id){
+  var x = 0;
+  var i = getIdxfromId(id);
+    var returnIDs = [];
+    var nb = 0;
+    var x = 0;
+    var y = 0;
+    var r = 0;
+    for(i; i > 0 ; i--){
+        ref = new ActionReference();
+        ref.putIndex( charIDToTypeID( 'Lyr ' ), i );
+        var desc = executeActionGet(ref);
+        var layerName = desc.getString(charIDToTypeID( 'Nm  ' ));
+        var ld = desc.getInteger(stringIDToTypeID( 'layerID' ));
+        var ls = desc.getEnumerationValue(stringIDToTypeID("layerSection"));
+        ls = typeIDToStringID(ls);
+        // var vis = desc.getInteger(stringIDToTypeID( 'visible' ));
+        if(ls == "layerSectionStart"){x++};
+        if(layerName.match(/^<\/Layer group/) ) 
+        { 
+          y ++;
+          r = x - y;
+          if(r == 0 && ls == "layerSectionEnd")
+          {
+            break
+          };
+          continue
+        }
+        returnIDs.push(ld);
+      }
+      returnIDs.splice(0, 1);// this removes the id of the parent layer
+    return returnIDs;
+
+}
+function remove_duplicates(arr) {
+    var obj = {};
+    for (var i = 0; i < arr.length; i++) {
+        obj[arr[i]] = true;
+    }
+    arr = [];
+    for (var key in obj) {
+        arr.push(parseInt(key));
+    }
+    return arr;
+}
+
+function selectOneByOneSpecialLayers(){
+  spLyers = getSpecialLayersIDsFromMetadata('BCM_BLinks');
+  var selId = getSelectedLayersIds()[0];
+  var wasLyr = false;
+  if(spLyers.length > 0){
+    for( var i=0; i<spLyers.length; i++){
+      // alert(selId + " "+ spLyers[i]);
+      if(selId == spLyers[i]){
+        // alert('now::');
+        if(i == spLyers.length-1){
+          // alert('lastI :: sel: '+ spLyers[0]);
+          multiSelectByIDs(spLyers[0]);
+        }else{
+          // alert('sel: '+ spLyers[i+1]);
+          multiSelectByIDs(spLyers[i+1])
+          
+        }
+        wasLyr = true;
+        break;
+      }
+    } 
+    if(wasLyr == false){
+      multiSelectByIDs(spLyers[0]);
+    }
+  }else{
+    alert('no special layer is set!');
+  }
+
+
+}
+
+function selectAllSpecialLayers(){
+  var spLyers = getSpecialLayersIDsFromMetadata('BCM_BLinks');
+  multiSelectByIDs(spLyers);
+}
+
+function toggleVisForSpecials(){
+  spLyers = getSpecialLayersIDsFromMetadata('BCM_BLinks');
+  if(spLyers.length > 0){
+    for( var i=0; i<spLyers.length; i++){
+      cId = parseInt(spLyers[i]);
+      if(doesIdExists( cId )){
+        if(getVisibleforID(cId) == true){
+            hideByID(cId);
+        }else{
+            showByID(cId);
+        }
+      }
+    }
+  }
+}
+
+
+function setSelectedIDsAsSpecialSets(){
+  var selIds = getSelectedLayersIds();
+  for( var a=0; a<selIds.length; a++){
+    xmpStr = createOrReplaceMetadata( selIds );
+    setMetadataByID(selIds[a], xmpStr);
+    // multiSelectByIDs(selIds[a]);
+    // app.activeDocument.activeLayer.xmpMetadata.rawData = xmpStr;
+  }
+}
+
+function createOrReplaceMetadata( ids ){
+  // load the library
+  if (ExternalObject.AdobeXMPScript == undefined) {
+  ExternalObject.AdobeXMPScript = new
+  ExternalObject('lib:AdobeXMPScript');
+  }
+
+
+  var myString = ids.toSource();
+  try{var ss = app.activeDocument.activeLayer.xmpMetadata.rawData}catch(err){};
+
+  if(ss){
+    xmp = new XMPMeta(ss);
+  }else{xmp = new XMPMeta();}
+  
+  if(xmp.doesPropertyExist(XMPConst.NS_XMP, "BCM_BLinks")){
+    // xmp.appendArrayItem(XMPConst.NS_XMP, "BCM_BLinks", myString);
+    xmp.deleteArrayItem(XMPConst.NS_XMP, "BCM_BLinks", 1);
+    xmp.insertArrayItem(XMPConst.NS_XMP, "BCM_BLinks", 1 ,myString);
+
+  }else{
+    xmp.setProperty(XMPConst.NS_XMP, "BCM_BLinks", "", XMPConst.PROP_IS_ARRAY);
+    xmp.setArrayItem(XMPConst.NS_XMP, "BCM_BLinks", 1, myString);
+  }
+  xmpStr = xmp.serialize(); // serialize the XMP packet to XML
+  // alert(xmpStr);
+  return xmpStr;
+}
+
+function appendNewMetadataArray( ids ){
+  // load the library
+  if (ExternalObject.AdobeXMPScript == undefined) {
+  ExternalObject.AdobeXMPScript = new
+  ExternalObject('lib:AdobeXMPScript');
+  }
+
+
+  var myString = ids.toSource();
+  try{var ss = app.activeDocument.activeLayer.xmpMetadata.rawData}catch(err){};
+
+  if(ss){
+    xmp = new XMPMeta(ss);
+  }else{xmp = new XMPMeta();}
+  
+  if(xmp.doesPropertyExist(XMPConst.NS_XMP, "BCM_BLinks")){
+    xmp.appendArrayItem(XMPConst.NS_XMP, "BCM_BLinks", myString);
+    // xmp.deleteArrayItem(XMPConst.NS_XMP, "BCM_BLinks", 1);
+    // xmp.insertArrayItem(XMPConst.NS_XMP, "BCM_BLinks", 1 ,myString);
+
+  }else{
+    xmp.setProperty(XMPConst.NS_XMP, "BCM_BLinks", "", XMPConst.PROP_IS_ARRAY);
+    xmp.setArrayItem(XMPConst.NS_XMP, "BCM_BLinks", 1, myString);
+  }
+  xmpStr = xmp.serialize(); // serialize the XMP packet to XML
+  // alert(xmpStr);
+  return xmpStr;
+}
+
+
+
+function appendSelLayerIdtoSpecialSetsLayersInMetadata(){
+  selIds = getSelectedLayersIds();
+
+  cSpecialSetsLayers = getSpecialSetsLayersIDsFromMetadata();
+  appendedLayers = cSpecialSetsLayers.concat(selIds);
+  // alert(appendedLayers.toSource());
+  appendedLayers = remove_duplicates(appendedLayers);
+  // alert(appendedLayers.toSource());
+  xmpStr = createOrReplaceMetadata( appendedLayers );
+  app.activeDocument.activeLayer.xmpMetadata.rawData = xmpStr;
+}
+
+
+
+
+function getSpecialLayersIDsFromMetadata( metaName ){
+  // load the library
+  if (ExternalObject.AdobeXMPScript == undefined) {
+  ExternalObject.AdobeXMPScript = new
+  ExternalObject('lib:AdobeXMPScript');
+  }
+  strRet ='';
+  tRet = [];
+  try{var ss = app.activeDocument.activeLayer.xmpMetadata.rawData}catch(err){};
+  if(ss){
+    xmp = new XMPMeta(ss);
+    // alert(ss);
+  }
+  
+  if(xmp.doesPropertyExist(XMPConst.NS_XMP, metaName)){
+    strRet = xmp.getArrayItem(XMPConst.NS_XMP, metaName, 1);
+  }
+
+  qq = strRet.toString();
+  qq = qq.substring(1,qq.length-1);
+  tRet0 = qq.split(",");
+  for( var f=0; f<tRet0.length; f++){
+    tRet.push(parseInt(tRet0[f]));
+  }
+
+
+  // xmpStr = xmp.serialize(); // serialize the XMP packet to XML
+  // alert(xmpStr);
+  return tRet;
+}
+
+function getDocumentEXIF(){
+  var ref = new ActionReference();
+  ref.putProperty(charIDToTypeID('Prpr'), stringIDToTypeID('EXIF'));
+  ref.putEnumerated( charIDToTypeID("Dcmn") , charIDToTypeID( "Ordn" ), charIDToTypeID( "Trgt" ) );
+  desc = executeActionGet(ref);
+  if(desc.hasKey(stringIDToTypeID('EXIF'))){
+    return desc.getString(stringIDToTypeID('EXIF'));
+  }else{
+    return null;
+  }
+}
+
+
+
+function setSelectedIDsAsSpecial( metaName ){
+  var selIds = getSelectedLayersIds();
+  xmpStr = createOrReplaceDocMetadata( selIds, metaName );
+  app.activeDocument.xmpMetadata.rawData = xmpStr;
+}
+
+function createOrReplaceDocMetadata( ids, metaName ){
+  // load the library
+  if (ExternalObject.AdobeXMPScript == undefined) {
+  ExternalObject.AdobeXMPScript = new
+  ExternalObject('lib:AdobeXMPScript');
+  }
+
+
+  var myString = ids.toSource();
+  try{var ss = app.activeDocument.xmpMetadata.rawData}catch(err){};
+
+  if(ss){
+    xmp = new XMPMeta(ss);
+  }else{xmp = new XMPMeta();}
+  
+  
+  if(xmp.doesPropertyExist(XMPConst.NS_XMP, metaName)){
+    // xmp.appendArrayItem(XMPConst.NS_XMP, metaName, myString);
+    xmp.deleteArrayItem(XMPConst.NS_XMP, metaName, 1);
+    xmp.insertArrayItem(XMPConst.NS_XMP, metaName, 1 ,myString);
+
+  }else{
+    
+    xmp.setProperty(XMPConst.NS_XMP, metaName, "", XMPConst.PROP_IS_ARRAY);
+    xmp.setArrayItem(XMPConst.NS_XMP, metaName, 1, myString);
+  }
+  xmpStr = xmp.serialize(); // serialize the XMP packet to XML
+  return xmpStr;
+}
+
+function appendNewMetadataArray( ids, metaName ){
+  // load the library
+  if (ExternalObject.AdobeXMPScript == undefined) {
+  ExternalObject.AdobeXMPScript = new
+  ExternalObject('lib:AdobeXMPScript');
+  }
+
+
+  var myString = ids.toSource();
+  try{var ss = app.activeDocument.xmpMetadata.rawData}catch(err){};
+
+  if(ss){
+    xmp = new XMPMeta(ss);
+  }else{xmp = new XMPMeta();}
+  
+  if(xmp.doesPropertyExist(XMPConst.NS_XMP, metaName)){
+    xmp.appendArrayItem(XMPConst.NS_XMP, metaName, myString);
+    // xmp.deleteArrayItem(XMPConst.NS_XMP, metaName, 1);
+    // xmp.insertArrayItem(XMPConst.NS_XMP, metaName, 1 ,myString);
+
+  }else{
+    xmp.setProperty(XMPConst.NS_XMP, metaName, "", XMPConst.PROP_IS_ARRAY);
+    xmp.setArrayItem(XMPConst.NS_XMP, metaName, 1, myString);
+  }
+  xmpStr = xmp.serialize(); // serialize the XMP packet to XML
+  // alert(xmpStr);
+  return xmpStr;
+}
+
+function getSpecialLayersIDsFromDocMetadata( metaName ){
+  // load the library
+  if (ExternalObject.AdobeXMPScript == undefined) {
+  ExternalObject.AdobeXMPScript = new
+  ExternalObject('lib:AdobeXMPScript');
+  }
+  strRet ='';
+  tRet = [];
+  try{var ss = app.activeDocument.xmpMetadata.rawData}catch(err){};
+
+  if(ss){
+    xmp = new XMPMeta(ss);
+  }
+  
+  if(xmp.doesPropertyExist(XMPConst.NS_XMP, metaName)){
+    strRet = xmp.getArrayItem(XMPConst.NS_XMP, metaName, 1);
+  }
+  if(strRet != ""){ 
+    qq = strRet.toString();
+    qq = qq.substring(1,qq.length-1);
+    tRet0 = qq.split(",");
+    for( var f=0; f<tRet0.length; f++){
+      tRet.push(parseInt(tRet0[f]));
+    }
+  }else{
+    tRet = '';
+  }
+
+
+  // xmpStr = xmp.serialize(); // serialize the XMP packet to XML
+  // alert(xmpStr);
+  return tRet;
+}
+
+
+function appendSelLayerIdtoMagicWandSpecialLayersInMetadata( metaName ){
+  selIds = getSelectedLayersIds();
+  cSpecialLayers = getSpecialLayersIDsFromDocMetadata( metaName);
+  appendedLayers = cSpecialLayers.concat(selIds);
+  // alert(appendedLayers.toSource());
+  appendedLayers = remove_duplicates(appendedLayers);
+  // alert(appendedLayers.toSource());
+  xmpStr = createOrReplaceDocMetadata( appendedLayers, metaName );
+  app.activeDocument.xmpMetadata.rawData = xmpStr;
+}
+
+function remove_duplicates(arr) {
+    var obj = {};
+    for (var i = 0; i < arr.length; i++) {
+        obj[arr[i]] = true;
+    }
+    arr = [];
+    for (var key in obj) {
+        arr.push(parseInt(key));
+    }
+    return arr;
+}
+
+// alert(getLayerXMPByID(getSelectedLayersIds()[0]));
+
+// main();

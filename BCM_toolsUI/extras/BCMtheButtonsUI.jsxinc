@@ -1,0 +1,28 @@
+var BCMtheButtonsUI = new Array();
+BCMtheButtonsUI[0]={image:"", shortcut:"2", label:"tglGroup", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/~BCM08_%20ToggleOpen_CloseGroup.jsx;;\" );", toolTip:"toggles Open-Close groups", x:330, y:0};
+BCMtheButtonsUI[1]={image:"only Sel.png", shortcut:"H", label:"only Sel", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/~BCM10_ showOnlySelected.jsx;;\" );", toolTip:"toggle show only selected", x:0, y:0};
+BCMtheButtonsUI[2]={image:"tgl Vis.png", shortcut:"V", label:"tgl Vis", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/BCM09_%20toggleVisibility.jsx;;\" )", toolTip:"", x:0, y:110};
+BCMtheButtonsUI[3]={image:"only Sibilings.png", shortcut:"S", label:"only Sibilings", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/~BCM06_%20selectOnlySibilings.jsx;;\" );", toolTip:"", x:0, y:330};
+BCMtheButtonsUI[4]={image:"add Sibilings.png", shortcut:"Shift + S", label:"add Sibilings", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/~BCM05_%20addSibilingsToSelection.jsx;;\" );", toolTip:"", x:0, y:440};
+BCMtheButtonsUI[5]={image:"", shortcut:"RIGHTBRACKET", label:"sel Forward", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/~BCM02_%20selectForward.jsx;;\" );\
+", toolTip:"", x:330, y:330};
+BCMtheButtonsUI[6]={image:"", shortcut:"Shift + RIGHTBRACKET", label:"add Forward", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/~BCM04_%20addForwardLayer.jsx;;\" );", toolTip:"", x:330, y:440};
+BCMtheButtonsUI[7]={image:"", shortcut:"LEFTBRACKET", label:"sel Backward", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/~BCM01_%20selectBack.jsx;;\" );", toolTip:"", x:220, y:330};
+BCMtheButtonsUI[8]={image:"", shortcut:"Shift + LEFTBRACKET", label:"add Backward", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/~BCM03_%20addBackLayer.jsx;;\" );", toolTip:"", x:220, y:440};
+BCMtheButtonsUI[9]={image:"", shortcut:"C", label:"Color Picker", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/~BCM12_%20TheColorPicker.jsx;;\" );", toolTip:"script to show the color picker for the selected SolidColor or for the foreground color", x:550, y:440};
+BCMtheButtonsUI[10]={image:"", shortcut:"W", label:"select Layers\nby Name", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/~BCM00_%20selectByName.jsx;;\" );", toolTip:"", x:880, y:0};
+BCMtheButtonsUI[11]={image:"", shortcut:"R", label:"rename", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/~Rename%20&%20Renumber%20Selected%20Layers.jsx;;\" );", toolTip:"", x:880, y:110};
+BCMtheButtonsUI[12]={image:"", shortcut:"Shift + W", label:"select Brush\nby Name", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/~BCM14_searchBrushByName.jsx;;\" );", toolTip:"", x:770, y:0};
+BCMtheButtonsUI[13]={image:"selParent.png", shortcut:"P", label:"selParent", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/~BCM07_%20selectParent.jsx;;\" );", toolTip:"", x:220, y:0};
+BCMtheButtonsUI[14]={image:"grpClipLayers.png", shortcut:"G", label:"grpClipLayers", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/~bcm_groupLayers.jsx;;\" );", toolTip:"", x:330, y:110};
+BCMtheButtonsUI[15]={image:"solidColor.png", shortcut:"Q", label:"solidColor", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/~bcm_solidColor.jsx;;\" );", toolTip:"", x:550, y:330};
+BCMtheButtonsUI[16]={image:"", shortcut:"U", label:"openMayaUvs", command:"var desc3 = new ActionDescriptor();\
+    var idnull = charIDToTypeID( \"null\" );\
+    desc3.putPath( idnull, new File( \"C:/Users/MAN/Documents/maya/projects/default/images/outUV.tga\" ) );\
+executeAction( idOpn, desc3, DialogModes.NO );\
+", toolTip:"open the exported maya uvs", x:550, y:0};
+BCMtheButtonsUI[17]={image:"TglVis Main Parent.png", shortcut:"Z", label:"TglVis\nMain Parent", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/~BCM18_ hideBigParent.jsx;;\" );", toolTip:"", x:220, y:110};
+BCMtheButtonsUI[18]={image:"", shortcut:"ACCENT", label:"to\nSmart Object", command:"var idnewPlacedLayer = stringIDToTypeID( \"newPlacedLayer\" );\
+executeAction( idnewPlacedLayer, undefined, DialogModes.NO );", toolTip:"", x:550, y:110};
+BCMtheButtonsUI[19]={image:"", shortcut:"3", label:"BCM Panel\nBCM Array", command:"runJSX( \"~/Documents/BCM/Photoshop/panels/BCMPanel2.1/scripts/BCMArray.jsx\" );", toolTip:"", x:880, y:440};
+BCMtheButtonsUI[20]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:110, y:0};

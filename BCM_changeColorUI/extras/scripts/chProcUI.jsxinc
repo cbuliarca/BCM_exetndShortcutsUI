@@ -1,0 +1,75 @@
+#include "chProcent.jsxinc";
+function mainChProcUI(){
+	var win = new Window( 'dialog', 'Change procent',undefined,{resizeable:true,closeButton:true,borderless:false});
+	  	g = win.graphics;
+	  	var myBrush = g.newBrush(g.BrushType.SOLID_COLOR, [0.1, 0.1, 0.1, 1]);
+	  	g.backgroundColor = myBrush;
+  		g.disabledBackgroundColor = myBrush;
+
+  		var myPen = g.newPen(g.PenType.SOLID_COLOR, [0.4, 0.4, 0.4, 1], 20); // this is the font color
+		var shortcutFont = ScriptUI.newFont("Tahoma","BOLD",10);
+		g.foregroundColor = myPen;
+		g.disabledForegroundColor = myPen;
+		g.font = ScriptUI.newFont("Tahoma","BOLD",11);
+			win.opacity =.95;
+			win.spacing = 0;
+			win.indent = 0;
+			win.orientation='column';
+
+		win.et = win.add('edittext',undefined, mb_Procc);
+		win.et.preferredSize = [170, 20];
+		win.et.onChanging = function(){
+			testN = Number(win.et.text);
+			if(testN != 0 ){
+				if( isNaN(testN) ){
+					win.logT.text = "\nthat's not a valid number, please correct that !\nIf you don't change it, the value 5 will be used";
+				}else{
+					if(testN > 100){
+						win.logT.text = "\nthe number can't be bigger than 100 !\nIf you don't change it, the value 255 will be used";
+					}else{
+						win.logT.text = "\n";
+					}
+				}
+			}else{win.logT.text = "\nthe number can't be 0 !\nIf you don't change it, the value 5 will be used";}
+		}
+		win.logT = win.add('statictext', undefined, "      ", {multiline:true});
+		win.logT.preferredSize = [170, 90];
+		win.g1 = win.add('group');
+		win.okB = win.g1.add('button', undefined, 'Ok');
+		win.okB.onClick = function(){
+			var testN = Number(win.et.text);
+			var resNb = 5;
+			if(testN != 0){
+				if( isNaN(testN) ){
+					win.logT.text = "\nthat's not a valid number, please correct that !\nIf you don't change it, the value 5 will be used";
+					resNb = 5;
+				}else{
+					if(testN > 100){
+						win.logT.text = "\nthe number can't be bigger than 100 !\nIf you don't change it the 255 value will be used";
+						resNb = 100;
+					}else{
+						win.logT.text = "\n";
+						resNb = parseInt(testN);
+					}
+				}
+			}else{win.logT.text = "\nthe number can't be 0 !\nIf you don't change it, the value 5 will be used"; resNb = 5}
+
+				var desc3Proc = new ActionDescriptor();
+				desc3Proc.putString(0, resNb.toString());
+				app.putCustomOptions('03ec44a0-a37e-11e4-bcd8-0800200c9a66', desc3Proc, true );
+			// var FProc = new File(File($.fileName).path + "/chProcent.jsxinc");
+			// FProc.open('w');
+			// FProc.write('var mb_Procc = '+ resNb);
+			// FProc.close();
+
+			win.close();
+		}
+		win.cancelB = win.g1.add('button', undefined, 'Cancel');
+		
+
+		win.et.active = true;
+		win.cancelElement = win.cancelB;
+		win.defaultElement = win.okB;
+  	
+  	win.show();
+}

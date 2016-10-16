@@ -1,0 +1,65 @@
+/*please don't modify this file if you want to translate it, you can duplicate it rename it with the language 
+you want to and change it by replacing in sublimeText with regularExpression on: 
+(\s=\s\{en:)("[a-zA-z \\\".\r\n,():@'+/=%0-9?]*)(\};)
+with :
+.fr = \2;
+*/
+//localized strings:================
+var firstLookHelpLCZ = {en:" Right click or double click here to open the \"Add shortcut button dialog\".\
+Within that dialog you can set the button to react to a key shortcut, and you can set it to \
+play an action, a java script file, or you can set it to chose a brush from your Brush Preset.\
+\r      To change the position of a button press CTRL( Command ) key and drag it to the new position."};
+
+var alertAboutFlash = {en:"This script uses the flash player. If you can't do anything for the first \
+time you are opening the script that's because the script just added the trusted path to your " + File(resolveCfgFilePath()).fsName +" and you need to reopen Photoshop."};
+
+var clkToMailTip = {en:"click here to sent a mail to buliarca@yahoo.com"};
+var createdByLCZ = {en:"created by Buliarca Cristian "};
+var btnDelLcz = {en:"Delete the button"};
+var btnDelToolTipLcz = {en:"delete the button from the first window"};
+var btnAddLcz = {en:"Add another button"};
+var btnAddToolTipLcz = {en:"add a button with the folowing settings:"};
+var pnlPropLcz = {en:"Propreties: "};
+var lbTLcz = {en:"Label: "};
+var lbTToolTipLcz = {en:"the label of the button"};
+var asGroupBtnLcz = {en:"as new Group"};
+var descTLcz = {en:"Description: "};
+var descToolTipLcz = {en:"a short description that will apear when you will hover the mouse over the button, as a tool tip"};
+var iconTLcz = {en:"Icon: "};
+var iconToolTipLcz = {en:"the path for the image of the button"};
+var browseTLcz = {en:"Browse"};
+var broseToolTipLcz = {en:"browse for the image of the button"};
+var editTLcz = {en:"Edit Image"};
+var editToolTipLcz = {en:"opens the image to edit"};
+var shTLcz = {en:"Shortcut:"};
+var shToolTipLcz = {en:"set a shortcut for your button, press a key or a combination of Ctrl+ Shift+ Alt+ a key"};
+var comTLcz = {en:"Command: "};
+var comToolTipLcz = {en:"the command that will be triggered when you will press the button.\
+Usefull variables and functions:\
+    _gESHFolder  -- folder object for main folder path.\
+    _gMainESHui  -- file object for the main.jsx script\
+    _gCurrentESHui  -- file object for the script that open the current UI.\
+    runScript_Fnct_Arguments() -- run a function with arguments from a script file .Takes as argument a string in this form:\
+      \"the script path ; the function ; the arguments as string\"\
+  "};
+var brsFroTLcz = {en:"Browse for:"};
+var scrBtLcz = {en:"Script"};
+var scrBtToolTipLcz = {en:"you can execute a .jsx file. Browse for it."};
+var helpCodeAddedLcz = {en:"//============ code added by the browse button to open a .jsx file================"};
+var helpCodeAddEndedLcz = {en:"//============ end of code added by the browse button ============================"};
+var actTLcz = {en:"Action"};
+var actTtToolTipLcz = {en:"you can execute a .jsx file. Browse for it."};
+var brshTLcz = {en:"Brush"};
+var brshTtToolTipLcz = {en:"you can chose a brush. Browse for it"};
+var cancelTLcz = {en:"Cancel"};
+var applyTLcz = {en:"Apply"};
+var actWinTLcz = {en:"Select an action"};
+var actSetTLcz = {en:"Set: "};
+var actT2Lcz = {en:"Action: "};
+var okTLcz = {en:"Ok"};
+var helpCodeAddedActionLcz = {en:"// ===========code added by the browse Action button"};
+var helpCodePlayActLcz = {en:"// play action: "};
+var helpCodeFromSetLcz = {en:" from set: "};
+var helpCodeEndActionLcz = {en:"// ===========code added by the browse Action button"};
+var shortcutExistsLcz = {en:"The button \"%1\" already has the shortcut: \"%2\". Do you still want to use \"%2\" as shortcut for this button?\
+If so the button \"%1\" will remain without a shortcut.\n If you don't then you can try another shortcut key"};

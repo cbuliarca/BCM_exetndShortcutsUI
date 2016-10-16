@@ -1,0 +1,208 @@
+/*
+<javascriptresource>
+  <name>BCM18> changeColor...</name>
+  <category>BCM</category>
+</javascriptresource>
+*/
+
+// chColor( 'brightness', 5);
+// chColor( 'saturation', 5);
+// chColor( 'hue', 5);
+
+// chColor( 'red', 5);
+// chColor( 'green', 5);
+// chColor( 'blue', 5);
+
+// chColor( 'black', 5);
+// chColor( 'cyan', 5);
+// chColor( 'magenta', 5);
+// chColor( 'yellow', 5);
+
+// chColor( 'a', 5);
+// chColor( 'b', 5);
+// chColor( 'l', 5);
+
+function chColor( what, val ){
+	var cl = app.foregroundColor;
+	var cl1 = app.foregroundColor;
+	var modeS = '';
+	if(what == 'brightness' || what == 'saturation' || what == 'hue'){
+		modeS = 'HSBC';
+		var clB = cl.hsb;
+		var clB1 = cl1.hsb;
+		var colrsN =['H   ', 'Strt', 'Brgh'];
+		var colrsD =['#Ang', '', ''];
+		var colrSO = [clB.hue, clB.saturation, clB.brightness];
+		var colrSO1 = [clB1.hue, clB1.saturation, clB1.brightness];
+		var maxO = [360, 100, 100];
+	}
+	if(what == 'red' || what == 'green' || what == 'blue'){
+		modeS = 'RGBC';
+		var clB = cl.rgb;
+		var clB1 = cl1.rgb;
+		var colrsN =['Rd  ', 'Grn ', 'Bl  '];
+		var colrsD =['', '', ''];
+		var colrSO = [clB.red, clB.green, clB.blue];
+		var colrSO1 = [clB1.red, clB1.green, clB1.blue];
+		var maxO = [255, 255, 255];
+	}
+	if(what == 'cyan' || what == 'magenta' || what == 'yellow' || what == 'black'){
+		modeS = 'CMYC';
+		var clB = cl.cmyk;
+		var clB1 = cl1.cmyk;
+		var colrsN =['Cyn ', 'Mgnt', 'Ylw ', 'Blck'];
+		var colrsD =['', '', ''];
+		var colrSO = [clB.cyan, clB.magenta, clB.yellow, clB.black];
+		var colrSO1 = [clB1.cyan, clB1.magenta, clB1.yellow, clB1.black];
+		var maxO = [100, 100, 100, 100];
+	}
+	if(what == 'l' || what == 'a' || what == 'b'){
+		modeS = 'LbCl';
+		var clB = cl.lab;
+		var clB1 = cl1.lab;
+		var colrsN =['Lmnc', 'A   ', 'B   '];
+		var colrsD =['', '', ''];
+		var colrSO = [clB.l, clB.a, clB.b];
+		var colrSO1 = [clB1.l, clB1.a, clB1.b];
+		var maxO = [100, 127, 127];
+	}
+	var ii=0;
+
+
+	for( b in clB ){
+		if(b == what){
+
+			val = val*(maxO[ii]/100);//convert it from units to procents
+			var newVal = clB[b] + val;
+			var newVal1 = clB1[b] - val;
+			if( val > 0 ){
+				if(newVal >= maxO[ii] && clB[b] != maxO[ii]){
+					newVal = maxO[ii];
+				}else if ( clB[b] == maxO[ii]){
+					newVal = maxO[ii];
+				}
+				if(newVal < 0){
+					newVal = 0;
+				}
+				
+			}else{//when going back
+				if(newVal <= 0 && clB[b] != 0){
+					newVal = 0;
+				}else if ( clB[b] == 0){
+					newVal = 0;
+				}
+				if(newVal < 0){
+					newVal = 0;
+				}
+			}
+			colrSO[ii]=newVal;
+			colrSO1[ii]=newVal1;
+			break;
+		}
+		ii++;
+	}
+	chColorPickerPanel( modeS, colrsN, colrsD, colrSO, 'FrgC');
+	// chColorPickerPanel( modeS, colrsN, colrsD, colrSO1, 'BkgC');
+}
+function chColor0( what, val ){
+	var cl = app.foregroundColor;
+	var cl1 = app.foregroundColor;
+	var modeS = '';
+	if(what == 'brightness' || what == 'saturation' || what == 'hue'){
+		modeS = 'HSBC';
+		var clB = cl.hsb;
+		var clB1 = cl1.hsb;
+		var colrsN =['H   ', 'Strt', 'Brgh'];
+		var colrsD =['#Ang', '', ''];
+		var colrSO = [clB.hue, clB.saturation, clB.brightness];
+		var colrSO1 = [clB1.hue, clB1.saturation, clB1.brightness];
+		var maxO = [360, 100, 100];
+	}
+	if(what == 'red' || what == 'green' || what == 'blue'){
+		modeS = 'RGBC';
+		var clB = cl.rgb;
+		var clB1 = cl1.rgb;
+		var colrsN =['Rd  ', 'Grn ', 'Bl  '];
+		var colrsD =['', '', ''];
+		var colrSO = [clB.red, clB.green, clB.blue];
+		var colrSO1 = [clB1.red, clB1.green, clB1.blue];
+		var maxO = [255, 255, 255];
+	}
+	if(what == 'cyan' || what == 'magenta' || what == 'yellow' || what == 'black'){
+		modeS = 'CMYC';
+		var clB = cl.cmyk;
+		var clB1 = cl1.cmyk;
+		var colrsN =['Cyn ', 'Mgnt', 'Ylw ', 'Blck'];
+		var colrsD =['', '', ''];
+		var colrSO = [clB.cyan, clB.magenta, clB.yellow, clB.black];
+		var colrSO1 = [clB1.cyan, clB1.magenta, clB1.yellow, clB1.black];
+		var maxO = [100, 100, 100, 100];
+	}
+	if(what == 'l' || what == 'a' || what == 'b'){
+		modeS = 'LbCl';
+		var clB = cl.lab;
+		var clB1 = cl1.lab;
+		var colrsN =['Lmnc', 'A   ', 'B   '];
+		var colrsD =['', '', ''];
+		var colrSO = [clB.l, clB.a, clB.b];
+		var colrSO1 = [clB1.l, clB1.a, clB1.b];
+		var maxO = [100, 127, 127];
+	}
+	var ii=0;
+
+
+	for( b in clB ){
+		if(b == what){
+
+			val = val*(maxO[ii]/100);//convert it from units to procents
+			var newVal = clB[b] + val;
+			var newVal1 = clB1[b] - val;
+			if( val > 0 ){
+				if(newVal >= maxO[ii] && clB[b] != maxO[ii]){
+					newVal = maxO[ii];
+				}else if ( clB[b] == maxO[ii]){
+					newVal = maxO[ii];
+				}
+				if(newVal < 0){
+					newVal = 0;
+				}
+				
+			}else{//when going back
+				if(newVal <= 0 && clB[b] != 0){
+					newVal = 0;
+				}else if ( clB[b] == 0){
+					newVal = 0;
+				}
+				if(newVal < 0){
+					newVal = 0;
+				}
+			}
+			colrSO[ii]=newVal;
+			colrSO1[ii]=newVal1;
+			break;
+		}
+		ii++;
+	}
+	chColorPickerPanel( modeS, colrsN, colrsD, colrSO, 'FrgC');
+	// chColorPickerPanel( modeS, colrsN, colrsD, colrSO1, 'BkgC');
+}
+function chColorPickerPanel( mode, colors, units, values, to){
+
+	    var desc = new ActionDescriptor();
+	        var ref = new ActionReference();
+	        ref.putProperty( charIDToTypeID( "Clr " ), charIDToTypeID( to ) );
+	    desc.putReference( charIDToTypeID( "null" ), ref );
+	        var desc2 = new ActionDescriptor();
+	        for( var i=0; i<colors.length; i++){
+	        	if(units[i] == '#Ang'){
+	        		desc2.putUnitDouble(charIDToTypeID(colors[i]), charIDToTypeID(units[i]), values[i]);
+	        	}else{
+	        		desc2.putDouble(charIDToTypeID(colors[i]), values[i]);
+	        	}
+	        }
+	    desc.putObject( charIDToTypeID( "T   " ), charIDToTypeID( mode ), desc2 );
+	    var idSrce = charIDToTypeID( "Srce" );
+	    desc.putString( idSrce, """colorPickerPanel""" );
+	executeAction( charIDToTypeID( "setd" ), desc, DialogModes.NO );
+
+}

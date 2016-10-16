@@ -1,0 +1,9 @@
+var BCMtheButtonsUI = new Array();
+BCMtheButtonsUI[0]={image:"", shortcut:"S", label:"SET", command:"runScript_Fnct_Arguments(_gCurrentESHui.path+\"/extras/BCM19_tglSpecialLayer.jsx;setSelectedIDsAsSpecial;\");", toolTip:"", x:0, y:0};
+BCMtheButtonsUI[1]={image:"", shortcut:"2", label:"tgl vis", command:"runScript_Fnct_Arguments(_gCurrentESHui.path+\"/extras/BCM19_tglSpecialLayer.jsx;toggleVisForSpecials;\");", toolTip:"", x:440, y:0};
+BCMtheButtonsUI[2]={image:"", shortcut:"A", label:"Append", command:"runScript_Fnct_Arguments(_gCurrentESHui.path+\"/extras/BCM19_tglSpecialLayer.jsx;appendSelLayerIdtoSpecialLayersInMetadata;\");", toolTip:"", x:110, y:0};
+BCMtheButtonsUI[3]={image:"", shortcut:"Q", label:"select \none by one", command:"runScript_Fnct_Arguments(_gCurrentESHui.path+\"/extras/BCM19_tglSpecialLayer.jsx;selectOneByOneSpecialLayers;\");", toolTip:"", x:550, y:0};
+BCMtheButtonsUI[4]={image:"", shortcut:"H", label:"select all \nspecial layers", command:"runScript_Fnct_Arguments(_gCurrentESHui.path+\"/extras/BCM19_tglSpecialLayer.jsx;selectAllSpecialLayers;\");", toolTip:"", x:660, y:0};
+BCMtheButtonsUI[5]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:220, y:0};
+BCMtheButtonsUI[6]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:330, y:0};
+BCMtheButtonsUI[7]={image:"", shortcut:"ACCENT", label:"show\none by one", command:"runScript_Fnct_Arguments(_gCurrentESHui.path+\"/extras/BCM19_tglSpecialLayer.jsx;showOneByOneSpecialLayers;\");", toolTip:"", x:770, y:0};

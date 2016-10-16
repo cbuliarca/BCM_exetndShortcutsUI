@@ -1,0 +1,7 @@
+var BCMtheButtonsUI = new Array();
+BCMtheButtonsUI[0]={image:"", shortcut:"I", label:"import resource\nsbs", command:"\
+\
+	runJSX( \"/f/work/psScripts_wip/ArkaneTools/bcm_importResources.jsx\" );", toolTip:"", x:110, y:0};
+BCMtheButtonsUI[1]={image:"", shortcut:"R", label:"ARK_review", command:"\
+\
+	runJSX( \"/f/work/psScripts_wip/ArkaneTools/bcm_review.jsx\" );", toolTip:"", x:220, y:0};

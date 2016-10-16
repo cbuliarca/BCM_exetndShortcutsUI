@@ -1,0 +1,1 @@
+/*<javascriptresource>  <category>BCM</category></javascriptresource>*/var _gCurrentESHui = File($.fileName);#include "../_main/main.jsxinc";#include "extras/BCMtheButtonsUI.jsxinc";#include "extras/BCMtheWinUI.jsxinc";main();execAfterUI();

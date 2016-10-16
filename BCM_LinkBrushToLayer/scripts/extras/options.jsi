@@ -1,0 +1,3 @@
+var _BCM_getLBLOptions = ({get_the_brush:true, get_the_tool:true, get_foreground_color:false, get_background_color:false});
+var _BCM_replaceLBLOptions = ({repalce_all:true});
+var _BCM_deleteLBLOptions = ({delete_all:true});
