@@ -1,6 +1,6 @@
 var BCMtheButtonsUI = new Array();
-BCMtheButtonsUI[0]={image:"", shortcut:"N", label:"Save Minor", command:"saveQ(\"minor\");", toolTip:"add two siffixes like \"_v01_v01\" this will increment the last one", x:440, y:0};
-BCMtheButtonsUI[1]={image:"", shortcut:"M", label:"Save Major", command:"saveQ(\"major\");", toolTip:"add two siffixes like \"_v01_v01\" this will increment the first one and set the second one to 01", x:330, y:0};
+BCMtheButtonsUI[0]={image:"", shortcut:"N", label:"Save Minor", command:"saveQ(\"minor\");", toolTip:"add two siffixes like \"_v01_v01\" this will increment the last one", x:440, y:0, isGroup:false };
+BCMtheButtonsUI[1]={image:"", shortcut:"M", label:"Save Major", command:"saveQ(\"major\");", toolTip:"add two siffixes like \"_v01_v01\" this will increment the first one and set the second one to 01", x:330, y:0, isGroup:false };
 BCMtheButtonsUI[2]={image:"", shortcut:"S", label:"Save", command:"var idsave = charIDToTypeID( \"save\" );\
     var desc20 = new ActionDescriptor();\
     var idIn = charIDToTypeID( \"In  \" );\
@@ -11,12 +11,10 @@ BCMtheButtonsUI[2]={image:"", shortcut:"S", label:"Save", command:"var idsave = 
     desc20.putEnumerated( idsaveStage, idsaveStageType, idsaveBegin );\
     var idDocI = charIDToTypeID( \"DocI\" );\
     desc20.putInteger( idDocI, 1136 );\
-executeAction( idsave, desc20, DialogModes.NO );", toolTip:"just the save command", x:0, y:0};
-BCMtheButtonsUI[3]={image:"", shortcut:"A", label:"Save As", command:"saveQ(\"saveAs\");", toolTip:"save as command", x:110, y:0};
-BCMtheButtonsUI[4]={image:"", shortcut:"Q", label:"BCM Panel\nSave Maps", command:"runScript_Fnct_Arguments(\"c:\\\\Users\\\\Man\\\\Documents\\\\BCM\\\\Photoshop\\\\panels\\\\BCMPanel2.1\\\\scripts\\\\bcm_saveTGA.jsx;saveTGA;\");", toolTip:"triggers the \"SAVE MAPS\" button from the BCM Panel ", x:660, y:0};
-BCMtheButtonsUI[5]={image:"", shortcut:"B", label:"Backup", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/BCM17_createBackup.jsx;;\");", toolTip:"create backup for the current document, by saving the document then creating a 7z archive with it in the backup directory", x:220, y:0};
-BCMtheButtonsUI[6]={image:"", shortcut:"C", label:"Albedo Check", command:"runScript_Fnct_Arguments(\"c:\\\\Users\\\\Man\\\\Documents\\\\BCM\\\\Photoshop\\\\panels\\\\BCMPanel2.1\\\\scripts\\\\bcm_albedoCheckToggle.jsx;toogleVisDN_Check;\");", toolTip:"", x:660, y:110};
-BCMtheButtonsUI[7]={image:"", shortcut:"D", label:"Delete\nAlbedo Check", command:"runScript_Fnct_Arguments(\"c:\\\\Users\\\\Man\\\\Documents\\\\BCM\\\\Photoshop\\\\panels\\\\BCMPanel2.1\\\\scripts\\\\bcm_albedoCheckToggle.jsx;removeDN_Check;\");", toolTip:"", x:770, y:110};
-BCMtheButtonsUI[8]={image:"", shortcut:"1", label:"BCM Panel\nCustomize", command:"\
-\
-	    		runJSX( \"~/Documents/BCM/Photoshop/panels/BCMPanel2.1/linkScripts/CUSTOMIZE.jsx\" );", toolTip:"", x:550, y:110};
+executeAction( idsave, desc20, DialogModes.NO );", toolTip:"just the save command", x:0, y:0, isGroup:false };
+BCMtheButtonsUI[3]={image:"", shortcut:"A", label:"Save As", command:"saveQ(\"saveAs\");", toolTip:"save as command", x:110, y:0, isGroup:false };
+BCMtheButtonsUI[4]={image:"", shortcut:"Q", label:"BCM Panel\nSave Maps", command:"runScript_Fnct_Arguments(\"c:\\\\Users\\\\Man\\\\Documents\\\\BCM\\\\Photoshop\\\\panels\\\\BCMPanel2.1\\\\scripts\\\\bcm_saveTGA.jsx;saveTGA;\");", toolTip:"triggers the \"SAVE MAPS\" button from the BCM Panel ", x:660, y:0, isGroup:false };
+BCMtheButtonsUI[5]={image:"", shortcut:"B", label:"Backup", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/BCM17_createBackup.jsx;;\");", toolTip:"create backup for the current document, by saving the document then creating a 7z archive with it in the backup directory", x:220, y:0, isGroup:false };
+BCMtheButtonsUI[6]={image:"", shortcut:"C", label:"Albedo Check", command:"runScript_Fnct_Arguments(\"c:\\\\Users\\\\Man\\\\Documents\\\\BCM\\\\Photoshop\\\\panels\\\\BCMPanel2.1\\\\scripts\\\\bcm_albedoCheckToggle.jsx;toogleVisDN_Check;\");", toolTip:"", x:660, y:110, isGroup:false };
+BCMtheButtonsUI[7]={image:"", shortcut:"D", label:"Delete\nAlbedo Check", command:"runScript_Fnct_Arguments(\"c:\\\\Users\\\\Man\\\\Documents\\\\BCM\\\\Photoshop\\\\panels\\\\BCMPanel2.1\\\\scripts\\\\bcm_albedoCheckToggle.jsx;removeDN_Check;\");", toolTip:"", x:770, y:110, isGroup:false };
+BCMtheButtonsUI[8]={image:"", shortcut:"1", label:"BCM Panel\nCustomize", command:"runScript_Fnct_Arguments( \"~/Documents/BCM/Photoshop/panels/BCMPanel2.1/linkScripts/CUSTOMIZE.jsx;;\" );", toolTip:"", x:550, y:110, isGroup:false };

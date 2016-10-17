@@ -1,1 +1,1 @@
-var winSizeFirst = {w:1137, h:275};
+var winSizeFirst = {w:1137, h:275, stick:false};

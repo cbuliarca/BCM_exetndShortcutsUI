@@ -16,7 +16,7 @@ BCMtheButtonsUI[0]={image:"", shortcut:"B", label:"Bright/Contrsat", command:"va
         desc6.putObject( idType, idBrgC, desc7 );\
     var idAdjL = charIDToTypeID( \"AdjL\" );\
     desc5.putObject( idUsng, idAdjL, desc6 );\
-executeAction( idMk, desc5, DialogModes.NO );", toolTip:"", x:0, y:0};
+executeAction( idMk, desc5, DialogModes.NO );", toolTip:"", x:0, y:0, isGroup:false };
 BCMtheButtonsUI[1]={image:"", shortcut:"L", label:"Levels", command:"var idMk = charIDToTypeID( \"Mk  \" );\
     var desc13 = new ActionDescriptor();\
     var idnull = charIDToTypeID( \"null\" );\
@@ -36,7 +36,7 @@ BCMtheButtonsUI[1]={image:"", shortcut:"L", label:"Levels", command:"var idMk = 
         desc14.putObject( idType, idLvls, desc15 );\
     var idAdjL = charIDToTypeID( \"AdjL\" );\
     desc13.putObject( idUsng, idAdjL, desc14 );\
-executeAction( idMk, desc13, DialogModes.NO );", toolTip:"", x:110, y:0};
+executeAction( idMk, desc13, DialogModes.NO );", toolTip:"", x:110, y:0, isGroup:false };
 BCMtheButtonsUI[2]={image:"", shortcut:"C", label:"Curves", command:"// =======================================================\
 var idMk = charIDToTypeID( \"Mk  \" );\
     var desc16 = new ActionDescriptor();\
@@ -57,7 +57,7 @@ var idMk = charIDToTypeID( \"Mk  \" );\
         desc17.putObject( idType, idCrvs, desc18 );\
     var idAdjL = charIDToTypeID( \"AdjL\" );\
     desc16.putObject( idUsng, idAdjL, desc17 );\
-executeAction( idMk, desc16, DialogModes.NO );", toolTip:"", x:220, y:0};
+executeAction( idMk, desc16, DialogModes.NO );", toolTip:"", x:220, y:0, isGroup:false };
 BCMtheButtonsUI[3]={image:"", shortcut:"G", label:"InvertGreen", command:"// =======================================================\
 var idMk = charIDToTypeID( \"Mk  \" );\
     var desc16 = new ActionDescriptor();\
@@ -108,7 +108,7 @@ var list2 = new ActionList();\
     desc1.putObject(charIDToTypeID('T   '), charIDToTypeID('Crvs'), desc2);\
     executeAction(charIDToTypeID('setd'), desc1, DialogModes.NO);\
 \
-app.activeDocument.activeLayer.name = \"InvertGreen\";", toolTip:"", x:330, y:0};
+app.activeDocument.activeLayer.name = \"InvertGreen\";", toolTip:"", x:330, y:0, isGroup:false };
 BCMtheButtonsUI[4]={image:"", shortcut:"BACKSLASH", label:"Blue50%", command:"// =======================================================\
 var idMk = charIDToTypeID( \"Mk  \" );\
     var desc16 = new ActionDescriptor();\
@@ -159,7 +159,7 @@ var list2 = new ActionList();\
     desc1.putObject(charIDToTypeID('T   '), charIDToTypeID('Crvs'), desc2);\
     executeAction(charIDToTypeID('setd'), desc1, DialogModes.NO);\
 \
-app.activeDocument.activeLayer.name = \"Blue_50%\";", toolTip:"", x:440, y:0};
+app.activeDocument.activeLayer.name = \"Blue_50%\";", toolTip:"", x:440, y:0, isGroup:false };
 BCMtheButtonsUI[5]={image:"", shortcut:"H", label:"Hue/Saturation", command:"var idMk = charIDToTypeID( \"Mk  \" );\
     var desc19 = new ActionDescriptor();\
     var idnull = charIDToTypeID( \"null\" );\
@@ -181,7 +181,7 @@ BCMtheButtonsUI[5]={image:"", shortcut:"H", label:"Hue/Saturation", command:"var
         desc20.putObject( idType, idHStr, desc21 );\
     var idAdjL = charIDToTypeID( \"AdjL\" );\
     desc19.putObject( idUsng, idAdjL, desc20 );\
-executeAction( idMk, desc19, DialogModes.NO );", toolTip:"", x:550, y:0};
+executeAction( idMk, desc19, DialogModes.NO );", toolTip:"", x:550, y:0, isGroup:false };
 BCMtheButtonsUI[6]={image:"", shortcut:"I", label:"Invert", command:"var idMk = charIDToTypeID( \"Mk  \" );\
     var desc22 = new ActionDescriptor();\
     var idnull = charIDToTypeID( \"null\" );\
@@ -197,5 +197,5 @@ BCMtheButtonsUI[6]={image:"", shortcut:"I", label:"Invert", command:"var idMk = 
     var idAdjL = charIDToTypeID( \"AdjL\" );\
     desc22.putObject( idUsng, idAdjL, desc23 );\
 executeAction( idMk, desc22, DialogModes.NO );\
-", toolTip:"", x:660, y:0};
-BCMtheButtonsUI[7]={image:"", shortcut:"Q", label:"SolidColor", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_toolsUI/extras/scripts/~bcm_solidColor.jsx;;\");", toolTip:"", x:770, y:0};
+", toolTip:"", x:660, y:0, isGroup:false };
+BCMtheButtonsUI[7]={image:"", shortcut:"Q", label:"SolidColor", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_toolsUI/extras/scripts/~bcm_solidColor.jsx;;\");", toolTip:"", x:770, y:0, isGroup:false };

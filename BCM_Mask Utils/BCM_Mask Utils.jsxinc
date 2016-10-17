@@ -1,6 +1,6 @@
 /*
 <javascriptresource>
-  <category>BCM</category>
+  <category>BCM_ESHui</category>
 </javascriptresource>
 */
 var _gCurrentESHui = File($.fileName);

@@ -63,3 +63,5 @@ var helpCodeFromSetLcz = {en:" from set: "};
 var helpCodeEndActionLcz = {en:"// ===========code added by the browse Action button"};
 var shortcutExistsLcz = {en:"The button \"%1\" already has the shortcut: \"%2\". Do you still want to use \"%2\" as shortcut for this button?\
 If so the button \"%1\" will remain without a shortcut.\n If you don't then you can try another shortcut key"};
+var shortcutPersistentWin = {en:"You can't set Ctrl + ACCENT as shortcut. It is used to toggle the persistent mode for the UI.\
+Please set another shortcut"};

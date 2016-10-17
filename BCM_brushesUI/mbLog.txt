@@ -9,16 +9,11 @@ on Activate:
  firstResz: 0
 win.fl
 addingResize:
-      ({w:688, h:425})
+      ({w:688, h:425, stick:true})
 on Activate:
  firstResz: 1
 000000
 addButtons
 onMove
 showButtons
- optionsWin: 787 , 640.5 , 11 , 110 , 220
-on Activate:
- firstResz: 1
-on Activate:
- firstResz: 1
 onClose

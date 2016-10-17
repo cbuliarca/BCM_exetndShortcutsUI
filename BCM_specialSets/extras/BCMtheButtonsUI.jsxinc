@@ -1,22 +1,22 @@
 var BCMtheButtonsUI = new Array();
 BCMtheButtonsUI[0]={image:"", shortcut:"S", label:"SET", command:"runScript_Fnct_Arguments( _gCurrentESHui.path +\"/extras/test_duplAlphas.jsxinc;setSelectedIDsAsSpecialSets0;\" );\
-", toolTip:"", x:0, y:0};
+", toolTip:"", x:0, y:0, isGroup:false };
 BCMtheButtonsUI[1]={image:"", shortcut:"ACCENT", label:"update", command:"runScript_Fnct_Arguments(_gCurrentESHui.path +\"/extras/test_duplAlphas.jsxinc;update0;\" );\
-", toolTip:"", x:220, y:0};
+", toolTip:"", x:220, y:0, isGroup:false };
 BCMtheButtonsUI[2]={image:"", shortcut:"Q", label:"select\none by one\nBLinked", command:"runScript_Fnct_Arguments(_gCurrentESHui.path +\"/extras/test_duplAlphas.jsxinc;selectOneByOneSpecialLayers0;\" );\
-", toolTip:"", x:550, y:0};
+", toolTip:"", x:550, y:0, isGroup:false };
 BCMtheButtonsUI[3]={image:"", shortcut:"A", label:"select all\nBLinked", command:"runScript_Fnct_Arguments(_gCurrentESHui.path +\"/extras/test_duplAlphas.jsxinc;selectAllSpecialLayers0;\" );\
-", toolTip:"", x:660, y:0};
-BCMtheButtonsUI[4]={image:"", shortcut:"W", label:"append\nBLink", command:"runScript_Fnct_Arguments(_gCurrentESHui.path +\"/extras/test_duplAlphas.jsxinc;appendAsBLink0;\" );", toolTip:"", x:440, y:0};
+", toolTip:"", x:660, y:0, isGroup:false };
+BCMtheButtonsUI[4]={image:"", shortcut:"W", label:"append\nBLink", command:"runScript_Fnct_Arguments(_gCurrentESHui.path +\"/extras/test_duplAlphas.jsxinc;appendAsBLink0;\" );", toolTip:"", x:440, y:0, isGroup:false };
 BCMtheButtonsUI[5]={image:"", shortcut:"D", label:"duplicate with\nBLinks", command:"runScript_Fnct_Arguments(_gCurrentESHui.path +\"/extras/test_duplAlphas.jsxinc;duplicateWithBLinks0;\" );\
-", toolTip:"", x:770, y:0};
+", toolTip:"", x:770, y:0, isGroup:false };
 BCMtheButtonsUI[6]={image:"", shortcut:"TAB", label:"show layer\nmetadata", command:"runScript_Fnct_Arguments(_gCurrentESHui.path +\"/extras/test_duplAlphas.jsxinc;showLayerMetadata;\" );\
-", toolTip:"", x:880, y:0};
+", toolTip:"", x:880, y:0, isGroup:false };
 BCMtheButtonsUI[7]={image:"", shortcut:"G", label:"get sel id", command:"runScript_Fnct_Arguments(_gCurrentESHui.path +\"/extras/test_duplAlphas.jsxinc;showSelectedLayersID;\" );\
-", toolTip:"", x:990, y:0};
-BCMtheButtonsUI[8]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:110, y:0};
-BCMtheButtonsUI[9]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:330, y:0};
-BCMtheButtonsUI[10]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:0, y:110};
-BCMtheButtonsUI[11]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:110, y:110};
-BCMtheButtonsUI[12]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:220, y:110};
-BCMtheButtonsUI[13]={image:"", shortcut:"1", label:"overlay\ndate & time", command:"runScript_Fnct_Arguments(_gCurrentESHui.path +\"/extras/test_duplAlphas.jsxinc;overlayDateAndTime0;\" );", toolTip:"", x:330, y:110};
+", toolTip:"", x:990, y:0, isGroup:false };
+BCMtheButtonsUI[8]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:110, y:0, isGroup:false };
+BCMtheButtonsUI[9]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:330, y:0, isGroup:false };
+BCMtheButtonsUI[10]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:0, y:110, isGroup:false };
+BCMtheButtonsUI[11]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:110, y:110, isGroup:false };
+BCMtheButtonsUI[12]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:220, y:110, isGroup:false };
+BCMtheButtonsUI[13]={image:"", shortcut:"1", label:"overlay\ndate & time", command:"runScript_Fnct_Arguments(_gCurrentESHui.path +\"/extras/test_duplAlphas.jsxinc;overlayDateAndTime0;\" );", toolTip:"", x:330, y:110, isGroup:false };

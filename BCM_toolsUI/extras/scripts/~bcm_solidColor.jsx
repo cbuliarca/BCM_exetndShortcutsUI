@@ -1,5 +1,5 @@
 makeSolidColor();
-ccallColorPicker(getSolidColors());q
+callColorPicker(getSolidColors());
 function CreateSolidLayer() {
 
         var startColor = app.foregroundColor;

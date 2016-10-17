@@ -63,3 +63,5 @@ helpCodeFromSetLcz.fr = "du jeu:";
 helpCodeEndActionLcz.fr = "// =========== code ajouté par l'action bouton de navigation";
 shortcutExistsLcz.fr = "Le bouton \"%1 \"a déjà le raccourci: \"%2\". Voulez-vous continuer à utiliser \"%2 \" comme raccourci pour ce bouton ?\
 Si oui le bouton \"%1 \" restera sans un raccourci \n Si vous ne le faites pas, alors vous pouvez essayer une autre touche de raccourci ";
+shortcutPersistentWin.fr = "Vous ne pouvez pas définir Ctrl + ACCENT comme raccourci. Il est utilisé pour activer le mode persistant pour l'interface utilisateur.\
+S'il vous plaît définir un autre raccourci";

@@ -9,7 +9,7 @@ on Activate:
  firstResz: 0
 win.fl
 addingResize:
-      ({w:1137, h:275})
+      ({w:1137, h:275, stick:false})
 on Activate:
  firstResz: 1
 000000
