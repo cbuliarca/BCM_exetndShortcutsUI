@@ -17,7 +17,8 @@ addButtons
 onMove
 showButtons
 pressed key:::
-pressed keyStr::: ESCAPE
+pressed keyStr::: I
+onClose
 pressed key:::
-pressed keyStr::: ESCAPE
+pressed keyStr::: I
 onClose

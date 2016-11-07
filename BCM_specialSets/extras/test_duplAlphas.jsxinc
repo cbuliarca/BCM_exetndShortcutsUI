@@ -163,7 +163,7 @@ function update(){
 }
 function updateSpecialSetsLayers( id ){
 	multiSelectByIDs(id);
-	var SSL = getSpecialLayersIDsFromMetadata();
+	var SSL = getSpecialLayersIDsFromMetadata("BCM_BLinks");
 	if(SSL.length > 0){
 		for(var a=0; a<SSL.length; a++){
 			if(id != SSL[a]){

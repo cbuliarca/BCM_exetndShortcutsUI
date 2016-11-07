@@ -18,7 +18,7 @@ BCMtheButtonsUI[8]={image:"", shortcut:"W", label:"Special Sets", command:"runSc
 ", toolTip:"", x:880, y:0, isGroup:true};
 BCMtheButtonsUI[9]={image:"", shortcut:"X", label:"Tools", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_toolsUI/BCM_toolsUI.jsx;;\" );\
 ", toolTip:"", x:990, y:0, isGroup:true};
-BCMtheButtonsUI[10]={image:"", shortcut:"1", label:"Link Brush\nto Layer", command:"runScript_Fnct_Arguments( _gESHFolder + \"/BCM_LinkBrushToLayer/scripts/linkBrushToLayerUI.jsx;;\" );", toolTip:"", x:1100, y:0, isGroup:true};
+BCMtheButtonsUI[10]={image:"", shortcut:"1", label:"Link Brush\nto Layer", command:"runScript_Fnct_Arguments( _gESHFolder + \"/BCM_LinkBrushToLayer/scripts/linkBrushToLayerUI.jsx;;\" );", toolTip:"", x:1100, y:0, isGroup:false};
 BCMtheButtonsUI[11]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:0, y:110, isGroup:false};
 BCMtheButtonsUI[12]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:110, y:110, isGroup:false};
 BCMtheButtonsUI[13]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:220, y:110, isGroup:false};

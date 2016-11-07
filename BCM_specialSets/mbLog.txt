@@ -16,4 +16,9 @@ on Activate:
 addButtons
 onMove
 showButtons
+pressed key:::
+pressed keyStr::: ACCENT
+onClose
+pressed key:::
+pressed keyStr::: ACCENT
 onClose

@@ -9,11 +9,16 @@ on Activate:
  firstResz: 0
 win.fl
 addingResize:
-      ({w:688, h:425, stick:true})
+      ({w:688, h:425, stick:false})
 on Activate:
  firstResz: 1
 000000
 addButtons
 onMove
 showButtons
+pressed key:::
+pressed keyStr::: P
+onClose
+pressed key:::
+pressed keyStr::: P
 onClose

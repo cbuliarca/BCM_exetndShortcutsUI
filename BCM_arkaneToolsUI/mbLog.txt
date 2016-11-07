@@ -3,17 +3,29 @@ addEvents:
 events added 
 winCreated
 win.pnl0
-onMove
-showButtons
 on Activate:
  firstResz: 0
-win.fl
+adding FPL:
 addingResize:
       ({w:520, h:273, stick:false})
-on Activate:
- firstResz: 1
 000000
 addButtons
-onMove
-showButtons
+getBtns
+ btnsNB: 2
+FLEX:: buttons receved: [object Object],[object Object]
+FLEX:: scr receved: /f/work/psScripts_wip/_scripts/BCM_exetndShortcutsUI/BCM_arkaneToolsUI
+FLEX:: addBtn: import resource
+sbs
+FLEX:: btn image: 
+FLEX:: added btn: import resource
+sbs
+FLEX:: addBtn: ARK_review
+FLEX:: btn image: 
+FLEX:: added btn: ARK_review
+on Activate:
+ firstResz: 1
+on Activate:
+ firstResz: 1
+FLEX:: onScrollStop
+activate from flex
 onClose

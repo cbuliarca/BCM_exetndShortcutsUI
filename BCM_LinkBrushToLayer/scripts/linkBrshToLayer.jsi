@@ -34,9 +34,9 @@ function addLBL(){
 			deleteAllBrshFromPreset();
 			loadBeforePreset();
 			try{
-				_beforePreset.remove();
-				_DocBrshPreset.remove();
-				_testMetadata.remove();
+				// _beforePreset.remove();
+				// _DocBrshPreset.remove();
+				// _testMetadata.remove();
 			}catch(err){};
 			progressWindow.updateProgress();
 		}else{alert("the current tool doesn't use a brush")}
@@ -66,9 +66,9 @@ function getLBL(){
 			loadBeforePreset();
 		}
 		try{
-			_beforePreset.remove();
-			_DocBrshPreset.remove();
-			_testMetadata.remove();
+			// _beforePreset.remove();
+			// _DocBrshPreset.remove();
+			// _testMetadata.remove();
 		}catch(err){};
 		progressWindow.updateProgress();
 	}else{
@@ -115,9 +115,9 @@ function replLBL(){
 			deleteAllBrshFromPreset();
 			loadBeforePreset();
 			try{
-				_beforePreset.remove();
-				_DocBrshPreset.remove();
-				_testMetadata.remove();
+				// _beforePreset.remove();
+				// _DocBrshPreset.remove();
+				// _testMetadata.remove();
 			}catch(err){};
 			progressWindow.updateProgress();
 		}else{alert("the current tool doesn't use a brush")}

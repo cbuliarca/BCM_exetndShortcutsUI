@@ -16,14 +16,9 @@ on Activate:
 addButtons
 onMove
 showButtons
- optionsWin: 964 , 549.5 , 2 , 440 , 0
-on Activate:
- firstResz: 1
-on Activate:
- firstResz: 1
- optionsWin: 964 , 549.5 , 2 , 440 , 0
-on Activate:
- firstResz: 1
-on Activate:
- firstResz: 1
+pressed key:::
+pressed keyStr::: 1
+onClose
+pressed key:::
+pressed keyStr::: 1
 onClose
