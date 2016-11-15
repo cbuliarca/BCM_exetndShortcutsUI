@@ -1,0 +1,3 @@
+var BCMtheButtonsUI = new Array();
+BCMtheButtonsUI[0]={image:"", shortcut:"", label:"Mask\n@passerby", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_psMaskUI/BCM_psMaskUI.jsx;;\" );\
+", toolTip:"", x:0, y:0, isGroup:true};

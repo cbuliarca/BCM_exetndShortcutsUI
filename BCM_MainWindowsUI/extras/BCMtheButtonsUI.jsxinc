@@ -6,8 +6,7 @@ BCMtheButtonsUI[2]={image:"", shortcut:"A", label:"ARKANE\nTools", command:"runS
 ", toolTip:"", x:220, y:0, isGroup:true};
 BCMtheButtonsUI[3]={image:"", shortcut:"C", label:"Change Color", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_changeColorUI/BCM_changeColorUI.jsx;;\" );\
 ", toolTip:"", x:330, y:0, isGroup:true};
-BCMtheButtonsUI[4]={image:"", shortcut:"M", label:"Mask\n@passerby", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_psMaskUI/BCM_psMaskUI.jsx;;\" );\
-", toolTip:"", x:440, y:0, isGroup:true};
+BCMtheButtonsUI[4]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:440, y:0, isGroup:false};
 BCMtheButtonsUI[5]={image:"", shortcut:"S", label:"Saves", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_saves/BCM_savesUI.jsx;;\" );\
 ", toolTip:"", x:550, y:0, isGroup:true};
 BCMtheButtonsUI[6]={image:"", shortcut:"Q", label:"Select\nby color", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_selectByColorUI/BCM_searchLayerByColorsUI.jsxinc;;\" );\
@@ -34,5 +33,7 @@ the magic wand will work like it suposed to. The user can also use the Alt or Sh
        Also if the user press the Divide key and clicks with the magic wand selected anywhere on the document it will set the selected layer as a hotLayer\
        Pressing CapsLock when clicking with the magic wand the user can toggle visibilty for the hotLayer.", x:550, y:110, isGroup:true};
 BCMtheButtonsUI[17]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:660, y:110, isGroup:false};
-BCMtheButtonsUI[18]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:990, y:110, isGroup:false};
-BCMtheButtonsUI[19]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:1100, y:110, isGroup:false};
+BCMtheButtonsUI[18]={image:"", shortcut:"O", label:"OTHER's\nscripts from \nWEB", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_from the NET/BCM_from the NET.jsxinc;;\" );", toolTip:"", x:990, y:110, isGroup:false};
+BCMtheButtonsUI[19]={image:"", shortcut:"F1", label:"HELP", command:"openHelpHTML( \"https://www.youtube.com/watch?v=2_x1LerZfek\");\
+$.sleep(500);\
+openHelpHTML( \"https://www.youtube.com/watch?v=EkQXvMXDdX4\");", toolTip:"", x:1100, y:110, isGroup:false};

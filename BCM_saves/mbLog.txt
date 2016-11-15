@@ -2,7 +2,6 @@
 addEvents: 
 events added 
 winCreated
-win.pnl0
 onMove
 showButtons
 on Activate:
@@ -19,4 +18,19 @@ buttonStick :: drawingStateObj::: [object Object]
 addButtons
 onMove
 showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: S
+search for keyStr::: S
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
 onClose
+compare initWin0::940 :: 940
+compare initWin1::940 :: 940
+compare initWin0::311 :: 277
+compare initWin1::311 :: 311
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false

@@ -8,7 +8,7 @@ on Activate:
  firstResz: 0
 win.fl
 addingResize:
-      ({w:1027, h:147, stick:false})
+      ({w:1000, h:164, stick:undefined})
 on Activate:
  firstResz: 1
 buttonStick :: draW
@@ -27,9 +27,9 @@ firstPressAnyButton :: true
 pressed keyStr::: ESCAPE
 search for keyStr::: ESCAPE
 onClose
-compare initWin0::1027 :: 1027
-compare initWin1::1027 :: 1027
-compare initWin0::181 :: 147
-compare initWin1::181 :: 181
-compare initWin0::false :: false
-compare initWin1::false :: false
+compare initWin0::1000 :: 1000
+compare initWin1::1000 :: 1000
+compare initWin0::198 :: 164
+compare initWin1::198 :: 198
+compare initWin0::undefined :: undefined
+compare initWin1::undefined :: undefined

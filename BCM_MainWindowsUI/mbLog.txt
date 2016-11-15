@@ -2,35 +2,166 @@
 addEvents: 
 events added 
 winCreated
-onMove
-showButtons
+buttonStick :: draW
+buttonStick :: this::: [object Button]
+buttonStick :: drawingStateObj::: [object Object]
 on Activate:
  firstResz: 0
-win.fl
+adding FPL:
 addingResize:
-      ({w:1238, h:288, stick:false})
-on Activate:
- firstResz: 1
-buttonStick :: draW
-buttonStick :: this::: [object StaticText]
-buttonStick :: drawingStateObj::: [object Object]
+      ({w:1238, h:267, stick:false})
 000000
 addButtons
-onMove
-showButtons
+getBtns
+ btnsNB: 20
+FLEX:: buttons receved: [object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+FLEX:: scr receved: /f/work/psScripts_wip/_scripts/BCM_exetndShortcutsUI/BCM_MainWindowsUI
+FLEX:: addBtn: Brushes
+FLEX:: btn image: 
+FLEX:: added btn: Brushes
+FLEX:: addBtn: Adjusments
+Layers
+FLEX:: btn image: 
+FLEX:: added btn: Adjusments
+Layers
+FLEX:: addBtn: ARKANE
+Tools
+FLEX:: btn image: 
+FLEX:: added btn: ARKANE
+Tools
+FLEX:: addBtn: Change Color
+FLEX:: btn image: 
+FLEX:: added btn: Change Color
+FLEX:: addBtn: 
+FLEX:: btn image: 
+FLEX:: added btn: 
+FLEX:: addBtn: Saves
+FLEX:: btn image: 
+FLEX:: added btn: Saves
+FLEX:: addBtn: Select
+by color
+FLEX:: btn image: 
+FLEX:: added btn: Select
+by color
+FLEX:: addBtn: Special Layers
+FLEX:: btn image: 
+FLEX:: added btn: Special Layers
+FLEX:: addBtn: Special Sets
+FLEX:: btn image: 
+FLEX:: added btn: Special Sets
+FLEX:: addBtn: Tools
+FLEX:: btn image: 
+FLEX:: added btn: Tools
+FLEX:: addBtn: Link Brush
+to Layer
+FLEX:: btn image: 
+FLEX:: added btn: Link Brush
+to Layer
+FLEX:: addBtn: 
+FLEX:: btn image: 
+FLEX:: added btn: 
+FLEX:: addBtn: 
+FLEX:: btn image: 
+FLEX:: added btn: 
+FLEX:: addBtn: 
+FLEX:: btn image: 
+FLEX:: added btn: 
+FLEX:: addBtn: 
+FLEX:: btn image: 
+FLEX:: added btn: 
+FLEX:: addBtn: Mask Utils
+FLEX:: btn image: 
+FLEX:: added btn: Mask Utils
+FLEX:: addBtn: event
+Magic Wand
+FLEX:: btn image: 
+FLEX:: added btn: event
+Magic Wand
+FLEX:: addBtn: 
+FLEX:: btn image: 
+FLEX:: added btn: 
+FLEX:: addBtn: OTHER's
+scripts from 
+WEB
+FLEX:: btn image: 
+FLEX:: added btn: OTHER's
+scripts from 
+WEB
+FLEX:: addBtn: HELP
+FLEX:: btn image: 
+FLEX:: added btn: HELP
 pressed key:::[object KeyboardEvent]
 firstPressAnyButton :: true
-pressed keyStr::: ACCENT
-search for keyStr::: ACCENT
+pressed keyStr::: Ctrl + ACCENT
+setPersist
 buttonStick :: draW
-buttonStick :: this::: [object StaticText]
+buttonStick :: this::: [object Button]
 buttonStick :: drawingStateObj::: [object Object]
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+setPersist
+buttonStick :: draW
+buttonStick :: this::: [object Button]
+buttonStick :: drawingStateObj::: [object Object]
+FLEX:: onScrollStop
+activate from flex
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+setPersist
+buttonStick :: draW
+buttonStick :: this::: [object Button]
+buttonStick :: drawingStateObj::: [object Object]
+FLEX:: onScrollStop
+activate from flex
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+setPersist
+buttonStick :: draW
+buttonStick :: this::: [object Button]
+buttonStick :: drawingStateObj::: [object Object]
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+setPersist
+buttonStick :: draW
+buttonStick :: this::: [object Button]
+buttonStick :: drawingStateObj::: [object Object]
+FLEX:: onScrollStop
+activate from flex
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+setPersist
+buttonStick :: draW
+buttonStick :: this::: [object Button]
+buttonStick :: drawingStateObj::: [object Object]
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+setPersist
+buttonStick :: draW
+buttonStick :: this::: [object Button]
+buttonStick :: drawingStateObj::: [object Object]
+FLEX:: onScrollStop
+activate from flex
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+setPersist
+buttonStick :: draW
+buttonStick :: this::: [object Button]
+buttonStick :: drawingStateObj::: [object Object]
+FLEX:: onScrollStop
+activate from flex
+FLEX:: onScrollStop
+activate from flex
 onClose
 compare initWin0::1238 :: 1238
 compare initWin1::1238 :: 1238
-compare initWin0::322 :: 288
-compare initWin1::322 :: 322
+compare initWin0::286 :: 267
+compare initWin1::286 :: 286
 compare initWin0::false :: false
 compare initWin1::false :: false
-pressed key:::[object KeyboardEvent]
-firstPressAnyButton :: false
