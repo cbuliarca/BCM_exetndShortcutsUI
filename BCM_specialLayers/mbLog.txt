@@ -2,23 +2,225 @@
 addEvents: 
 events added 
 winCreated
-win.pnl0
 onMove
 showButtons
 on Activate:
  firstResz: 0
 win.fl
 addingResize:
-      ({w:928, h:145, stick:false})
+      ({w:928, h:147, stick:false})
 on Activate:
  firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
 000000
 addButtons
 onMove
 showButtons
-pressed key:::
-pressed keyStr::: 2
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+setPersist
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+setPersist
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+setPersist
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+setPersist
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+setPersist
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+setPersist
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+setPersist
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+setPersist
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+setPersist
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+setPersist
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+setPersist
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+setPersist
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+setPersist
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+setPersist
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+setPersist
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Ctrl + ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+setPersist
+btnStick :::  clicked
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+setPersist
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+on Activate:
+ firstResz: 1
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+on Activate:
+ firstResz: 1
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+btnStick :::  clicked
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+setPersist
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
 onClose
-pressed key:::
-pressed keyStr::: 2
-onClose
+compare initWin0::928 :: 928
+compare initWin1::928 :: 928
+compare initWin0::181 :: 147
+compare initWin1::181 :: 181
+compare initWin0::false :: false
+compare initWin1::false :: false

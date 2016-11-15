@@ -51,7 +51,7 @@ function toogleConformLinkMasks(){
 	var sel = getSelectedLayersIds();
 	value = false;
 	if(hasLayerMaskID(sel[0]) == true){
-		value = isLayerMaskLinkedID(sel[0])?false:true;
+		value = isLayerMaskLinkedID(sel[0]) == true?false:true;
 	}
 	for(var i = 0; i<sel.length; i++){
 		if(hasLayerMaskID(sel[i]) == true){

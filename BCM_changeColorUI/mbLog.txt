@@ -3,67 +3,22 @@ addEvents:
 events added 
 winCreated
 win.pnl0
+onMove
+showButtons
 on Activate:
  firstResz: 0
-adding FPL:
+win.fl
 addingResize:
       ({w:807, h:995, stick:false})
-000000
-addButtons
-getBtns
- btnsNB: 16
-FLEX:: buttons receved: [object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
-FLEX:: scr receved: /f/work/psScripts_wip/_scripts/BCM_exetndShortcutsUI/BCM_changeColorUI
-FLEX:: addBtn: ch: Bright
-FLEX:: btn image: 
-FLEX:: added btn: ch: Bright
-FLEX:: addBtn: ch: Saturation
-FLEX:: btn image: 
-FLEX:: added btn: ch: Saturation
-FLEX:: addBtn: ch: Hue
-FLEX:: btn image: 
-FLEX:: added btn: ch: Hue
-FLEX:: addBtn: ch: -Bright
-FLEX:: btn image: 
-FLEX:: added btn: ch: -Bright
-FLEX:: addBtn: ch: -Saturation
-FLEX:: btn image: 
-FLEX:: added btn: ch: -Saturation
-FLEX:: addBtn: ch: -Hue
-FLEX:: btn image: 
-FLEX:: added btn: ch: -Hue
-FLEX:: addBtn: chProc
-FLEX:: btn image: 
-FLEX:: added btn: chProc
-FLEX:: addBtn: ch:Red
-FLEX:: btn image: 
-FLEX:: added btn: ch:Red
-FLEX:: addBtn: ch:-Red
-FLEX:: btn image: 
-FLEX:: added btn: ch:-Red
-FLEX:: addBtn: ch:-Green
-FLEX:: btn image: 
-FLEX:: added btn: ch:-Green
-FLEX:: addBtn: ch:Green
-FLEX:: btn image: 
-FLEX:: added btn: ch:Green
-FLEX:: addBtn: AUTOHOTKEY
-FLEX:: btn image: 
-FLEX:: added btn: AUTOHOTKEY
-FLEX:: addBtn: ch:Blue
-FLEX:: btn image: 
-FLEX:: added btn: ch:Blue
-FLEX:: addBtn: ch:-Blue
-FLEX:: btn image: 
-FLEX:: added btn: ch:-Blue
-FLEX:: addBtn: 
-FLEX:: btn image: 
-FLEX:: added btn: 
-FLEX:: addBtn: 
-FLEX:: btn image: 
-FLEX:: added btn: 
-FLEX:: onScrollStop
-activate from flex
 on Activate:
  firstResz: 1
+buttonStick :: draW
+000000
+addButtons
+onMove
+showButtons
+pressed key:::
+pressed keyStr::: ESCAPE
+pressed key:::
+pressed keyStr::: ESCAPE
 onClose

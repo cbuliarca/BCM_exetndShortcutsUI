@@ -1,74 +1,76 @@
 #include "_libs/bezier.jsxinc"
 
-function addMyButton(parent, bounds, image, label, shortcut, reusePrecalculated, redraw){
+function _2addMyButton(parent, bounds ){
 	// logW('---addddd---BBBB');
 	// alert('vb')
-	if(reusePrecalculated== true){// this will reuse the contur it needs to have a global btnPathsArr decalred
-		if(btnPathsArr){
-			if(btnPathsArr.length == 0){
-				preCalcRoundRect1(1, 1, bounds.width-3, bounds.height-3);// only 1 calculation for the buttons
-			}
-		}
-	}
-
+	// if(reusePrecalculated== true){// this will reuse the contur it needs to have a global _2btnPathsArr decalred
+	// 	if(_2btnPathsArr){
+	// 		if(_2btnPathsArr.length == 0){
+	// 			preCalcRoundRect1(1, 1, bounds.width-3, bounds.height-3);// only 1 calculation for the buttons
+	// 		}
+	// 	}
+	// }
+	redraw = true
 	if(parseInt(app.version) > 15){
 		if(Object.prototype.toString.call( bounds ) === '[object Array]'){
 			var g = parent.add('statictext', undefined, '');
 			g.preferredSize = [bounds[0], bounds[1]];
+			boundsDraw = {width:bounds[0], height:bounds[1], x:0, y:0};
 			// alert('array');
 		}else{
 			var g = parent.add('statictext', bounds, '');
+			boundsDraw = {width:bounds.width, height:bounds.height, x:bounds.x, y:bounds.y};
 		}
 	}else{
-		g = parent.add('button', undefined, '');
+		g = parent.add('group', undefined, '');
 		g.preferredSize = [bounds[0], bounds[1]];
+		boundsDraw = {width:bounds[0], height:bounds[1], x:0, y:0};
 	}
 	g.md = false;
-	g.visible = false;
-	g.bReuse = reusePrecalculated;
+	g.visible = true;
+	// g.bReuse = reusePrecalculated;
 	g.llPath = [];
 	g.redraw = redraw;
 	g.clicked = 0;
-	g.label = label;
-	g.shortcut = shortcut;
-	g.img = image;
-	g.onDraw = winDraw;
+
+	g.boundsDraw = boundsDraw;
+	g.label = '';
+	// g.shortcut = shortcut;
+	// g.img = image;
+	// g.onDraw = function(){
+	// 	logW('rererer ::'+ this);
+	// 	_2winDraw(this)};
+	g.onDraw = _2winDraw;
 	g.command = '';
 	g.onRightMouse = '';
 	g.id = null;
 	g.context = false;
 	g.helptip = '';
 
-	addEvents(g);
-	g.onMove = function(){alert(btnPathsArr)};
+	_2addEvents(g);
+	// g.onMove = function(){alert(_2btnPathsArr)};
 	return g;
 
 
 }
 
-function addEvents(g){
-	// w.tempB.addEventListener('keydown', function (kd){pressed (kd)});
-    g.addEventListener('click', function (kd){clicked (kd)});
-    // g.addEventListener('mouseover', function (kd){mover (kd)});
-    // g.addEventListener('mouseout', function (kd){mout (kd)});
-    g.addEventListener('mousedown', function (kd){mdown (kd)});
-    g.addEventListener('mouseup', function (kd){mup (kd)});
-       // win.addEventListener('mouseover', function (kd){over (kd)});
-    // w.addEventListener('mouseup', function (kd){up(kd)});
-       // win.addEventListener('mousemove', function (kd){move(kd)});
+function _2addEvents(g){
+    g.addEventListener('click', function (kd){_2clicked (kd)});
+    g.addEventListener('mousedown', function (kd){_2mdown (kd)});
+    g.addEventListener('mouseup', function (kd){_2mup (kd)});
 };
 
-function resizeWin(){
+function _2resizeWin(){
 	g.bounds = {x:0, y:0, width: w.bounds.width-30, height:w.bounds.height-log.bounds.height-45};
 	// log.bounds = {x:0, y:w.bounds.height-405, width:400, height:20};
 }
-function mout(e){
+function _2mout(e){
 	// log.text += '\nmouse out';
 	// for(a in e){
 	// 	log.text += ("\n"+a+" :: "+e[a]);
 	// }
 }
-function mover(e){
+function _2mover(e){
 	// try{
 	// 	log.text = '\nmover';
 	// 	for(a in e){
@@ -77,8 +79,10 @@ function mover(e){
 	// }catch(err){}
 
 }
-function clicked(e){
-	winDrawClick(e.target);
+function _2clicked(e){
+	logW('btnStick :::  clicked')
+	// _2winDrawClick(e.target);
+	e.target.notify('onDraw');
 	// try{
 	// 	log.text = '\nclicked';
 	// 	for(a in e){
@@ -88,7 +92,7 @@ function clicked(e){
 
 }
 
-function mdown(e){
+function _2mdown(e){
 	// try{
 	// 	log.text = '\nmouse down';
 	// 	for(a in e){
@@ -98,7 +102,7 @@ function mdown(e){
 	e.target.md = true;
 }
 
-function mup(e){
+function _2mup(e){
 	// log.text = '\nmouse up';
 	// log.text += '\n'+e.target.md;
 	// log.text += '\n'+e.target.md;
@@ -117,7 +121,7 @@ function mup(e){
 	e.target.md = false;
 
 }
-function mmove(e){
+function _2mmove(e){
 	if(e.target.md == true){
 		// log.text += '\nmouse move';
 		// log.text += '\n\t'+e.clientX;
@@ -130,16 +134,15 @@ function mmove(e){
 }
 
 
-function winDrawClick(drawingStateObj){
-	drawingStateObj.clicked = 1;
-	// log.text += ('\nDRAW2----------');
-	drawingStateObj.notify("onDraw");
-	$.sleep(150);
-	drawingStateObj.clicked = 0;
-	drawingStateObj.notify("onDraw");
+function _2winDrawClick(drawingStateObj){
+	logW('buttonStick :: clicked = '+ drawingStateObj.clicked);
+	// drawingStateObj.dispatchEvent('onDraw');
+	// drawingStateObj.notify("onDraw");
+	_2winDraw(drawingStateObj);
+
 
 }
-function szDraw(drawingStateObj){
+function _2szDraw(drawingStateObj){
 	var gfx = this.graphics;
 	W = this.bounds.width;
 	H = this.bounds.height;
@@ -154,49 +157,72 @@ function szDraw(drawingStateObj){
 
 }
 
-function winDraw(drawingStateObj){
-	// this.llPath = [];
-	// alert('\nDRAW----------');
-	// log.text += ('\nDRAW----------');
-
-	// log.text += ('\n'+this.graphics.font);
-	// log.text += ('\n'+this.clicked);
-	// for(a in drawingStateObj){
-		// log.text += ("\n"+a+" :: "+drawingStateObj[a]);
+function _2winDraw(drawingStateObj){
+	logW('buttonStick :: draW');
+	logW('buttonStick :: this::: '+ this)
+	logW('buttonStick :: drawingStateObj::: '+ drawingStateObj)
+	// for( df in this){
+	// 	logw( df + ' ::: '+ this[df]);
 	// }
-	if(this.redraw == 0){	
-
-
-		var gfx = this.graphics;
-		W = this.bounds.width;
-		H = this.bounds.height;
+	// if(this == 'Global'){
+	// 	logW(' cum in plm e Global')
+	// }
+	// if(this.redraw == 1){	
+		// alert('rdraw');
+		// var gfx = this.graphics;
+		// W = this.boundsDraw.width;
+		// H = this.boundsDraw.height;
+		// X = this.boundsDraw.x;
+		// Y = this.boundsDraw.y;
 		
-		if(this.llPath.length == 0){
-			if(this.bReuse == true){
-				if(btnPathsArr.length != 0){
-					gfx.newPath();
-					gfx.moveTo(btnPathsArr[0][0], btnPathsArr[0][1]);
-					for(var i=1;i<btnPathsArr.length;i++){
-						gfx.lineTo(btnPathsArr[i][0],btnPathsArr[i][1]);
-					}
-					this.llPath = btnPathsArr;
-				}
-			}else{
-				btnPathsArr = [];
-				preCalcRoundRect1(1, 1, W-3, H-3);
+		// logW('buttonStick :: this::: '+ this)
+		var exPath = [];
+		try
+		{
+			exPathL = this.llPath.length
+			exPath = this.llPath;
+			var gfx = this.graphics;
+			W = this.boundsDraw.width;
+			H = this.boundsDraw.height;
+			X = this.boundsDraw.x;
+			Y = this.boundsDraw.y;
+		}catch(err){
+			exPathL = drawingStateObj.llPath.length;
+			exPath = drawingStateObj.llPath;
+			var gfx = drawingStateObj.graphics;
+			W = drawingStateObj.boundsDraw.width;
+			H = drawingStateObj.boundsDraw.height;
+			X = drawingStateObj.boundsDraw.x;
+			Y = drawingStateObj.boundsDraw.y;
+		}
+		// logW(exPath)
+		if(exPathL == 0){
+			// if(this.bReuse == true){
+			// 	if(_2btnPathsArr.length != 0){
+			// 		gfx.newPath();
+			// 		gfx.moveTo(_2btnPathsArr[0][0], _2btnPathsArr[0][1]);
+			// 		for(var i=1;i<_2btnPathsArr.length;i++){
+			// 			gfx.lineTo(_2btnPathsArr[i][0],_2btnPathsArr[i][1]);
+			// 		}
+			// 		this.llPath = _2btnPathsArr;
+			// 	}
+			// }else{
+				_2btnPathsArr = [];
+				_2preCalcRoundRect1(X, Y, W-3, H-3);
+				// logW(_2btnPathsArr.toSource());
 				gfx.newPath();
-				gfx.moveTo(btnPathsArr[0][0], btnPathsArr[0][1]);
-				for(var i=1;i<btnPathsArr.length;i++){
-					gfx.lineTo(btnPathsArr[i][0],btnPathsArr[i][1]);
+				gfx.moveTo(_2btnPathsArr[0][0], _2btnPathsArr[0][1]);
+				for(var i=1;i<_2btnPathsArr.length;i++){
+					gfx.lineTo(_2btnPathsArr[i][0],_2btnPathsArr[i][1]);
 				}			
-				this.llPath = btnPathsArr;
+				this.llPath = _2btnPathsArr;
 		
-			}
+			// }
 		}else{// reusing the first line created
 			gfx.newPath();
-			gfx.moveTo(this.llPath[0][0], this.llPath[0][1]);
-			for(var i=1;i<this.llPath.length;i++){
-				gfx.lineTo(this.llPath[i][0],this.llPath[i][1]);
+			gfx.moveTo(exPath[0][0], exPath[0][1]);
+			for(var i=1;i<exPath.length;i++){
+				gfx.lineTo(exPath[i][0],exPath[i][1]);
 			}
 		}
 
@@ -205,6 +231,15 @@ function winDraw(drawingStateObj){
 			if(this.context == true){
 				pen = gfx.newPen (gfx.PenType.SOLID_COLOR, [.8, .8, .8, 1], 1);
 			}
+				// logW('sssssssssssssssssssssssssssssssssssss')
+				// logW(gfx.toSource());
+				// for(a in gfx){
+				// 	logW(a + ':: '+ gfx[a]);
+				// }
+				// // for(b in gfx.currentPath){
+				// // 	logW(b + ':: '+ gfx.currentPath[b]);
+				// // }
+				// logW('sssssssssssssssssssssssssssssssssssss')
 				gfx.strokePath (pen, gfx.currentPath);
 				
 			if(this.clicked == 0){
@@ -222,18 +257,18 @@ function winDraw(drawingStateObj){
 		gfx.fillPath(brush, gfx.currentPath);
 
 
-		if(this.img != ""){
-			if(new File(this.img).exists){
-				var img = ScriptUI.newImage(this.img);
-					gfx.drawImage( img, 0, 0, W, H);
-			}
-		}
+		// if(this.img != ""){
+		// 	if(new File(this.img).exists){
+		// 		var img = ScriptUI.newImage(this.img);
+		// 			gfx.drawImage( img, 0, 0, W, H);
+		// 	}
+		// }
 
 		// the label:::::::
 
 		var font = ScriptUI.newFont("Tahoma",12.0);
 		if(this.clicked == 0){
-			var penF = gfx.newPen (gfx.PenType.SOLID_COLOR, [1, 1, 1, 1], 1);
+			var penF = gfx.newPen (gfx.PenType.SOLID_COLOR, [.5, .5, .5, .5], 1);
 		}else{
 			var penF = gfx.newPen (gfx.PenType.SOLID_COLOR, [.1, .1, .1, .1], 1);
 		}
@@ -246,7 +281,7 @@ function winDraw(drawingStateObj){
 			// var spaceBetween = cStrDim[1]/30;
 			var spaceBetween = 0;
 			var	strH = (cStrDim[1] * strArr.length) + (spaceBetween*(strArr.length-1));
-			var strPosY = (((H/2)-(strH/2))+((cStrDim[1]+spaceBetween)*i));//on the center
+			var strPosY = 5 - (((H/2)-(strH/2))+((cStrDim[1]+spaceBetween)*i));//on the center
 			// var strPosY = (H/2)+(((H/4)-(strH/2))+((cStrDim[1]+spaceBetween)*i));//ofsetted
 			var strPosX = ((W/2)-(cStrDim[0]/2));			
 			gfx.drawString(cStr, penF, strPosX, strPosY, font);
@@ -254,37 +289,37 @@ function winDraw(drawingStateObj){
 
 		// the shortcut::::::::::::::
 
-		var fontSH = ScriptUI.newFont("Tahoma Bold",10.0);
-		// for(a in fontSH){
-			// log.text +=("\n"+a+" :: "+fontSH[a]);
-		// }
-		var SHDim = gfx.measureString(this.shortcut, fontSH);
-		// log.text += ("\n"+this.shortcut+" :: ["+SHDim[0]+", "+SHDim[1]+"]");
-		SHDim = [	SHDim[0]*(fontSH.size/12.0),
-					SHDim[1]*(fontSH.size/12.0)]
-		var SHstrPosY = (H/10)-(SHDim[1]/2);
+		// var fontSH = ScriptUI.newFont("Tahoma Bold",10.0);
+		// // for(a in fontSH){
+		// 	// log.text +=("\n"+a+" :: "+fontSH[a]);
+		// // }
+		// var SHDim = gfx.measureString(this.shortcut, fontSH);
+		// // log.text += ("\n"+this.shortcut+" :: ["+SHDim[0]+", "+SHDim[1]+"]");
+		// SHDim = [	SHDim[0]*(fontSH.size/12.0),
+		// 			SHDim[1]*(fontSH.size/12.0)]
+		// var SHstrPosY = (H/10)-(SHDim[1]/2);
 
-		// log.text += ("\n"+this.shortcut+" :: ["+SHDim[0]+", "+SHDim[1]+"]");
-		var SHstrPosX = (W-SHDim[0])-10;
-		// log.text += ("\n"+SHstrPosX);
+		// // log.text += ("\n"+this.shortcut+" :: ["+SHDim[0]+", "+SHDim[1]+"]");
+		// var SHstrPosX = (W-SHDim[0])-10;
+		// // log.text += ("\n"+SHstrPosX);
 
-		var penA = gfx.newPen (gfx.PenType.SOLID_COLOR, [1, 1, 1, 1], 1);
-		gfx.drawString(this.shortcut, penA, SHstrPosX, SHstrPosY, fontSH);
+		// var penA = gfx.newPen (gfx.PenType.SOLID_COLOR, [1, 1, 1, 1], 1);
+		// gfx.drawString(this.shortcut, penA, SHstrPosX, SHstrPosY, fontSH);
 
-	}
+	// }
 }
 
-function precalcBezier(a, b, c, d){
+function _2precalcBezier(a, b, c, d){
 	var step = 10;
 	var bz = new Bezier(a,b,c,d);
 	// gfx.moveTo(bz.a.x, bz.a.y);
 	for( var i=0; i<1; ){
-		btnPathsArr.push([bz.mx(i), bz.my(i)]);
+		_2btnPathsArr.push([bz.mx(i), bz.my(i)]);
 		i=i+(1/step);
 	}
 }
 
-function preCalcRoundRect1(x, y, w, h){// using bezier
+function _2preCalcRoundRect1(x, y, w, h){// using bezier
 	// logW('calc--------;');
 	var whRation = w/h;
 
@@ -314,21 +349,21 @@ function preCalcRoundRect1(x, y, w, h){// using bezier
 	var crw = .4;
 	var crh = .7;
 
-	btnPathsArr.push([x+cw, y]);
+	_2btnPathsArr.push([x+cw, y]);
 	
-	precalcBezier(	{x:(x+w)-cw, 			y:y},
+	_2precalcBezier(	{x:(x+w)-cw, 			y:y},
 					{x:((x+w)-cw)+(cw*crw),	y:y},// ctrl1
 					{x:x+w,					y:(y+ch)-(ch*crh)},// ctrl2 
 					{x:x+w,      			y:y+ch});
-	precalcBezier(	{x:x+w, 				y:(y+h)-ch},
+	_2precalcBezier(	{x:x+w, 				y:(y+h)-ch},
 					{x:x+w,					y:((y+h)-ch)+(ch*crh)},// ctrl1
 					{x:((x+w)-cw)+(cw*crw),	y:y+h},// ctrl2 
 					{x:(x+w)-cw,      		y:y+h});
-	precalcBezier(	{x:x+cw, 				y:y+h},
+	_2precalcBezier(	{x:x+cw, 				y:y+h},
 					{x:(x+cw)-(cw*crw),		y:y+h},// ctrl1
 					{x:x,					y:((y+h)-ch)+(ch*crh)},// ctrl2 
 					{x:x,      				y:(y+h)-ch});
-	precalcBezier(	{x:x, 					y:y+ch},
+	_2precalcBezier(	{x:x, 					y:y+ch},
 					{x:x,					y:(y+ch)-(ch*crh)},// ctrl1
 					{x:(x+cw)-(cw*crw),		y:y},// ctrl2 
 					{x:x+cw,      			y:y});	
@@ -337,7 +372,7 @@ function preCalcRoundRect1(x, y, w, h){// using bezier
 
 
 
-function infos(g){
+function _2infos(g){
 	// var gfx = g.graphics;
 	
 	// for(a in gfx){
@@ -354,19 +389,19 @@ function infos(g){
 	// 	i = i+0.1;
 	// }
 }
-// function drawBezier(gfx, a, b, c, d, obj){
+// function _2drawBezier(gfx, a, b, c, d, obj){
 // 	var step = 6;
 // 	var bz = new Bezier(a,b,c,d);
 // 	// gfx.moveTo(bz.a.x, bz.a.y);
 // 	for( var i=0; i<1; ){
 // 		gfx.lineTo(bz.mx(i), bz.my(i));
-// 		btnPathsArr.push(gfx.currentPoint);
+// 		_2btnPathsArr.push(gfx.currentPoint);
 // 		obj.llPath.push(gfx.currentPoint);
 // 		i=i+(1/step);
 // 	}
 // }
 
-// function drawRoundRect1(gfx, x, y, w, h, obj){// using bezier
+// function _2drawRoundRect1(gfx, x, y, w, h, obj){// using bezier
 // 	var whRation = w/h;
 
 // 	// obj.text += "\n"+obj;

@@ -12,13 +12,11 @@ addingResize:
       ({w:940, h:277, stick:false})
 on Activate:
  firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
 000000
 addButtons
 onMove
 showButtons
-pressed key:::
-pressed keyStr::: Q
-onClose
-pressed key:::
-pressed keyStr::: Q
 onClose

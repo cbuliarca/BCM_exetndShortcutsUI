@@ -1,6 +1,6 @@
 #include "_libs/bezier.jsxinc"
 
-function _2addMyButton(parent, bounds, boundsDraw, redraw ){
+function _2addMyButton(parent, bounds ){
 	// logW('---addddd---BBBB');
 	// alert('vb')
 	// if(reusePrecalculated== true){// this will reuse the contur it needs to have a global _2btnPathsArr decalred
@@ -10,18 +10,21 @@ function _2addMyButton(parent, bounds, boundsDraw, redraw ){
 	// 		}
 	// 	}
 	// }
-
+	redraw = true
 	if(parseInt(app.version) > 15){
 		if(Object.prototype.toString.call( bounds ) === '[object Array]'){
 			var g = parent.add('statictext', undefined, '');
 			g.preferredSize = [bounds[0], bounds[1]];
+			boundsDraw = {width:bounds[0], height:bounds[1], x:0, y:0};
 			// alert('array');
 		}else{
 			var g = parent.add('statictext', bounds, '');
+			boundsDraw = {width:bounds.width, height:bounds.height, x:bounds.x, y:bounds.y};
 		}
 	}else{
-		g = parent.add('group', undefined, '');
+		g = parent.add('button', undefined, '');
 		g.preferredSize = [bounds[0], bounds[1]];
+		boundsDraw = {width:bounds[0], height:bounds[1], x:0, y:0};
 	}
 	g.md = false;
 	g.visible = true;
@@ -29,11 +32,16 @@ function _2addMyButton(parent, bounds, boundsDraw, redraw ){
 	g.llPath = [];
 	g.redraw = redraw;
 	g.clicked = 0;
+
 	g.boundsDraw = boundsDraw;
-	// g.label = label;
+	g.label = '';
 	// g.shortcut = shortcut;
 	// g.img = image;
+	// g.onDraw = function(){
+	// 	logW('rererer ::'+ this);
+	// 	_2winDraw(this)};
 	g.onDraw = _2winDraw;
+	// g.chhDraw = function(){ _2winDraw };
 	g.command = '';
 	g.onRightMouse = '';
 	g.id = null;
@@ -74,8 +82,8 @@ function _2mover(e){
 }
 function _2clicked(e){
 	logW('btnStick :::  clicked')
-	_2winDrawClick(e.target);
-
+	// _2winDrawClick(e.target);
+	e.target.notify('onDraw');
 	// try{
 	// 	log.text = '\nclicked';
 	// 	for(a in e){
@@ -128,11 +136,11 @@ function _2mmove(e){
 
 
 function _2winDrawClick(drawingStateObj){
-	drawingStateObj.clicked = 1;
-	drawingStateObj.notify("onDraw");
-	$.sleep(150);
-	drawingStateObj.clicked = 0;
-	drawingStateObj.notify("onDraw");
+	logW('buttonStick :: clicked = '+ drawingStateObj.clicked);
+	// drawingStateObj.dispatchEvent('onDraw');
+	// drawingStateObj.notify("onDraw");
+	_2winDraw(drawingStateObj);
+
 
 }
 function _2szDraw(drawingStateObj){
@@ -152,15 +160,44 @@ function _2szDraw(drawingStateObj){
 
 function _2winDraw(drawingStateObj){
 	logW('buttonStick :: draW');
-	if(this.redraw == 1){	
+	logW('buttonStick :: this::: '+ this)
+	logW('buttonStick :: drawingStateObj::: '+ drawingStateObj)
+	// for( df in this){
+	// 	logw( df + ' ::: '+ this[df]);
+	// }
+	// if(this == 'Global'){
+	// 	logW(' cum in plm e Global')
+	// }
+	// if(this.redraw == 1){	
 		// alert('rdraw');
-		var gfx = this.graphics;
-		W = this.boundsDraw.width;
-		H = this.boundsDraw.height;
-		X = this.boundsDraw.x;
-		Y = this.boundsDraw.y;
+		// var gfx = this.graphics;
+		// W = this.boundsDraw.width;
+		// H = this.boundsDraw.height;
+		// X = this.boundsDraw.x;
+		// Y = this.boundsDraw.y;
 		
-		if(this.llPath.length == 0){
+		// logW('buttonStick :: this::: '+ this)
+		var exPath = [];
+		try
+		{
+			exPathL = this.llPath.length
+			exPath = this.llPath;
+			var gfx = this.graphics;
+			W = this.boundsDraw.width;
+			H = this.boundsDraw.height;
+			X = this.boundsDraw.x;
+			Y = this.boundsDraw.y;
+		}catch(err){
+			exPathL = drawingStateObj.llPath.length;
+			exPath = drawingStateObj.llPath;
+			var gfx = drawingStateObj.graphics;
+			W = drawingStateObj.boundsDraw.width;
+			H = drawingStateObj.boundsDraw.height;
+			X = drawingStateObj.boundsDraw.x;
+			Y = drawingStateObj.boundsDraw.y;
+		}
+		// logW(exPath)
+		if(exPathL == 0){
 			// if(this.bReuse == true){
 			// 	if(_2btnPathsArr.length != 0){
 			// 		gfx.newPath();
@@ -173,6 +210,7 @@ function _2winDraw(drawingStateObj){
 			// }else{
 				_2btnPathsArr = [];
 				_2preCalcRoundRect1(X, Y, W-3, H-3);
+				// logW(_2btnPathsArr.toSource());
 				gfx.newPath();
 				gfx.moveTo(_2btnPathsArr[0][0], _2btnPathsArr[0][1]);
 				for(var i=1;i<_2btnPathsArr.length;i++){
@@ -183,9 +221,9 @@ function _2winDraw(drawingStateObj){
 			// }
 		}else{// reusing the first line created
 			gfx.newPath();
-			gfx.moveTo(this.llPath[0][0], this.llPath[0][1]);
-			for(var i=1;i<this.llPath.length;i++){
-				gfx.lineTo(this.llPath[i][0],this.llPath[i][1]);
+			gfx.moveTo(exPath[0][0], exPath[0][1]);
+			for(var i=1;i<exPath.length;i++){
+				gfx.lineTo(exPath[i][0],exPath[i][1]);
 			}
 		}
 
@@ -194,6 +232,15 @@ function _2winDraw(drawingStateObj){
 			if(this.context == true){
 				pen = gfx.newPen (gfx.PenType.SOLID_COLOR, [.8, .8, .8, 1], 1);
 			}
+				// logW('sssssssssssssssssssssssssssssssssssss')
+				// logW(gfx.toSource());
+				// for(a in gfx){
+				// 	logW(a + ':: '+ gfx[a]);
+				// }
+				// // for(b in gfx.currentPath){
+				// // 	logW(b + ':: '+ gfx.currentPath[b]);
+				// // }
+				// logW('sssssssssssssssssssssssssssssssssssss')
 				gfx.strokePath (pen, gfx.currentPath);
 				
 			if(this.clicked == 0){
@@ -220,26 +267,26 @@ function _2winDraw(drawingStateObj){
 
 		// the label:::::::
 
-		// var font = ScriptUI.newFont("Tahoma",12.0);
-		// if(this.clicked == 0){
-		// 	var penF = gfx.newPen (gfx.PenType.SOLID_COLOR, [1, 1, 1, 1], 1);
-		// }else{
-		// 	var penF = gfx.newPen (gfx.PenType.SOLID_COLOR, [.1, .1, .1, .1], 1);
-		// }
-		// var strArr = this.label.split("\n");
+		var font = ScriptUI.newFont("Tahoma",12.0);
+		if(this.clicked == 0){
+			var penF = gfx.newPen (gfx.PenType.SOLID_COLOR, [.5, .5, .5, .5], 1);
+		}else{
+			var penF = gfx.newPen (gfx.PenType.SOLID_COLOR, [.1, .1, .1, .1], 1);
+		}
+		var strArr = this.label.split("\n");
 
-		// for(var i=0; i<strArr.length; i++){
-		// 	var cStr = strArr[i];
-		// 	var cStrDim = gfx.measureString(cStr, font);
-		// 	// log.text += ("\n"+cStr+" :: ["+cStrDim[0]+", "+cStrDim[1]+"]");
-		// 	// var spaceBetween = cStrDim[1]/30;
-		// 	var spaceBetween = 0;
-		// 	var	strH = (cStrDim[1] * strArr.length) + (spaceBetween*(strArr.length-1));
-		// 	var strPosY = (((H/2)-(strH/2))+((cStrDim[1]+spaceBetween)*i));//on the center
-		// 	// var strPosY = (H/2)+(((H/4)-(strH/2))+((cStrDim[1]+spaceBetween)*i));//ofsetted
-		// 	var strPosX = ((W/2)-(cStrDim[0]/2));			
-		// 	gfx.drawString(cStr, penF, strPosX, strPosY, font);
-		// }
+		for(var i=0; i<strArr.length; i++){
+			var cStr = strArr[i];
+			var cStrDim = gfx.measureString(cStr, font);
+			// log.text += ("\n"+cStr+" :: ["+cStrDim[0]+", "+cStrDim[1]+"]");
+			// var spaceBetween = cStrDim[1]/30;
+			var spaceBetween = 0;
+			var	strH = (cStrDim[1] * strArr.length) + (spaceBetween*(strArr.length-1));
+			var strPosY = 5 - (((H/2)-(strH/2))+((cStrDim[1]+spaceBetween)*i));//on the center
+			// var strPosY = (H/2)+(((H/4)-(strH/2))+((cStrDim[1]+spaceBetween)*i));//ofsetted
+			var strPosX = ((W/2)-(cStrDim[0]/2));			
+			gfx.drawString(cStr, penF, strPosX, strPosY, font);
+		}
 
 		// the shortcut::::::::::::::
 
@@ -260,7 +307,7 @@ function _2winDraw(drawingStateObj){
 		// var penA = gfx.newPen (gfx.PenType.SOLID_COLOR, [1, 1, 1, 1], 1);
 		// gfx.drawString(this.shortcut, penA, SHstrPosX, SHstrPosY, fontSH);
 
-	}
+	// }
 }
 
 function _2precalcBezier(a, b, c, d){

@@ -1,5 +1,4 @@
 function runScript_Fnct_Arguments(args){
-    // alert(args);
     //theScriptpath;command;
     //arguments examples:
         //{0:[1,2,3], 1:'yellow'} -- for functions( array, string )

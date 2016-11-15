@@ -2,22 +2,35 @@
 addEvents: 
 events added 
 winCreated
-win.pnl0
 onMove
 showButtons
 on Activate:
  firstResz: 0
 win.fl
 addingResize:
-      ({w:1257, h:259, stick:false})
+      ({w:1238, h:288, stick:false})
 on Activate:
  firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
 000000
 addButtons
 onMove
 showButtons
-pressed key:::
-pressed keyStr::: ESCAPE
-pressed key:::
-pressed keyStr::: ESCAPE
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: ACCENT
+search for keyStr::: ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
 onClose
+compare initWin0::1238 :: 1238
+compare initWin1::1238 :: 1238
+compare initWin0::322 :: 288
+compare initWin1::322 :: 322
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false

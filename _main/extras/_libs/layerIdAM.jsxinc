@@ -618,7 +618,7 @@ function setMaskLinkedID(id, foo){
       var idT = charIDToTypeID( "T   " );
           var desc32 = new ActionDescriptor();
           var idUsrs = charIDToTypeID( "Usrs" );
-          desc32.putBoolean( idUsrs, true );
+          desc32.putBoolean( idUsrs, foo );
       var idLyr = charIDToTypeID( "Lyr " );
       desc31.putObject( idT, idLyr, desc32 );
   executeAction( idsetd, desc31, DialogModes.NO );

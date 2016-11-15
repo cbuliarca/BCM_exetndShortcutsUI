@@ -12,13 +12,13 @@ addingResize:
       ({w:994, h:167, stick:false})
 on Activate:
  firstResz: 1
+buttonStick :: draW
 000000
 addButtons
 onMove
 showButtons
 pressed key:::
-pressed keyStr::: 1
-onClose
+pressed keyStr::: ESCAPE
 pressed key:::
-pressed keyStr::: 1
+pressed keyStr::: ESCAPE
 onClose

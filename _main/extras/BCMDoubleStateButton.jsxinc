@@ -1,0 +1,288 @@
+#include "_libs/bezier.jsxinc"
+
+function BCMDoubleStateButton(){
+	this.test = true
+
+}
+BCMDoubleStateButton.prototype = {
+	create:function(parent, bounds){
+		redraw = true
+		if(parseInt(app.version) > 15){
+			if(Object.prototype.toString.call( bounds ) === '[object Array]'){
+				var g = parent.add('statictext', undefined, '');
+				g.preferredSize = [bounds[0], bounds[1]];
+				boundsDraw = {width:bounds[0], height:bounds[1], x:0, y:0};
+				// alert('array');
+			}else{
+				var g = parent.add('statictext', bounds, '');
+				boundsDraw = {width:bounds.width, height:bounds.height, x:bounds.x, y:bounds.y};
+			}
+		}else{
+			var g = parent.add('group', undefined, '');
+			g.preferredSize = [bounds[0], bounds[1]];
+			boundsDraw = {width:bounds[0], height:bounds[1], x:0, y:0};
+		}
+		this.g = g;
+		g.md = false;
+		g.visible = true;
+		// g.bReuse = reusePrecalculated;
+		g.llPath = [];
+		g.redraw = redraw;
+		g.clicked = 0;
+
+		g.boundsDraw = boundsDraw;
+		g.label = '';	
+		// g.shortcut = shortcut;
+		// g.img = image;
+		g.onDraw = this.winDraw();
+		g.command = '';
+		g.onRightMouse = '';
+		g.id = null;
+		g.context = false;
+		g.helptip = '';
+		this.addEvents();
+		// this.callAlert();
+		// this.onMove = function(){alert(this._2btnPathsArr)};
+		// alert( g );
+		// return g
+	},
+	callAlert:function(){
+		// alert(this);
+		for(a in this){
+			alert(a + " ::: "+ this[a]);
+			
+		}
+	},
+	addEvents:function(){
+	    this.g.addEventListener('click', function (kd){this.clicked (kd)});
+	    // this.addEventListener('mousedown', function (kd){this._2mdown (kd)});
+	    // this.addEventListener('mouseup', function (kd){this._2mup (kd)});
+	},
+
+	resize:function(){
+		this.bounds = {x:0, y:0, width: this.bounds.width-30, height:this.bounds.height-log.bounds.height-45};
+		// log.bounds = {x:0, y:w.bounds.height-405, width:400, height:20};
+	},
+
+
+	clicked:function(e){
+		logW('btnStick :::  clicked')
+		this.winDrawClick(e.target);
+	},
+
+	winDrawClick:function(drawingStateObj){
+		logW('buttonStick :: clicked = '+ drawingStateObj.clicked);
+		// drawingStateObj.dispatchEvent('onDraw');
+		// drawingStateObj.notify("onDraw");
+		this.winDraw(drawingStateObj);
+
+
+	},
+
+	szDraw:function(drawingStateObj){
+		var gfx = this.graphics;
+		W = this.bounds.width;
+		H = this.bounds.height;
+
+		gfx.newPath();
+		gfx.moveTo(20, 2);
+		gfx.lineTo(0,20);
+		gfx.lineTo(20,40);
+
+		var pen = gfx.newPen (gfx.PenType.SOLID_COLOR, [.8, .8, .8, 1], 2);
+			gfx.strokePath (pen, gfx.currentPath);
+
+	},
+
+	winDraw:function(){
+		logW('buttonStick :: draW');
+		// alert('windraw::: '+ this.g )
+		// this.addEvents();
+		// if(this.g.redraw == 1){	
+			// alert('rdraw');
+			logW('buttonStick :: this::: '+ this.g)
+			var gfx = this.g.graphics;
+			W = this.g.boundsDraw.width;
+			H = this.g.boundsDraw.height;
+			X = this.g.boundsDraw.x;
+			Y = this.g.boundsDraw.y;
+			// logW(gfx);
+			// if(this.g.llPath.length == 0){
+				// if(this.bReuse == true){
+				// 	if(_2btnPathsArr.length != 0){
+				// 		gfx.newPath();
+				// 		gfx.moveTo(_2btnPathsArr[0][0], _2btnPathsArr[0][1]);
+				// 		for(var i=1;i<_2btnPathsArr.length;i++){
+				// 			gfx.lineTo(_2btnPathsArr[i][0],_2btnPathsArr[i][1]);
+				// 		}
+				// 		this.llPath = _2btnPathsArr;
+				// 	}
+				// }else{
+					this._2btnPathsArr = [];
+					this.preCalcRoundRect1(X, Y, W-3, H-3);
+					// logW(this._2btnPathsArr.toSource());
+					gfx.newPath();
+					gfx.moveTo(this._2btnPathsArr[0][0], this._2btnPathsArr[0][1]);
+					for(var i=1;i<this._2btnPathsArr.length;i++){
+						gfx.lineTo(this._2btnPathsArr[i][0],this._2btnPathsArr[i][1]);
+					}
+					// alert(gfx.currentPath);
+					this.g.llPath = this._2btnPathsArr;
+			
+				// }
+			// }else{// reusing the first line created
+			// 	gfx.newPath();
+			// 	gfx.moveTo(this.g.llPath[0][0], this.g.llPath[0][1]);
+			// 	for(var i=1;i<this.g.llPath.length;i++){
+			// 		gfx.lineTo(this.g.llPath[i][0],this.g.llPath[i][1]);
+			// 	}
+			// }
+
+
+			var pen = gfx.newPen(gfx.PenType.SOLID_COLOR, [.8, .8, .8, .5], 1);
+				// if(this.g.context == true){
+				// 	pen = gfx.newPen (gfx.PenType.SOLID_COLOR, [.8, .8, .8, 1], 1);
+				// }
+				gfx.newPath();
+				gfx.moveTo(0,0);
+				gfx.lineTo(100,10);
+				logW('sssssssssssssssssssssssssssssssssssss')
+				logW(pen);
+				for(a in pen){
+					logW(a + ':: '+ pen[a]);
+				}
+				// for(b in gfx.currentPath){
+				// 	logW(b + ':: '+ gfx.currentPath[b]);
+				// }
+				logW('sssssssssssssssssssssssssssssssssssss')
+				gfx.strokePath(pen, gfx.currentPath);
+					
+				if(this.g.clicked == 0){
+					var brush = gfx.newBrush(gfx.BrushType.SOLID_COLOR, [.2, .2, .2, .1]);
+				}else{
+					var brush = gfx.newBrush(gfx.BrushType.SOLID_COLOR, [.9, .9, .9, 1]);
+				}
+				if(this.g.context == true){
+					var brush = gfx.newBrush(gfx.BrushType.SOLID_COLOR, [.2, .2, .2, .5]);
+				}
+			// }
+			this.g.conturPen = pen;
+			this.g.fillBrush = brush;
+			this.g.cPath = gfx.currentPath;
+			gfx.fillPath(brush, gfx.currentPath);
+
+
+			// if(this.img != ""){
+			// 	if(new File(this.img).exists){
+			// 		var img = ScriptUI.newImage(this.img);
+			// 			gfx.drawImage( img, 0, 0, W, H);
+			// 	}
+			// }
+
+			// the label:::::::
+
+			var font = ScriptUI.newFont("Tahoma",12.0);
+			if(this.g.clicked == 0){
+				var penF = gfx.newPen (gfx.PenType.SOLID_COLOR, [.5, .5, .5, .5], 1);
+			}else{
+				var penF = gfx.newPen (gfx.PenType.SOLID_COLOR, [.1, .1, .1, .1], 1);
+			}
+			var strArr = this.g.label.split("\n");
+
+			for(var i=0; i<strArr.length; i++){
+				var cStr = strArr[i];
+				var cStrDim = gfx.measureString(cStr, font);
+				// log.text += ("\n"+cStr+" :: ["+cStrDim[0]+", "+cStrDim[1]+"]");
+				// var spaceBetween = cStrDim[1]/30;
+				var spaceBetween = 0;
+				var	strH = (cStrDim[1] * strArr.length) + (spaceBetween*(strArr.length-1));
+				var strPosY = 5 - (((H/2)-(strH/2))+((cStrDim[1]+spaceBetween)*i));//on the center
+				// var strPosY = (H/2)+(((H/4)-(strH/2))+((cStrDim[1]+spaceBetween)*i));//ofsetted
+				var strPosX = ((W/2)-(cStrDim[0]/2));			
+				gfx.drawString(cStr, penF, strPosX, strPosY, font);
+			}
+
+			// the shortcut::::::::::::::
+
+			// var fontSH = ScriptUI.newFont("Tahoma Bold",10.0);
+			// // for(a in fontSH){
+			// 	// log.text +=("\n"+a+" :: "+fontSH[a]);
+			// // }
+			// var SHDim = gfx.measureString(this.shortcut, fontSH);
+			// // log.text += ("\n"+this.shortcut+" :: ["+SHDim[0]+", "+SHDim[1]+"]");
+			// SHDim = [	SHDim[0]*(fontSH.size/12.0),
+			// 			SHDim[1]*(fontSH.size/12.0)]
+			// var SHstrPosY = (H/10)-(SHDim[1]/2);
+
+			// // log.text += ("\n"+this.shortcut+" :: ["+SHDim[0]+", "+SHDim[1]+"]");
+			// var SHstrPosX = (W-SHDim[0])-10;
+			// // log.text += ("\n"+SHstrPosX);
+
+			// var penA = gfx.newPen (gfx.PenType.SOLID_COLOR, [1, 1, 1, 1], 1);
+			// gfx.drawString(this.shortcut, penA, SHstrPosX, SHstrPosY, fontSH);
+
+		// }
+	},
+
+	precalcBezier:function(a, b, c, d){
+		var step = 10;
+		var bz = new Bezier(a,b,c,d);
+		// gfx.moveTo(bz.a.x, bz.a.y);
+		for( var i=0; i<1; ){
+			this._2btnPathsArr.push([bz.mx(i), bz.my(i)]);
+			i=i+(1/step);
+		}
+	},
+
+	preCalcRoundRect1:function(x, y, w, h){// using bezier
+		// logW('calc--------;');
+		var whRation = w/h;
+
+		// obj.text += "\n"+obj;
+		var ww = 3;
+		var dd = 3;
+		var baseMin = .5;
+		var baseMax = 1;
+		var baseMax2 = 2;
+		var limitMin = 3;
+		var limitMax = 2;
+		var cw = w/ww;
+		if(whRation <= baseMin){
+			dd = limitMin;
+		}else if(whRation >= baseMax){
+			dd = limitMax; 
+			if(whRation >= baseMax2){
+				cw = (h*baseMax2)/ww;
+			}
+		}else{
+			dd = ((limitMax - limitMin) * (whRation - baseMin) / (baseMax - baseMin)) + limitMin;
+		}
+
+
+		// var cw = w/ww;
+		var ch = h/dd;
+		var crw = .4;
+		var crh = .7;
+
+		this._2btnPathsArr.push([x+cw, y]);
+		
+		this.precalcBezier(	{x:(x+w)-cw, 			y:y},
+						{x:((x+w)-cw)+(cw*crw),	y:y},// ctrl1
+						{x:x+w,					y:(y+ch)-(ch*crh)},// ctrl2 
+						{x:x+w,      			y:y+ch});
+		this.precalcBezier(	{x:x+w, 				y:(y+h)-ch},
+						{x:x+w,					y:((y+h)-ch)+(ch*crh)},// ctrl1
+						{x:((x+w)-cw)+(cw*crw),	y:y+h},// ctrl2 
+						{x:(x+w)-cw,      		y:y+h});
+		this.precalcBezier(	{x:x+cw, 				y:y+h},
+						{x:(x+cw)-(cw*crw),		y:y+h},// ctrl1
+						{x:x,					y:((y+h)-ch)+(ch*crh)},// ctrl2 
+						{x:x,      				y:(y+h)-ch});
+		this.precalcBezier(	{x:x, 					y:y+ch},
+						{x:x,					y:(y+ch)-(ch*crh)},// ctrl1
+						{x:(x+cw)-(cw*crw),		y:y},// ctrl2 
+						{x:x+cw,      			y:y});	
+
+	},
+
+}
