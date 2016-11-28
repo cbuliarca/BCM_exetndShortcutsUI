@@ -1,0 +1,55 @@
+﻿//Creats indexOf() array method in adobe JS
+if (typeof Array.prototype.indexOf != "function") {
+    Array.prototype.indexOf = function (el) {
+        for(var i = 0; i < this.length; i++) if(el === this[i]) return i;
+        return -1;
+        }
+}
+
+if (!Array.prototype.filter)
+{
+  Array.prototype.filter = function(fun /*, thisArg */)
+  {
+    "use strict";
+
+    if (this === void 0 || this === null)
+      throw new TypeError();
+
+    var t = Object(this);
+    var len = t.length >>> 0;
+    if (typeof fun !== "function")
+      throw new TypeError();
+
+    var res = [];
+    var thisArg = arguments.length >= 2 ? arguments[1] : void 0;
+    for (var i = 0; i < len; i++)
+    {
+      if (i in t)
+      {
+        var val = t[i];
+        if (fun.call(thisArg, val, i, t))
+          res.push(val);
+      }
+    }
+
+    return res;
+  };
+}
+
+
+function intersect(a, b) {
+    var t;
+    if (b.length > a.length) t = b, b = a, a = t;
+    return a.filter(function(e) {
+        if (b.indexOf(e) !== -1) return true;
+    });
+}
+
+
+String.prototype.fuzzy = function(s)
+{
+    var hay = this.toLowerCase(), i = 0, n = -1, l;
+    s = s.toLowerCase();
+    for(; l=s[i++] ;) if (!~(n = hay.indexOf(l, n + 1))) return false;
+    return true;
+}

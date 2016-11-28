@@ -1,0 +1,24 @@
+<macromedia-extension name="PhotoShop Mask Sync" version="0.1.0">
+  <author name="Chris Cunningham" />
+  <description href="NULL">
+    <![CDATA[<meta http-equiv=Content-Type content="text/html;charset=UTF-8">
+      <p style = "font-weight: bold; color: white">Overview:</p>
+      Quick Way to keep group masks in sync while working on PBR materials in photoshop.
+      For more information and help check out <a href="http://http://cmcproductions.co.uk/scripts/" style="color: #FFF; font-weight:bold;">my website</a>.
+      <br />
+    ]]>
+  </description>
+  <products>
+    <product familyname="Photoshop" version="11" />
+  </products>   
+  <ui-access>  
+    <![CDATA[
+      <p style = "font-weight: bold; color: white">Access:</p>
+      You can access the psMaskSync tools from the File -&gt; Scripts Menu or via the actions pallet.
+    ]]>  
+  </ui-access>  
+  <files>
+    <file source="psMaskSync" destination="$scripts/" />
+    <file source="psMaskSync.atn" destination="$actions/" />
+  </files>
+</macromedia-extension>

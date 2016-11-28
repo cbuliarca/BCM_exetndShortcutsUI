@@ -7,4 +7,4 @@ BCMtheButtonsUI[1]={image:"", shortcut:"Z", label:"toggleVisibility\nHot Layer",
 ", toolTip:"shows only the hot layer", x:330, y:0, isGroup:false};
 BCMtheButtonsUI[2]={image:"", shortcut:"2", label:"set Layer\nas hot", command:"runScript_Fnct_Arguments(_gCurrentESHui.path+\"/extras/~getEventMagicWand.jsx;setCurentLayerAsHot;false\");", toolTip:"set the selected layer as hot.\
 This is  the layer the the magic wand will sample.", x:440, y:0, isGroup:false};
-BCMtheButtonsUI[3]={image:"", shortcut:"F1", label:"HELP", command:"openHelpHTML( \"https://www.youtube.com/watch?v=Lrrs1YDh7fw\" )", toolTip:"will open a youtube video in your browser, showing a short tutorial on how to use the magic wand with hot layer scripts", x:880, y:0, isGroup:false};
+BCMtheButtonsUI[3]={image:"", shortcut:"F1", label:"HELP", command:"openHTML( \"https://www.youtube.com/watch?v=Lrrs1YDh7fw\" )", toolTip:"will open a youtube video in your browser, showing a short tutorial on how to use the magic wand with hot layer scripts", x:880, y:0, isGroup:false};

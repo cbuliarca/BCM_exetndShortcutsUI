@@ -151,3 +151,1773 @@ compare initWin1::610 :: 629
 compare initWin0::false :: false
 compare initWin1::false :: false
 write SZ
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: A
+search for keyStr::: A
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: A
+search for keyStr::: A
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: A
+search for keyStr::: A
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: A
+search for keyStr::: A
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: A
+search for keyStr::: A
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: A
+search for keyStr::: A
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: C
+search for keyStr::: C
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: ACCENT
+search for keyStr::: ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: ESCAPE
+search for keyStr::: ESCAPE
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: ESCAPE
+search for keyStr::: ESCAPE
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: ACCENT
+search for keyStr::: ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: ACCENT
+search for keyStr::: ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: ACCENT
+search for keyStr::: ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: ACCENT
+search for keyStr::: ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: ACCENT
+search for keyStr::: ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: A
+search for keyStr::: A
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: A
+search for keyStr::: A
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: ESCAPE
+search for keyStr::: ESCAPE
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: ESCAPE
+search for keyStr::: ESCAPE
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: ACCENT
+search for keyStr::: ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: G
+search for keyStr::: G
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: G
+search for keyStr::: G
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: G
+search for keyStr::: G
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: G
+search for keyStr::: G
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: G
+search for keyStr::: G
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: G
+search for keyStr::: G
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: G
+search for keyStr::: G
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: ESCAPE
+search for keyStr::: ESCAPE
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: ESCAPE
+search for keyStr::: ESCAPE
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: G
+search for keyStr::: G
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: G
+search for keyStr::: G
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: ACCENT
+search for keyStr::: ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: ACCENT
+search for keyStr::: ACCENT
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1027, h:591, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: Q
+search for keyStr::: Q
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1027 :: 1027
+compare initWin1::1027 :: 1027
+compare initWin0::625 :: 591
+compare initWin1::625 :: 625
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false

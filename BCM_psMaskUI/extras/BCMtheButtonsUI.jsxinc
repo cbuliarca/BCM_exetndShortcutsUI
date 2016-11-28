@@ -1,10 +1,8 @@
 var BCMtheButtonsUI = new Array();
-BCMtheButtonsUI[0]={image:"", shortcut:"M", label:"Create Material", command:"\
-\
-	runScript_Fnct_Arguments( \"/f/work/psScripts_wip/_NetScripts/psMaskSync/createMat.jsx;;\" );", toolTip:"", x:0, y:0, isGroup:false };
-BCMtheButtonsUI[1]={image:"", shortcut:"A", label:"setMaskAll", command:"\
-\
-	runScript_Fnct_Arguments( \"/f/work/psScripts_wip/_NetScripts/psMaskSync/setMaskAll.jsx;;\" );", toolTip:"", x:220, y:0, isGroup:false };
-BCMtheButtonsUI[2]={image:"", shortcut:"S", label:"setMaskSelected", command:"\
-\
-	runScript_Fnct_Arguments( \"/f/work/psScripts_wip/_NetScripts/psMaskSync/setMaskSel.jsx;;\" );", toolTip:"", x:440, y:0, isGroup:false };
+BCMtheButtonsUI[0]={image:"", shortcut:"M", label:"Create Material", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/psMaskSync-master/psMaskSync/createMat.jsxinc;;\");", toolTip:"", x:0, y:0, isGroup:false};
+BCMtheButtonsUI[1]={image:"", shortcut:"A", label:"setMask\nAll", command:"\
+runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/psMaskSync-master/psMaskSync/setMaskAll.jsxinc;;\");", toolTip:"", x:220, y:0, isGroup:false};
+BCMtheButtonsUI[2]={image:"", shortcut:"S", label:"setMask\nSelected", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/psMaskSync-master/psMaskSync/setMaskSel.jsxinc;;\");", toolTip:"", x:440, y:0, isGroup:false};
+BCMtheButtonsUI[3]={image:"", shortcut:"F1", label:"HELP", command:"openHTML(\"https://github.com/cmcpasserby/psMaskSync\");\
+$.sleep(500);\
+openHTML(\"http://polycount.com/discussion/135456/psmasksync-photoshop-script\");", toolTip:"", x:110, y:0, isGroup:false};

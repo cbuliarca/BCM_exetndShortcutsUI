@@ -2,7 +2,6 @@
 addEvents: 
 events added 
 winCreated
-win.pnl0
 onMove
 showButtons
 on Activate:
@@ -12,13 +11,95 @@ addingResize:
       ({w:1137, h:275, stick:false})
 on Activate:
  firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
 000000
 addButtons
 onMove
 showButtons
-pressed key:::
-pressed keyStr::: ACCENT
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: ESCAPE
+search for keyStr::: ESCAPE
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: ESCAPE
+search for keyStr::: ESCAPE
 onClose
-pressed key:::
-pressed keyStr::: ACCENT
+compare initWin0::1137 :: 1137
+compare initWin1::1137 :: 1137
+compare initWin0::309 :: 275
+compare initWin1::309 :: 309
+compare initWin0::false :: false
+compare initWin1::false :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1137, h:275, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: G
+search for keyStr::: G
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
 onClose
+compare initWin0::1137 :: 1137
+compare initWin1::1137 :: 1137
+compare initWin0::309 :: 275
+compare initWin1::309 :: 309
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false
+addEvents: 
+events added 
+winCreated
+onMove
+showButtons
+on Activate:
+ firstResz: 0
+win.fl
+addingResize:
+      ({w:1137, h:275, stick:false})
+on Activate:
+ firstResz: 1
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+000000
+addButtons
+onMove
+showButtons
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: true
+pressed keyStr::: TAB
+search for keyStr::: TAB
+buttonStick :: draW
+buttonStick :: this::: [object StaticText]
+buttonStick :: drawingStateObj::: [object Object]
+onClose
+compare initWin0::1137 :: 1137
+compare initWin1::1137 :: 1137
+compare initWin0::309 :: 275
+compare initWin1::309 :: 309
+compare initWin0::false :: false
+compare initWin1::false :: false
+pressed key:::[object KeyboardEvent]
+firstPressAnyButton :: false

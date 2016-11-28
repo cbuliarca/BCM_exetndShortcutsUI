@@ -1,3 +1,44 @@
 var BCMtheButtonsUI = new Array();
-BCMtheButtonsUI[0]={image:"", shortcut:"", label:"Mask\n@passerby", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_psMaskUI/BCM_psMaskUI.jsx;;\" );\
+BCMtheButtonsUI[0]={image:"", shortcut:"M", label:"Mask\n@passerby", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_psMaskUI/BCM_psMaskUI.jsx;;\" );\
 ", toolTip:"", x:0, y:0, isGroup:true};
+BCMtheButtonsUI[1]={image:"", shortcut:"C", label:"Corner \nEditor", command:"\
+runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/Corner%20Editor.jsxinc;;\");", toolTip:"Corner Editor\
+This Photoshop script can do everything that the Rounded Rectangle Radius Resizer script can, and a lot more!\
+\
+Round the corners of any polygonal shape\
+Multiple corner styles\
+Settings are saved to the Layer so they can be modified\
+Smooth multiple sub-paths in the same layer\
+Smooth only the selected sub-paths\
+As with the Rounded Rectangle Radius Resizer script, you can also\
+\
+View the pixel radius of existing rounded rectangles\
+Edit multiple layers at once\
+Apply a different radius to each corner and/or subpath\
+I have a couple more ideas for another update. Let me know if there are any other options that would be useful.\
+\
+Created by David Jensen @\
+http://photoshopscripts.wordpress.com/\
+", x:110, y:0, isGroup:false};
+BCMtheButtonsUI[2]={image:"", shortcut:"S", label:"Split to Layers", command:"\
+runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/Split%20to%20Layers.jsxinc;;\");", toolTip:"Split to Layers\
+This script will separate each contiguous group of pixels to its own layer.\
+\
+Corner Editor\
+This Photoshop script can do everything that the Rounded Rectangle Radius Resizer script can, and a lot more!\
+\
+Round the corners of any polygonal shape\
+Multiple corner styles\
+Settings are saved to the Layer so they can be modified\
+Smooth multiple sub-paths in the same layer\
+Smooth only the selected sub-paths\
+As with the Rounded Rectangle Radius Resizer script, you can also\
+\
+View the pixel radius of existing rounded rectangles\
+Edit multiple layers at once\
+Apply a different radius to each corner and/or subpath\
+I have a couple more ideas for another update. Let me know if there are any other options that would be useful.\
+\
+Created by David Jensen @\
+http://photoshopscripts.wordpress.com/\
+", x:220, y:0, isGroup:false};

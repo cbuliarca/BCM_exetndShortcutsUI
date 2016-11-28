@@ -1,0 +1,179 @@
+﻿#target photoshop
+#include "pbLib.jsxinc"
+
+/*
+<javascriptresource>
+    <name>psMaskSync - Sync</name>
+    <category>psMaskSync</category>
+</javascriptresource>
+*/
+
+try {
+    var doc = app.activeDocument;}
+catch(e) {alert('No Active Documeant to work on!', 'psMaskSync', 'erroricon')}
+
+function UI() {
+    //Methods
+     this.getMats = function() 
+    {
+        var matNames = [];
+        for (var i=0; i<matList.length; i++) 
+        {
+            if (this.matList[i].value == 1) {matNames.push(this.matList[i].text)}
+        }
+        var layerSets = doc.layerSets;
+        var sets = [];
+        for (var i=0; i<layerSets.length; i++)
+        {
+            if (matNames.indexOf(layerSets[i].name) > -1) {sets.push(layerSets[i])}
+        }
+    return sets;
+    };
+
+    var self = this; // Allows this ref via self in callbacks
+    var window = new Window('dialog', 'Select Masks to Sync');
+        var matGrp = window.add('group')
+            this.matList = [];
+            for (var i=0; i<doc.layerSets.length; i++) {
+                matList.push(matGrp.add('checkbox', undefined, doc.layerSets[i].name));
+            }
+    
+        var btnGrp = window.add('group');
+            var btnOk = btnGrp.add('button', undefined, 'Ok');
+            btnOk.onClick = function() {setLayersetMask(self.getMats());window.close()};
+            var btnCancel = btnGrp.add('button', undefined, 'Cancel');
+    window.show();
+    
+    //Methods
+     this.getMats = function() 
+    {
+        var matNames = [];
+        for (var i=0; i<matList.length; i++) 
+        {
+            if (this.matList[i].value == 1) {matNames.push(this.matList[i].text)}
+        }
+        var layerSets = doc.layerSets;
+        var sets = [];
+        for (var i=0; i<layerSets.length; i++)
+        {
+            if (matNames.indexOf(layerSets[i].name) > -1) {sets.push(layerSets[i])}
+        }
+    return sets;
+    };
+}
+
+
+function setLayersetMask(layerSets) {
+    var activeSet = new Set(doc.activeLayer);
+    var lSets = getSets(layerSets);
+    
+    try{
+        if (activeSet.ref.typename != 'LayerSet') {throw new Error('This is not a layerSet!')};
+        if (activeSet.hasMask() != true) {throw new Error('No Mask to sync!')}}
+    catch(e) {alert(e.message, 'psMaskSync', 'erroricon')}
+    
+    for (var i=0; i<lSets.length; i++) {
+        if (lSets[i].ref.name == activeSet.ref.name && lSets[i].getID() != activeSet.getID()) {
+                if (lSets[i].hasMask()) {
+                    lSets[i].deleteMask();
+                }
+                activeSet.copyMask(lSets[i].getID())
+        }
+    }
+}
+
+
+function getSets(layerSets) {
+    var lSets = [];
+    for(var i=0; i<layerSets.length; i++) {
+        var set = new Set(layerSets[i]);
+        lSets.push(set);
+        if (set.ref.layerSets.length > 0) {
+            lSets.push.apply(lSets, getSets(set.ref.layerSets));
+        }    
+    }
+    return lSets;    
+}
+
+
+// Set Class
+function Set(ref) {
+    this.ref = ref;
+    this.oldSel;
+    
+    //Methods
+    this.setActive = function() {
+        this.oldSel = doc.activeLayer;
+        doc.activeLayer = this.ref;
+    };
+
+    this.oldActive = function() {
+        doc.activeLayer = this.oldSel;
+    };
+    
+    this.hasMask = function() {
+        this.setActive();
+        var ref = new ActionReference();
+        ref.putEnumerated(charIDToTypeID("Lyr "), charIDToTypeID("Ordn"), charIDToTypeID("Trgt"));
+        var desc = executeActionGet(ref);
+        
+        var ret = desc.hasKey(charIDToTypeID("UsrM"));
+        this.oldActive();
+        return ret;
+    };
+
+    this.getID = function() {
+        this.setActive();
+        
+        var ref = new ActionReference();   
+        ref.putProperty( charIDToTypeID("Prpr") , charIDToTypeID( "LyrI" ));   
+        ref.putEnumerated( charIDToTypeID("Lyr "), charIDToTypeID("Ordn"), charIDToTypeID("Trgt") );  
+        var ret = executeActionGet(ref).getInteger( stringIDToTypeID( "layerID" ) );
+    
+        this.oldActive();
+        return ret; 
+    };
+
+    this.copyMask = function(dest) {
+        this.setActive();
+        var idMk = charIDToTypeID( "Mk  " );
+        var desc18 = new ActionDescriptor();
+        var idNw = charIDToTypeID( "Nw  " );
+        var idChnl = charIDToTypeID( "Chnl" );
+        desc18.putClass( idNw, idChnl );
+        var idAt = charIDToTypeID( "At  " );
+        var ref14 = new ActionReference();
+        var idChnl = charIDToTypeID( "Chnl" );
+        var idChnl = charIDToTypeID( "Chnl" );
+        var idMsk = charIDToTypeID( "Msk " );
+        ref14.putEnumerated( idChnl, idChnl, idMsk );
+        var idLyr = charIDToTypeID( "Lyr " );
+        ref14.putIdentifier( idLyr, dest );
+        desc18.putReference( idAt, ref14 );
+        var idUsng = charIDToTypeID( "Usng" );
+        var ref15 = new ActionReference();
+        var idChnl = charIDToTypeID( "Chnl" );
+        var idChnl = charIDToTypeID( "Chnl" );
+        var idMsk = charIDToTypeID( "Msk " );
+        ref15.putEnumerated( idChnl, idChnl, idMsk );
+        var idLyr = charIDToTypeID( "Lyr " );
+        var idOrdn = charIDToTypeID( "Ordn" );
+        var idTrgt = charIDToTypeID( "Trgt" );  
+        ref15.putEnumerated( idLyr, idOrdn, idTrgt );
+        desc18.putReference( idUsng, ref15 );
+        var idDplc = charIDToTypeID( "Dplc" );
+        desc18.putBoolean( idDplc, true );
+        executeAction( idMk, desc18, DialogModes.NO );
+        this.oldActive ();
+    };
+    
+    this.deleteMask = function() {
+        this.setActive();
+        var desc523 = new ActionDescriptor();
+        var ref325 = new ActionReference();
+        ref325.putEnumerated( charIDToTypeID('Chnl'), charIDToTypeID('Ordn'), charIDToTypeID('Trgt') );
+        desc523.putReference( charIDToTypeID('null'), ref325 );
+        executeAction( charIDToTypeID('Dlt '), desc523, DialogModes.NO );
+        this.oldActive();
+    };
+}
