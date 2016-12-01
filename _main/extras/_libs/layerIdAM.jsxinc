@@ -152,16 +152,20 @@ function multiSelectByIDs(ids) {
     var desc12 = new ActionDescriptor();
     var id55 = charIDToTypeID( "null" );
     var ref9 = new ActionReference();
+    var leastOneIS = false;
     for (var i = 0; i < ids.length; i++) {
     	if(doesIdExists(ids[i]) == true){// a check to see if the id stil exists
-	        layers[i] = charIDToTypeID( "Lyr " );
+	        leastOneIS = true;
+          layers[i] = charIDToTypeID( "Lyr " );
 	        ref9.putIdentifier(layers[i], ids[i]);
     	}
     }
     desc12.putReference( id55, ref9 );
     var id58 = charIDToTypeID( "MkVs" );
     desc12.putBoolean( id58, false );
-    executeAction( id54, desc12, DialogModes.NO );
+    if(leastOneIS == true){
+      executeAction( id54, desc12, DialogModes.NO );
+    }
 }
 
 function multiSelectByIDX(idxs) {
@@ -720,7 +724,19 @@ function setFillOpacityID(id, value){
   executeAction( idsetd, desc260, DialogModes.NO );
 
 }
+function deleteByID(id ){
+  // =======================================================
+var idDlt = charIDToTypeID( "Dlt " );
+    var desc2202 = new ActionDescriptor();
+    var idnull = charIDToTypeID( "null" );
+        var ref194 = new ActionReference();
+        var idLyr = charIDToTypeID( "Lyr " );
+        ref194.putIdentifier( idLyr, id );
+    desc2202.putReference( idnull, ref194 );
 
+executeAction( idDlt, desc2202, DialogModes.NO );
+
+}
 function deleteMaskByID( id ){
   var idDlt = charIDToTypeID( "Dlt " );
       var desc74 = new ActionDescriptor();

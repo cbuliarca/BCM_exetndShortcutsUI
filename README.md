@@ -7,7 +7,7 @@ into your Photoshop Installation Folder/Presets/Scripts the default path is this
 Works with Photoshop CS4 >>> CC 2017
 
 These are some help videos:
-The videos are old, and the ui tool have been a bit changed but the ideea is the same...
+The videos are old, and the ui tool has been changed a bit but the ideea is the same...
 
 https://www.youtube.com/watch?v=2_x1LerZfek
 

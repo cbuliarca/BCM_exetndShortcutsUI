@@ -27,3 +27,5 @@ executeAction( idnewPlacedLayer, undefined, DialogModes.NO );", toolTip:"", x:55
 BCMtheButtonsUI[19]={image:"", shortcut:"3", label:"BCM Panel\nBCM Array", command:"runScript_Fnct_Arguments( \"~/Documents/BCM/Photoshop/panels/BCMPanel2.1/scripts/BCMArray.jsx;;\" );", toolTip:"", x:880, y:440, isGroup:false};
 BCMtheButtonsUI[20]={image:"", shortcut:"M", label:"overlay\nDate&Time from \nMetadata", command:"runScript_Fnct_Arguments(_gMainESH +\"/BCM_specialSets/extras/test_duplAlphas.jsxinc;overlayDateAndTime0;\" );", toolTip:"", x:880, y:330, isGroup:false};
 BCMtheButtonsUI[21]={image:"", shortcut:"F1", label:"HELP", command:"openHTML( \"http://buliarcatools.blog.fc2.com/blog-entry-5.html\" );", toolTip:"", x:880, y:220, isGroup:false};
+BCMtheButtonsUI[22]={image:"", shortcut:"D", label:"Split \nColors", command:"\
+runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/BCM_SplitColors.jsxinc;;\");", toolTip:"", x:660, y:330, isGroup:false};

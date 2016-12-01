@@ -1,24 +1,2 @@
 
-addEvents: 
-events added 
-winCreated
-win.pnl0
-onMove
-showButtons
-on Activate:
- firstResz: 0
-win.fl
-addingResize:
-      ({w:807, h:995, stick:false})
-on Activate:
- firstResz: 1
-buttonStick :: draW
-000000
-addButtons
-onMove
-showButtons
-pressed key:::
-pressed keyStr::: ESCAPE
-pressed key:::
-pressed keyStr::: ESCAPE
-onClose
+compare initWin1::false :: false

@@ -5,4 +5,4 @@ runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/psMaskSync-mast
 BCMtheButtonsUI[2]={image:"", shortcut:"S", label:"setMask\nSelected", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/psMaskSync-master/psMaskSync/setMaskSel.jsxinc;;\");", toolTip:"", x:440, y:0, isGroup:false};
 BCMtheButtonsUI[3]={image:"", shortcut:"F1", label:"HELP", command:"openHTML(\"https://github.com/cmcpasserby/psMaskSync\");\
 $.sleep(500);\
-openHTML(\"http://polycount.com/discussion/135456/psmasksync-photoshop-script\");", toolTip:"", x:110, y:0, isGroup:false};
+openHTML(\"http://polycount.com/discussion/135456/psmasksync-photoshop-script\");", toolTip:"", x:770, y:0, isGroup:false};

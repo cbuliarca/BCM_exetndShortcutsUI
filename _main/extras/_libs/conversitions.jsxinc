@@ -1,0 +1,234 @@
+// alert(RGBtoLAB({red:78,green:57,blue:57}).toSource());
+
+function RGBtoXYZ(rgb) {
+// https://software.intel.com/en-us/html5/hub/blogs/exploring-color-matching-in-javascript
+  var _r = (rgb.red / 255);
+  var _g = (rgb.green / 255);
+  var _b = (rgb.blue / 255);
+
+  if (_r > 0.04045) {
+      _r = Math.pow(((_r + 0.055) / 1.055), 2.4);
+  }
+  else {
+      _r = _r / 12.92;
+  }
+
+  if (_g > 0.04045) {
+      _g = Math.pow(((_g + 0.055) / 1.055), 2.4);
+  }
+  else {                 
+      _g = _g / 12.92;
+  }
+
+  if (_b > 0.04045) {
+      _b = Math.pow(((_b + 0.055) / 1.055), 2.4);
+  }
+  else {                  
+      _b = _b / 12.92;
+  }
+
+  _r = _r * 100;
+  _g = _g * 100;
+  _b = _b * 100;
+
+
+  X = _r * 0.4124 + _g * 0.3576 + _b * 0.1805;
+  Y = _r * 0.2126 + _g * 0.7152 + _b * 0.0722;
+  Z = _r * 0.0193 + _g * 0.1192 + _b * 0.9505;
+
+  return {x:X, y:Y, z:Z};
+
+};
+
+
+function XYZtoLAB(xyz) {
+// https://software.intel.com/en-us/html5/hub/blogs/exploring-color-matching-in-javascript
+  var ref_X =  95.047;
+  var ref_Y = 100.000;
+  var ref_Z = 108.883;
+
+  var _X = xyz.x / ref_X;
+  var _Y = xyz.y / ref_Y;
+  var _Z = xyz.z / ref_Z;
+
+
+  if (_X > 0.008856) {
+       _X = Math.pow(_X, (1/3));
+  }
+  else {                 
+      _X = (7.787 * _X) + (16 / 116);
+  }
+
+  if (_Y > 0.008856) {
+      _Y = Math.pow(_Y, (1/3));
+  }
+  else {
+    _Y = (7.787 * _Y) + (16 / 116);
+  }
+
+  if (_Z > 0.008856) {
+      _Z = Math.pow(_Z, (1/3));
+  }
+  else { 
+      _Z = (7.787 * _Z) + (16 / 116);
+  }
+
+
+  var CIE_L = (116 * _Y) - 16;
+  var CIE_a = 500 * (_X - _Y);
+  var CIE_b = 200 * (_Y - _Z);
+
+  return {l:CIE_L, a:CIE_a, b:CIE_b};
+
+};
+
+
+function RGBtoLAB(rgb){
+  var XYZ = RGBtoXYZ(rgb);
+  return(XYZtoLAB(XYZ));
+}
+// http://www.devx.com/tips/Tip/41581
+function RGBToHSB(rgb){
+     var h = 0;
+     var s = 0;
+     var b = 0;
+     var minRGB = Math.min(Math.min(rgb.red, rgb.green), rgb.blue)
+     var maxRGB = Math.max(Math.max(rgb.red, rgb.green), rgb.blue)
+     var Delta = (maxRGB - minRGB)
+     b = maxRGB
+     if (maxRGB != 0){
+          s = 255 * Delta / maxRGB
+     }else{
+          s = 0
+     }
+     if (s != 0){
+          if (rgb.red = maxRGB){
+               h = (parseFloat(rgb.green) - parseFloat(rgb.blue)) / Delta
+          }else{
+               if (rgb.green = maxRGB) {
+                    h = 2 + (parseFloat(rgb.blue) - parseFloat(rgb.red)) / Delta
+               }else{
+                    if (rgb.blue = maxRGB){
+                         h = 4 + (parseFloat(rgb.red) - parseFloat(rgb.green)) / Delta
+                    }
+               }
+          }
+     }else{
+          h = -1
+     }
+     h = h * 60
+     if (h < 0) {h = h + 360};
+     s = s * 100 / 255;
+     b = b * 100 / 255;
+     tr = {hue:h, saturation:s, brightness:b};
+     return tr;
+}
+function HSBToRGB0(hsb){
+     var h = hsb.hue / 60;
+     var s = hsb.saturation * 255 / 100;
+     var b = hsb.brightness * 255 / 100;
+     alert(h+" , "+s+" , "+b);
+     var maxRGB = b;
+     var HSBToRGB = {red:0, green:0, blue:0};
+     if( s = 0 ){
+          HSBToRGB.red = 0;
+          HSBToRGB.green = 0;
+          HSBToRGB.blue = 0;
+     }else{
+          Delta = s * maxRGB / 255;
+          if( h > 3 ){
+               HSBToRGB.blue = parseFloat(Math.round(maxRGB));
+               if( h > 4 ){
+                    HSBToRGB.green = parseFloat(Math.round(maxRGB - Delta));
+                    HSBToRGB.red = parseFloat(Math.round((h - 4) * Delta)) + HSBToRGB.green;
+               }else{
+                    HSBToRGB.red = parseFloat(Math.round(maxRGB - Delta));
+                    HSBToRGB.green = parseFloat(HSBToRGB.red - Math.round((h - 4) * Delta));
+               }
+          }else{
+               if( h > 1 ){
+                    HSBToRGB.green = parseFloat(Math.round(maxRGB));
+                    if( h > 2 ){
+                         HSBToRGB.red = parseFloat(Math.round(maxRGB - Delta));
+                         HSBToRGB.blue = parseFloat(Math.round((h - 2) * Delta)) + HSBToRGB.red;
+                    }else{
+                         HSBToRGB.blue = parseFloat(Math.round(maxRGB - Delta));
+                         HSBToRGB.red = parseFloat(HSBToRGB.blue - Math.round((h - 2) * Delta));
+                    }
+               }else{
+                    if( h > -1 ){
+                         HSBToRGB.red = parseFloat(Math.round(maxRGB));
+                         if( h > 0 ){
+                              HSBToRGB.blue = parseFloat(Math.round(maxRGB - Delta));
+                              HSBToRGB.green = parseFloat(Math.round(h * Delta)) + HSBToRGB.blue;
+                         }else{
+                              HSBToRGB.green = parseFloat(Math.round(maxRGB - Delta));
+                              HSBToRGB.blue = parseFloat(HSBToRGB.green - Math.round(h * Delta));
+                         }
+                    }
+               }
+          }
+     }
+     return HSBToRGB;
+}
+function HSBToRGB(hsb) {
+     var h = hsb.hue;
+     var s = hsb.saturation;
+     var b = hsb.brightness;
+     var myRGB = {red:0, green:0, blue:0};
+        if (b == 0) {
+            myRGB.red = myRGB.green = myRGB.blue = 0;
+        } else {
+            s /= 100;
+            b /= 100;
+            if (h > 359) {
+                h = 0
+            }
+            var hueTemp = ~~(h / 60);
+            h /= 60;
+            fTemp = h - hueTemp;
+            pTemp = b * (1 - s);
+            qTemp = b * (1 - s * fTemp);
+            tTemp = b * (1 - s * (1 - fTemp));
+            switch (hueTemp) {
+                case 0:
+                    myRGB.red = b;
+                    myRGB.green = tTemp;
+                    myRGB.blue = pTemp;
+                    break;
+                case 1:
+                    myRGB.red = qTemp;
+                    myRGB.green = b;
+                    myRGB.blue = pTemp;
+                    break;
+                case 2:
+                    myRGB.red = pTemp;
+                    myRGB.green = b;
+                    myRGB.blue = tTemp;
+                    break;
+                case 3:
+                    myRGB.red = pTemp;
+                    myRGB.green = qTemp;
+                    myRGB.blue = b;
+                    break;
+                case 4:
+                    myRGB.red = tTemp;
+                    myRGB.green = pTemp;
+                    myRGB.blue = b;
+                    break;
+                case 5:
+                    myRGB.red = b;
+                    myRGB.green = pTemp;
+                    myRGB.blue = qTemp;
+                    break
+            }
+            myRGB.red *= 255;
+            myRGB.green *= 255;
+            myRGB.blue *= 255
+        }
+        return myRGB
+    }
+
+
+// alert(app.foregroundColor.rgb.red+" ,"+app.foregroundColor.rgb.green+" ,"+app.foregroundColor.rgb.blue+
+//  +"\n\n"+HSBToRGB(app.foregroundColor.hsb).toSource());
