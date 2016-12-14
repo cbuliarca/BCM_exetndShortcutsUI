@@ -1,0 +1,6 @@
+var BCMtheButtonsUI = new Array();
+BCMtheButtonsUI[0]={image:"", shortcut:"F", label:"Import\nFolder", command:"\
+runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/BCM_multiImport.jsxinc;;\");", toolTip:"import files from a folder, adding a mask. \
+Ex: if there is a folder with some renders named BPR_Render1.jpg and BPR_Mask1.jpg, the tool will copy the BPR_Mask1.jpg into the mask for BPR_Render1.jpg, the condition is that the first two fileds in the ui should be _Render and _Mask. If there is not specified the mask filed, it will make a mask from the Alpha1 channel.\
+\
+Done to use it for charater sheet presentation", x:0, y:0, isGroup:false};

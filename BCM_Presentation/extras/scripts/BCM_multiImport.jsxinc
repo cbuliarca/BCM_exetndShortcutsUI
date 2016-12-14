@@ -1,0 +1,1019 @@
+/*
+<javascriptresource>
+  <name>BCM>  Import Files from Folder..</name>
+  <category>BCM</category>
+</javascriptresource>
+*/
+////////////////////////////////////////////
+/*
+Author: Buliarca Cristian (buliarca@yahoo.com)
+Copyright (C) 2013 Buliarca Cristian
+http://buliarca.blog124.fc2.com/
+*/
+
+#include "../../../_main/extras/_libs/layerIdAM.jsxinc"
+
+
+// importBCM();
+var originalRulerUnits = app.preferences.rulerUnits;
+app.preferences.rulerUnits = Units.PIXELS;
+BCM_UIImport();
+app.preferences.rulerUnits = originalRulerUnits;
+function BCM_UIImport(){
+
+	var lastSettings = getCustomSettingsImp();
+
+	win = new Window('dialog', 'BCM Import Files from Folder' , undefined, {
+	    resizeable: true,
+	    closeButton: true,
+	    borderless: false
+	    });
+	g0 = win.add('panel', undefined);
+		g1 = g0.add('group', undefined);
+		g1.orientation = 'row';
+			fSt = g1.add('statictext', undefined, 'File name in common:');
+			fEt = g1.add('edittext', undefined, lastSettings.sfile);
+			fEt.preferredSize = [165, 20];
+			fEt.onChange = function(){
+				processFolder();
+			}
+
+			mSt = g1.add('statictext', undefined, 'Mask name in common:');
+			mEt = g1.add('edittext', undefined, lastSettings.smask);
+			mEt.preferredSize = [165, 20];
+			mEt.onChange = function(){
+				processFolder();
+			}
+		g1a = g0.add('group', undefined);
+		g1a.alignment = 'fill';
+		g1a.orientation = 'row';
+			distChk = g1a.add('checkbox', undefined, 'Distribute');
+			distChk.value = lastSettings.distribute;
+			distChk.alignment = 'left';
+			distValTxt = g1a.add('statictext', undefined, 'Distribute by:');
+			// distValTxt.alignment = 'fill';
+			distValTxt.justify = 'right';
+			distVal = g1a.add('edittext', undefined, lastSettings.distributeVal);
+			distVal.preferredSize = [100,20];
+			distVal.alignment = 'right';
+			distVal.onChange = function(){
+				distVal.text = getCorrectvaluesDistirbuteStr();
+			}
+	
+
+	g2 = win.add('panel', undefined);
+	g2.orientation = 'row';
+		fldSt = g2.add('statictext', undefined, 'Process Folder: ');
+		fldEt  =g2.add('edittext', undefined, lastSettings.path);
+		fldEt.preferredSize = [400,20];
+		fldEt.onChange = function(){
+			processFolder();
+		}
+		fldBrws = g2.add('button', undefined ,"Browse");
+		fldBrws.onClick = function(){
+			var theFld = Folder.selectDialog();
+			if(theFld != null){
+				fldEt.text = theFld.toString();
+				processFolder();
+			}
+		}
+	g21 = win.add('panel', undefined);
+	// g21.preferredSize = [610, 200];
+		g3 = g21.add('panel', undefined);
+		g3.preferredSize = [570, 400];
+
+	g4 = win.add('group', undefined);
+	g4.orientation = 'stack';
+	g4.preferredSize = [610, 40];
+		cancelBtn = g4.add('button', undefined,  'Cancel');
+		cancelBtn.alignment = 'left';
+		cancelBtn.preferredSize = [130,50];
+
+		okBtn = g4.add('button', undefined,  'Apply');
+		okBtn.alignment = 'right';
+		okBtn.preferredSize = [130,50];
+		okBtn.onClick = function(){
+			var toProcess = [];
+			for(var i=0; i<g3.children.length; i++){
+				if(g3.children[i].myObj.mask == ''){
+					g3.children[i].myObj.mask = g3.children[i].children[1].selection.toString();
+				}
+				toProcess.push(g3.children[i].myObj);
+			}
+			win.close();
+			importBCM( {array:toProcess, 
+				distribute:distChk.value, 
+				distributeVal:getCorrectvaluesDistirbute()} );
+
+		}
+
+	win.onClose = function(){
+		var oo = {path:fldEt.text, 
+					sfile:fEt.text, 
+					smask:mEt.text, 
+					distribute:distChk.value, 
+					distributeVal:getCorrectvaluesDistirbuteStr()
+		};
+		putCustomSettingsImp( oo );
+	}
+
+	win.onShow = function(){
+		processFolder();
+	}
+	win.show();
+
+
+	function processFolder(){
+		if(fldEt.text != ""){
+			var filesS = getFi( fldEt.text, {sfile:fEt.text, smask:mEt.text});
+			createLL( filesS );
+		}
+	}
+	function createLL( arr ){
+		
+		removeAllCH(g3);
+		
+		for(var i=0; i<arr.length; i++){
+			var incPos = i * 35;
+			// alert(g3);
+			imgL = g3.add('panel', {x:0,y:incPos,width:g3.bounds.width - 5,height:30});
+			imgL.myObj = arr[i];
+			imgL.idx = i;
+				// image name
+				imgSt = imgL.add('statictext', {x:20,y:3,width:(imgL.bounds.width * 0.5)-100, height:20}, 
+										arr[i].file.name.toString());
+				// imgSt.justify = 'center';
+
+
+				// the mask				
+				if(arr[i].mask != ''){
+					var drDittems =[arr[i].mask.name.toString(), '$self'];
+					
+				}else{
+					var drDittems =['$self'];
+				}
+				maskSt = imgL.add('dropdownlist', {x:imgSt.bounds.x + imgSt.bounds.width,
+										y:3,width:(imgL.bounds.width * 0.5) - 40, height:20}, 
+										drDittems);
+				maskSt.selection = 0;
+
+				//the delete
+				dltBtn = imgL.add('button', {x:maskSt.bounds.x + maskSt.bounds.width + 40, y:3, width:20, height:15}, "x")
+				dltBtn.onClick = function(){
+					var idx = this.parent.idx;
+					var MainPrnt = this.parent.parent;
+					this.parent.parent.remove(this.parent);
+					rearangeCH(MainPrnt, idx);
+					theScroll();
+				}
+		}
+
+		theScroll();
+	}
+
+	function theScroll(){
+		// g21.remove(g21.children[1]);
+		var lastEl  = g3.children[g3.children.length-1];
+		var lastBndsY = (g3.children.length - 1 ) * 35;
+		if( lastEl.type == 'scrollbar'){
+			lastEl  = g3.children[g3.children.length-2];
+			lastBndsY = (g3.children.length - 2 ) * 35;
+		}
+		if(	lastBndsY > g3.bounds.height){
+			scrl = g21.add('scrollbar', {x:g21.bounds.width - 20, y:0, width:15, height:g21.bounds.height});
+			scrl.maxvalue = lastBndsY - g3.bounds.height + 40;
+			scrl.onChange = function(){
+				for(var j=0; j<g3.children.length; j++){
+					g3.children[j].bounds.y =((0 - this.value) + (j * 35));
+					g3.children[j].bounds.height = 30;
+				}
+			}
+		}
+
+	}
+	function getCorrectvaluesDistirbute(){
+		var dsVl = distVal.text == ''?'0':distVal.text;
+		dsVl = dsVl.split(',');
+		if(dsVl.length == 1){
+			eval('var distVll ='+ dsVl[0]);
+		}else{
+			for(var i=0; i<2; i++){
+				if(isNaN(parseInt(dsVl[i]))){
+					dsVl[i] = 0;
+				}else{
+					dsVl[i] = parseInt(dsVl[i]);
+				}
+			}
+			eval('var distVll ='+ dsVl.toSource());
+		}
+		return  distVll;
+	}
+	function getCorrectvaluesDistirbuteStr(){
+		var dsVl = distVal.text == ''?'0':distVal.text;
+		dsVl = dsVl.split(',');
+		if(dsVl.length == 1){
+			eval('var distVll ='+ dsVl[0]);
+			distVllStr = distVll[0].toString();
+		}else{
+			for(var i=0; i<2; i++){
+				if(isNaN(parseInt(dsVl[i]))){
+					dsVl[i] = 0;
+				}else{
+					dsVl[i] = parseInt(dsVl[i]);
+				}
+			}
+			eval('var distVll ='+ dsVl.toSource());
+			distVllStr = distVll[0].toString() +','+distVll[1].toString();
+		}
+		return  distVllStr;
+	}
+
+	function rearangeCH( parent, fromIDX ){
+		for(var i = fromIDX; i<parent.children.length ; i++){
+			if(parent.children[i].type != 'scrollbar'){
+				parent.children[i].idx = i;
+				parent.children[i].bounds.y -= 35;
+				parent.children[i].bounds.height = 30;
+			}else{
+				break;
+			}
+		}
+	}
+	function removeAllCH( parent ){
+		while(true){
+			if(parent.children.length == 0){
+				break;
+			}
+			g3.remove(parent.children[0]);
+		}
+	}
+}
+
+function getFi( path ,obj ){
+	
+	var fld = new Folder(path);
+	var Ffiles = fld.getFiles();
+	var trimedFiles = [];
+	var i = 0;
+
+	while (true){
+		if(Ffiles.length == 0 || i == Ffiles.length){
+			break;
+		}
+		var myF = Ffiles[i];
+		var objF = {file:'', mask:''};
+		if(myF.name.toString().toLowerCase().match(obj.sfile.toLowerCase()) != null){
+			objF.file = myF;
+			Ffiles.splice(i, 1);
+			i --;
+			for(var j=0; j<Ffiles.length; j++){
+				var myM = Ffiles[j];
+				if(myM.name.toString().toLowerCase().match(obj.smask.toLowerCase()) != null){
+					if(myM.name.toString().toLowerCase().replace(obj.smask.toLowerCase(), obj.sfile.toLowerCase()) == myF.name.toString().toLowerCase()){
+						objF.mask = myM;
+						Ffiles.splice(j, 1);
+						i--;
+						break;
+					}
+				}
+			}
+			trimedFiles.push(objF);
+		}
+		i++;
+	}
+		
+	return trimedFiles;
+}
+
+function importBCM( obj0 ){
+	if(app.documents.length != 0){
+		mainDoc0 = getActiveDocumentID();
+		obj0.mainDocID = mainDoc0;
+		app.activeDocument.suspendHistory('BCM_multiImport', 'hist('+obj0.toSource()+')');
+	}else{
+		obj0.mainDocID = "";
+		obj0.newPx = 0;
+		obj0.newPy = 0;
+		hist( obj0 );
+	}
+	
+	function hist( obj ){
+		var contin = true;
+		var mainDoc = obj.mainDocID;
+		var hFiles = obj.array;
+		var distance = obj.distributeVal;
+
+		if(obj.newPx0 != undefined){// there is no document open to copy in it
+			var newPx = obj.newPx0;//these are saved by the first run of his function whene there is no doc opened
+			var newPy = obj.newPy0;
+		}else{
+			if(distance.constructor == Array){
+				var newPx = distance[0];
+				var newPy = distance[1];
+			}else{
+				var newPx = distance;
+				var newPy = distance;
+			}
+		}
+
+		var LwithBounds = [];
+		if(mainDoc == ''){//open first file and use it as the main document
+			var MainR01 = app.open(hFiles[0].file);
+			if(hFiles[0].mask == '$self'){
+				maskFromSelfAlpha();
+			}else{
+				var MaskR01 = app.open(hFiles[0].mask);
+				maskFromAlphaFile(MainR01, MaskR01);
+			}
+			obj.array.splice(0,1);//remove first layer from array
+
+
+			var myLB = getLayerIDAndBounds();
+			obj.mainDocID = getActiveDocumentID();
+
+			if(obj.distribute == true){
+				
+				trnsf(myLB.id, newPx !=0?newPx - myLB.bounds.x:0 , newPy!=0 ? newPy - myLB.bounds.y: 0);
+				
+				if(distance.constructor == Array){
+					newPx = newPx !=0? newPx + myLB.bounds.width + distance[0]: 0;
+					newPy = newPy !=0? newPy + myLB.bounds.height + distance[1]:0;
+					obj.newPx0 = newPx;
+					obj.newPy0 = newPy;
+					
+				}else{
+					newPx = newPx !=0? newPx + myLB.bounds.width + distance: 0;
+					newPy = newPy !=0? newPy + myLB.bounds.height + distance : 0;
+					obj.newPx0 = newPx;
+					obj.newPy0 = newPy;
+				}
+			}
+
+			app.activeDocument.suspendHistory('BCM_multiImport', 'hist('+obj.toSource()+')');
+			
+		}else{//import all the files:::
+			for(var i=0;i<hFiles.length;i++){
+
+				var MainR0 = app.open(hFiles[i].file);
+				if(hFiles[i].mask == '$self'){
+					maskFromSelfAlpha();
+				}else{
+					var MaskR0 = app.open(hFiles[i].mask);
+					maskFromAlphaFile(MainR0, MaskR0);
+				}
+
+				var idDplc = charIDToTypeID( "Dplc" );
+				    var desc499 = new ActionDescriptor();
+				    var idnull = charIDToTypeID( "null" );
+				        var ref145 = new ActionReference();
+				        var idLyr = charIDToTypeID( "Lyr " );
+				        var idOrdn = charIDToTypeID( "Ordn" );
+				        var idTrgt = charIDToTypeID( "Trgt" );
+				        ref145.putEnumerated( idLyr, idOrdn, idTrgt );
+				    desc499.putReference( idnull, ref145 );
+				    var idT = charIDToTypeID( "T   " );
+				        var ref146 = new ActionReference();
+				        var idDcmn = charIDToTypeID( "Dcmn" );
+				        ref146.putIdentifier( idDcmn, mainDoc );
+				    desc499.putReference( idT, ref146 );
+				executeAction( idDplc, desc499, DialogModes.NO );
+
+				MainR0.close(SaveOptions.DONOTSAVECHANGES);
+		
+				var myLB = getLayerIDAndBounds();
+
+				if(obj.distribute == true){
+					trnsf(myLB.id, newPx !=0?newPx - myLB.bounds.x:0 , newPy!=0 ? newPy - myLB.bounds.y: 0);
+					if(distance.constructor == Array){
+						newPx = newPx !=0? newPx + myLB.bounds.width + distance[0]: 0;
+						newPy = newPy !=0? newPy + myLB.bounds.height + distance[1]:0;
+						
+					}else{
+						newPx = newPx !=0? newPx + myLB.bounds.width + distance: 0;
+						newPy = newPy !=0? newPy + myLB.bounds.height + distance : 0;
+					}
+				}
+
+			}//end loop
+
+			// =======================================================crop::
+			if(obj.distribute == true){
+				var idCnvS = charIDToTypeID( "CnvS" );
+				    var desc1049 = new ActionDescriptor();
+				    var idWdth = charIDToTypeID( "Wdth" );
+				    var idPxl = charIDToTypeID( "#Pxl" );
+				    desc1049.putUnitDouble( idWdth, idPxl, newPx!=0?newPx:parseFloat(app.activeDocument.width) );
+				        
+				   	var idHght = charIDToTypeID( "Hght" );
+				    var idPxl = charIDToTypeID( "#Pxl" );
+				    desc1049.putUnitDouble( idHght, idPxl, newPy!=0?newPy:parseFloat(app.activeDocument.height));
+				 
+
+				    var idHrzn = charIDToTypeID( "Hrzn" );
+				    var idHrzL = charIDToTypeID( "HrzL" );
+				    var idLeft = charIDToTypeID( "Left" );
+				    desc1049.putEnumerated( idHrzn, idHrzL, idLeft );
+
+				    var idVrtc = charIDToTypeID( "Vrtc" );
+				    var idVrtL = charIDToTypeID( "VrtL" );
+				    var idTop = charIDToTypeID( "Top " );
+				    desc1049.putEnumerated( idVrtc, idVrtL, idTop );
+				executeAction( idCnvS, desc1049, DialogModes.NO );
+			}
+			makeSolidBackground();
+		}
+	}//end hist function
+}
+
+function getLayerIDAndBounds(){
+	app.activeDocument.selection.deselect();
+	var rt = {id:getSelectedLayersIds()[0], bounds:{x:0, y:0, width:0, height:0}};
+	// =======================================================make selection from mask
+	try{
+		var idsetd = charIDToTypeID( "setd" );
+		    var desc805 = new ActionDescriptor();
+		    var idnull = charIDToTypeID( "null" );
+		        var ref129 = new ActionReference();
+		        var idChnl = charIDToTypeID( "Chnl" );
+		        var idfsel = charIDToTypeID( "fsel" );
+		        ref129.putProperty( idChnl, idfsel );
+		    desc805.putReference( idnull, ref129 );
+		    var idT = charIDToTypeID( "T   " );
+		        var ref130 = new ActionReference();
+		        var idChnl = charIDToTypeID( "Chnl" );
+		        var idChnl = charIDToTypeID( "Chnl" );
+		        var idMsk = charIDToTypeID( "Msk " );
+		        ref130.putEnumerated( idChnl, idChnl, idMsk );
+		        var idLyr = charIDToTypeID( "Lyr " );
+		        ref130.putIdentifier(idLyr, rt.id);
+		    desc805.putReference( idT, ref130 );
+		executeAction( idsetd, desc805, DialogModes.NO );
+	}catch(err){// if there is no mask 
+		if(app.activeDocument.activeLayer.isBackgroundLayer == true){
+			// =======================================================
+			var idsetd = charIDToTypeID( "setd" );
+			    var desc113 = new ActionDescriptor();
+			    var idnull = charIDToTypeID( "null" );
+			        var ref26 = new ActionReference();
+			        var idLyr = charIDToTypeID( "Lyr " );
+			        var idBckg = charIDToTypeID( "Bckg" );
+			        ref26.putProperty( idLyr, idBckg );
+			    desc113.putReference( idnull, ref26 );
+			    var idT = charIDToTypeID( "T   " );
+			        var desc114 = new ActionDescriptor();
+			        var idOpct = charIDToTypeID( "Opct" );
+			        var idPrc = charIDToTypeID( "#Prc" );
+			        desc114.putUnitDouble( idOpct, idPrc, 100.000000 );
+			        var idMd = charIDToTypeID( "Md  " );
+			        var idBlnM = charIDToTypeID( "BlnM" );
+			        var idNrml = charIDToTypeID( "Nrml" );
+			        desc114.putEnumerated( idMd, idBlnM, idNrml );
+			    var idLyr = charIDToTypeID( "Lyr " );
+			    desc113.putObject( idT, idLyr, desc114 );
+			    var idLyrI = charIDToTypeID( "LyrI" );
+			    desc113.putInteger( idLyrI, 3 );
+			executeAction( idsetd, desc113, DialogModes.NO );
+		}
+		// =======================================================
+			var idsetd = charIDToTypeID( "setd" );
+			    var desc400 = new ActionDescriptor();
+			    var idnull = charIDToTypeID( "null" );
+			        var ref110 = new ActionReference();
+			        var idChnl = charIDToTypeID( "Chnl" );
+			        var idfsel = charIDToTypeID( "fsel" );
+			        ref110.putProperty( idChnl, idfsel );
+			    desc400.putReference( idnull, ref110 );
+			    var idT = charIDToTypeID( "T   " );
+			        var ref111 = new ActionReference();
+			        var idChnl = charIDToTypeID( "Chnl" );
+			        var idChnl = charIDToTypeID( "Chnl" );
+			        var idTrsp = charIDToTypeID( "Trsp" );
+			        ref111.putEnumerated( idChnl, idChnl, idTrsp );
+			    desc400.putReference( idT, ref111 );
+			executeAction( idsetd, desc400, DialogModes.NO );
+	}
+
+	var bnds = app.activeDocument.selection.bounds;
+	rt.bounds.x = parseInt(bnds[0]);
+	rt.bounds.y = parseInt(bnds[1]);
+	rt.bounds.width = parseInt(bnds[2] - bnds[0]);
+	rt.bounds.height = parseInt(bnds[3] - bnds[1]);
+	app.activeDocument.selection.deselect();
+	return rt;
+
+}
+function maskFromAlphaFile( MainR, MaskR ){
+
+	MaskR.selection.selectAll();
+	MaskR.selection.copy();
+	MaskR.close();
+	MainR.selection.selectAll();
+	// alert('sssss0');
+	// =======================================================make it normal layer not background
+	var idsetd = charIDToTypeID( "setd" );
+	    var desc30 = new ActionDescriptor();
+	    var idnull = charIDToTypeID( "null" );
+	        var ref17 = new ActionReference();
+	        var idLyr = charIDToTypeID( "Lyr " );
+	        var idBckg = charIDToTypeID( "Bckg" );
+	        ref17.putProperty( idLyr, idBckg );
+	    desc30.putReference( idnull, ref17 );
+	    var idT = charIDToTypeID( "T   " );
+	        var desc31 = new ActionDescriptor();
+	        var idOpct = charIDToTypeID( "Opct" );
+	        var idPrc = charIDToTypeID( "#Prc" );
+	        desc31.putUnitDouble( idOpct, idPrc, 100.000000 );
+	        var idMd = charIDToTypeID( "Md  " );
+	        var idBlnM = charIDToTypeID( "BlnM" );
+	        var idNrml = charIDToTypeID( "Nrml" );
+	        desc31.putEnumerated( idMd, idBlnM, idNrml );
+	    var idLyr = charIDToTypeID( "Lyr " );
+	    desc30.putObject( idT, idLyr, desc31 );
+	executeAction( idsetd, desc30, DialogModes.NO );
+
+	// =======================================================make mask
+	var idMk = charIDToTypeID( "Mk  " );
+	    var desc763 = new ActionDescriptor();
+	    var idNw = charIDToTypeID( "Nw  " );
+	    var idChnl = charIDToTypeID( "Chnl" );
+	    desc763.putClass( idNw, idChnl );
+	    var idAt = charIDToTypeID( "At  " );
+	        var ref97 = new ActionReference();
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idMsk = charIDToTypeID( "Msk " );
+	        ref97.putEnumerated( idChnl, idChnl, idMsk );
+	    desc763.putReference( idAt, ref97 );
+	    var idUsng = charIDToTypeID( "Usng" );
+	    var idUsrM = charIDToTypeID( "UsrM" );
+	    var idRvlS = charIDToTypeID( "RvlS" );
+	    desc763.putEnumerated( idUsng, idUsrM, idRvlS );
+	executeAction( idMk, desc763, DialogModes.NO );
+	// alert('sssss');
+	// ======================================================= make mask visible
+	var idslct = charIDToTypeID( "slct" );
+	    var desc764 = new ActionDescriptor();
+	    var idnull = charIDToTypeID( "null" );
+	        var ref98 = new ActionReference();
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idOrdn = charIDToTypeID( "Ordn" );
+	        var idTrgt = charIDToTypeID( "Trgt" );
+	        ref98.putEnumerated( idChnl, idOrdn, idTrgt );
+	    desc764.putReference( idnull, ref98 );
+	    var idMkVs = charIDToTypeID( "MkVs" );
+	    desc764.putBoolean( idMkVs, true );
+	executeAction( idslct, desc764, DialogModes.NO );
+
+	// =======================================================select all
+	var idsetd = charIDToTypeID( "setd" );
+	    var desc765 = new ActionDescriptor();
+	    var idnull = charIDToTypeID( "null" );
+	        var ref99 = new ActionReference();
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idfsel = charIDToTypeID( "fsel" );
+	        ref99.putProperty( idChnl, idfsel );
+	    desc765.putReference( idnull, ref99 );
+	    var idT = charIDToTypeID( "T   " );
+	    var idOrdn = charIDToTypeID( "Ordn" );
+	    var idAl = charIDToTypeID( "Al  " );
+	    desc765.putEnumerated( idT, idOrdn, idAl );
+	executeAction( idsetd, desc765, DialogModes.NO );
+
+	// ======================================================= paste
+	var idpast = charIDToTypeID( "past" );
+	    var desc766 = new ActionDescriptor();
+	    var idAntA = charIDToTypeID( "AntA" );
+	    var idAnnt = charIDToTypeID( "Annt" );
+	    var idAnno = charIDToTypeID( "Anno" );
+	    desc766.putEnumerated( idAntA, idAnnt, idAnno );
+	    var idAs = charIDToTypeID( "As  " );
+	    var idPxel = charIDToTypeID( "Pxel" );
+	    desc766.putClass( idAs, idPxel );
+	executeAction( idpast, desc766, DialogModes.NO );
+
+	// ======================================================= deselect all
+	var idsetd = charIDToTypeID( "setd" );
+	    var desc767 = new ActionDescriptor();
+	    var idnull = charIDToTypeID( "null" );
+	        var ref100 = new ActionReference();
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idfsel = charIDToTypeID( "fsel" );
+	        ref100.putProperty( idChnl, idfsel );
+	    desc767.putReference( idnull, ref100 );
+	    var idT = charIDToTypeID( "T   " );
+	    var idOrdn = charIDToTypeID( "Ordn" );
+	    var idNone = charIDToTypeID( "None" );
+	    desc767.putEnumerated( idT, idOrdn, idNone );
+	executeAction( idsetd, desc767, DialogModes.NO );
+
+	// =======================================================
+	var idslct = charIDToTypeID( "slct" );
+	    var desc773 = new ActionDescriptor();
+	    var idnull = charIDToTypeID( "null" );
+	        var ref103 = new ActionReference();
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idRGB = charIDToTypeID( "RGB " );
+	        ref103.putEnumerated( idChnl, idChnl, idRGB );
+	    desc773.putReference( idnull, ref103 );
+	    var idMkVs = charIDToTypeID( "MkVs" );
+	    desc773.putBoolean( idMkVs, false );
+	executeAction( idslct, desc773, DialogModes.NO );
+
+}
+function maskFromSelfAlpha(){
+	try{
+		// =======================================================select Alpha chn
+		var idslct = charIDToTypeID( "slct" );
+		    var desc317 = new ActionDescriptor();
+		    var idnull = charIDToTypeID( "null" );
+		        var ref52 = new ActionReference();
+		        var idChnl = charIDToTypeID( "Chnl" );
+		        ref52.putName( idChnl, "Alpha 1" );
+		    desc317.putReference( idnull, ref52 );
+		executeAction( idslct, desc317, DialogModes.NO );
+	
+	
+
+	// =======================================================select all
+	var idsetd = charIDToTypeID( "setd" );
+	    var desc318 = new ActionDescriptor();
+	    var idnull = charIDToTypeID( "null" );
+	        var ref53 = new ActionReference();
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idfsel = charIDToTypeID( "fsel" );
+	        ref53.putProperty( idChnl, idfsel );
+	    desc318.putReference( idnull, ref53 );
+	    var idT = charIDToTypeID( "T   " );
+	    var idOrdn = charIDToTypeID( "Ordn" );
+	    var idAl = charIDToTypeID( "Al  " );
+	    desc318.putEnumerated( idT, idOrdn, idAl );
+	executeAction( idsetd, desc318, DialogModes.NO );
+
+	// =======================================================copy
+	var idcopy = charIDToTypeID( "copy" );
+	executeAction( idcopy, undefined, DialogModes.NO );
+
+	// =======================================================select RGB
+	var idslct = charIDToTypeID( "slct" );
+	    var desc319 = new ActionDescriptor();
+	    var idnull = charIDToTypeID( "null" );
+	        var ref54 = new ActionReference();
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idRGB = charIDToTypeID( "RGB " );
+	        ref54.putEnumerated( idChnl, idChnl, idRGB );
+	    desc319.putReference( idnull, ref54 );
+	executeAction( idslct, desc319, DialogModes.NO );
+
+	// =======================================================make mask
+	var idMk = charIDToTypeID( "Mk  " );
+	    var desc320 = new ActionDescriptor();
+	    var idNw = charIDToTypeID( "Nw  " );
+	    var idChnl = charIDToTypeID( "Chnl" );
+	    desc320.putClass( idNw, idChnl );
+	    var idAt = charIDToTypeID( "At  " );
+	        var ref55 = new ActionReference();
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idMsk = charIDToTypeID( "Msk " );
+	        ref55.putEnumerated( idChnl, idChnl, idMsk );
+	    desc320.putReference( idAt, ref55 );
+	    var idUsng = charIDToTypeID( "Usng" );
+	    var idUsrM = charIDToTypeID( "UsrM" );
+	    var idRvlS = charIDToTypeID( "RvlS" );
+	    desc320.putEnumerated( idUsng, idUsrM, idRvlS );
+	executeAction( idMk, desc320, DialogModes.NO );
+
+	// =======================================================make mask visible
+	var idslct = charIDToTypeID( "slct" );
+	    var desc321 = new ActionDescriptor();
+	    var idnull = charIDToTypeID( "null" );
+	        var ref56 = new ActionReference();
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idOrdn = charIDToTypeID( "Ordn" );
+	        var idTrgt = charIDToTypeID( "Trgt" );
+	        ref56.putEnumerated( idChnl, idOrdn, idTrgt );
+	    desc321.putReference( idnull, ref56 );
+	    var idMkVs = charIDToTypeID( "MkVs" );
+	    desc321.putBoolean( idMkVs, true );
+	executeAction( idslct, desc321, DialogModes.NO );
+
+	// =======================================================select all
+	var idsetd = charIDToTypeID( "setd" );
+	    var desc322 = new ActionDescriptor();
+	    var idnull = charIDToTypeID( "null" );
+	        var ref57 = new ActionReference();
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idfsel = charIDToTypeID( "fsel" );
+	        ref57.putProperty( idChnl, idfsel );
+	    desc322.putReference( idnull, ref57 );
+	    var idT = charIDToTypeID( "T   " );
+	    var idOrdn = charIDToTypeID( "Ordn" );
+	    var idAl = charIDToTypeID( "Al  " );
+	    desc322.putEnumerated( idT, idOrdn, idAl );
+	executeAction( idsetd, desc322, DialogModes.NO );
+
+	// =======================================================paste
+	var idpast = charIDToTypeID( "past" );
+	    var desc323 = new ActionDescriptor();
+	    var idAntA = charIDToTypeID( "AntA" );
+	    var idAnnt = charIDToTypeID( "Annt" );
+	    var idAnno = charIDToTypeID( "Anno" );
+	    desc323.putEnumerated( idAntA, idAnnt, idAnno );
+	    var idAs = charIDToTypeID( "As  " );
+	    var idPxel = charIDToTypeID( "Pxel" );
+	    desc323.putClass( idAs, idPxel );
+	executeAction( idpast, desc323, DialogModes.NO );
+
+	// =======================================================select rgb
+	var idslct = charIDToTypeID( "slct" );
+	    var desc324 = new ActionDescriptor();
+	    var idnull = charIDToTypeID( "null" );
+	        var ref58 = new ActionReference();
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idRGB = charIDToTypeID( "RGB " );
+	        ref58.putEnumerated( idChnl, idChnl, idRGB );
+	    desc324.putReference( idnull, ref58 );
+	executeAction( idslct, desc324, DialogModes.NO );
+
+	// =======================================================delete alpha
+	var idDlt = charIDToTypeID( "Dlt " );
+	    var desc325 = new ActionDescriptor();
+	    var idnull = charIDToTypeID( "null" );
+	        var ref59 = new ActionReference();
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        ref59.putName( idChnl, "Alpha 1" );
+	    desc325.putReference( idnull, ref59 );
+	executeAction( idDlt, desc325, DialogModes.NO );
+
+	// =======================================================deselect
+	var idsetd = charIDToTypeID( "setd" );
+	    var desc326 = new ActionDescriptor();
+	    var idnull = charIDToTypeID( "null" );
+	        var ref60 = new ActionReference();
+	        var idChnl = charIDToTypeID( "Chnl" );
+	        var idfsel = charIDToTypeID( "fsel" );
+	        ref60.putProperty( idChnl, idfsel );
+	    desc326.putReference( idnull, ref60 );
+	    var idT = charIDToTypeID( "T   " );
+	    var idOrdn = charIDToTypeID( "Ordn" );
+	    var idNone = charIDToTypeID( "None" );
+	    desc326.putEnumerated( idT, idOrdn, idNone );
+	executeAction( idsetd, desc326, DialogModes.NO );
+
+	}catch(err){}
+
+}
+
+function trnsf( id, x, y){
+	// alert(id + ', '+x+ ', '+y);
+	try{
+		// =======================================================
+		var idTrnf = charIDToTypeID( "Trnf" );
+		    var desc871 = new ActionDescriptor();
+		    var idnull = charIDToTypeID( "null" );
+		        var ref153 = new ActionReference();
+		        var idLyr = charIDToTypeID( "Lyr " );
+		        var idOrdn = charIDToTypeID( "Ordn" );
+		        var idTrgt = charIDToTypeID( "Trgt" );
+		        // ref153.putEnumerated( idLyr, idOrdn, idTrgt );
+		        ref153.putIdentifier( idLyr, id );
+		    desc871.putReference( idnull, ref153 );
+		    var idFTcs = charIDToTypeID( "FTcs" );
+		    var idQCSt = charIDToTypeID( "QCSt" );
+		    var idQcsa = charIDToTypeID( "Qcsa" );
+		    desc871.putEnumerated( idFTcs, idQCSt, idQcsa );
+		    var idOfst = charIDToTypeID( "Ofst" );
+		        var desc872 = new ActionDescriptor();
+		        var idHrzn = charIDToTypeID( "Hrzn" );
+		        var idPxl = charIDToTypeID( "#Pxl" );
+		        desc872.putUnitDouble( idHrzn, idPxl, x );
+		        var idVrtc = charIDToTypeID( "Vrtc" );
+		        var idPxl = charIDToTypeID( "#Pxl" );
+		        desc872.putUnitDouble( idVrtc, idPxl, y );
+		    var idOfst = charIDToTypeID( "Ofst" );
+		    desc871.putObject( idOfst, idOfst, desc872 );
+		    var idIntr = charIDToTypeID( "Intr" );
+		    var idIntp = charIDToTypeID( "Intp" );
+		    var idBcbc = charIDToTypeID( "Bcbc" );
+		    desc871.putEnumerated( idIntr, idIntp, idBcbc );
+		executeAction( idTrnf, desc871, DialogModes.NO );
+	}catch(err){alert(err)}
+}
+
+function makeSolidBackground(){
+	// =======================================================
+var idMk = charIDToTypeID( "Mk  " );
+    var desc1678 = new ActionDescriptor();
+    var idnull = charIDToTypeID( "null" );
+        var ref277 = new ActionReference();
+        var idcontentLayer = stringIDToTypeID( "contentLayer" );
+        ref277.putClass( idcontentLayer );
+    desc1678.putReference( idnull, ref277 );
+    var idUsng = charIDToTypeID( "Usng" );
+        var desc1679 = new ActionDescriptor();
+        var idType = charIDToTypeID( "Type" );
+            var desc1680 = new ActionDescriptor();
+            var idClr = charIDToTypeID( "Clr " );
+                var desc1681 = new ActionDescriptor();
+                var idRd = charIDToTypeID( "Rd  " );
+                desc1681.putDouble( idRd, 87.000002 );
+                var idGrn = charIDToTypeID( "Grn " );
+                desc1681.putDouble( idGrn, 87.000002 );
+                var idBl = charIDToTypeID( "Bl  " );
+                desc1681.putDouble( idBl, 87.000002 );
+            var idRGBC = charIDToTypeID( "RGBC" );
+            desc1680.putObject( idClr, idRGBC, desc1681 );
+        var idsolidColorLayer = stringIDToTypeID( "solidColorLayer" );
+        desc1679.putObject( idType, idsolidColorLayer, desc1680 );
+    var idcontentLayer = stringIDToTypeID( "contentLayer" );
+    desc1678.putObject( idUsng, idcontentLayer, desc1679 );
+executeAction( idMk, desc1678, DialogModes.NO );
+
+
+// =======================================================
+var idsetd = charIDToTypeID( "setd" );
+    var desc1684 = new ActionDescriptor();
+    var idnull = charIDToTypeID( "null" );
+        var ref278 = new ActionReference();
+        var idPrpr = charIDToTypeID( "Prpr" );
+        var idLefx = charIDToTypeID( "Lefx" );
+        ref278.putProperty( idPrpr, idLefx );
+        var idLyr = charIDToTypeID( "Lyr " );
+        var idOrdn = charIDToTypeID( "Ordn" );
+        var idTrgt = charIDToTypeID( "Trgt" );
+        ref278.putEnumerated( idLyr, idOrdn, idTrgt );
+    desc1684.putReference( idnull, ref278 );
+    var idT = charIDToTypeID( "T   " );
+        var desc1685 = new ActionDescriptor();
+        var idScl = charIDToTypeID( "Scl " );
+        var idPrc = charIDToTypeID( "#Prc" );
+        desc1685.putUnitDouble( idScl, idPrc, 100.000000 );
+        var idGrFl = charIDToTypeID( "GrFl" );
+            var desc1686 = new ActionDescriptor();
+            var idenab = charIDToTypeID( "enab" );
+            desc1686.putBoolean( idenab, true );
+            var idpresent = stringIDToTypeID( "present" );
+            desc1686.putBoolean( idpresent, true );
+            var idshowInDialog = stringIDToTypeID( "showInDialog" );
+            desc1686.putBoolean( idshowInDialog, true );
+            var idMd = charIDToTypeID( "Md  " );
+            var idBlnM = charIDToTypeID( "BlnM" );
+            var idNrml = charIDToTypeID( "Nrml" );
+            desc1686.putEnumerated( idMd, idBlnM, idNrml );
+            var idOpct = charIDToTypeID( "Opct" );
+            var idPrc = charIDToTypeID( "#Prc" );
+            desc1686.putUnitDouble( idOpct, idPrc, 100.000000 );
+            var idGrad = charIDToTypeID( "Grad" );
+                var desc1687 = new ActionDescriptor();
+                var idNm = charIDToTypeID( "Nm  " );
+                desc1687.putString( idNm, """Custom""" );
+                var idGrdF = charIDToTypeID( "GrdF" );
+                var idGrdF = charIDToTypeID( "GrdF" );
+                var idCstS = charIDToTypeID( "CstS" );
+                desc1687.putEnumerated( idGrdF, idGrdF, idCstS );
+                var idIntr = charIDToTypeID( "Intr" );
+                desc1687.putDouble( idIntr, 4096.000000 );
+                var idClrs = charIDToTypeID( "Clrs" );
+                    var list32 = new ActionList();
+                        var desc1688 = new ActionDescriptor();
+                        var idClr = charIDToTypeID( "Clr " );
+                            var desc1689 = new ActionDescriptor();
+                            var idRd = charIDToTypeID( "Rd  " );
+                            desc1689.putDouble( idRd, 51.000001 );
+                            var idGrn = charIDToTypeID( "Grn " );
+                            desc1689.putDouble( idGrn, 51.000001 );
+                            var idBl = charIDToTypeID( "Bl  " );
+                            desc1689.putDouble( idBl, 51.000001 );
+                        var idRGBC = charIDToTypeID( "RGBC" );
+                        desc1688.putObject( idClr, idRGBC, desc1689 );
+                        var idType = charIDToTypeID( "Type" );
+                        var idClry = charIDToTypeID( "Clry" );
+                        var idUsrS = charIDToTypeID( "UsrS" );
+                        desc1688.putEnumerated( idType, idClry, idUsrS );
+                        var idLctn = charIDToTypeID( "Lctn" );
+                        desc1688.putInteger( idLctn, 0 );
+                        var idMdpn = charIDToTypeID( "Mdpn" );
+                        desc1688.putInteger( idMdpn, 50 );
+                    var idClrt = charIDToTypeID( "Clrt" );
+                    list32.putObject( idClrt, desc1688 );
+                        var desc1690 = new ActionDescriptor();
+                        var idClr = charIDToTypeID( "Clr " );
+                            var desc1691 = new ActionDescriptor();
+                            var idRd = charIDToTypeID( "Rd  " );
+                            desc1691.putDouble( idRd, 255.000000 );
+                            var idGrn = charIDToTypeID( "Grn " );
+                            desc1691.putDouble( idGrn, 255.000000 );
+                            var idBl = charIDToTypeID( "Bl  " );
+                            desc1691.putDouble( idBl, 255.000000 );
+                        var idRGBC = charIDToTypeID( "RGBC" );
+                        desc1690.putObject( idClr, idRGBC, desc1691 );
+                        var idType = charIDToTypeID( "Type" );
+                        var idClry = charIDToTypeID( "Clry" );
+                        var idUsrS = charIDToTypeID( "UsrS" );
+                        desc1690.putEnumerated( idType, idClry, idUsrS );
+                        var idLctn = charIDToTypeID( "Lctn" );
+                        desc1690.putInteger( idLctn, 4096 );
+                        var idMdpn = charIDToTypeID( "Mdpn" );
+                        desc1690.putInteger( idMdpn, 50 );
+                    var idClrt = charIDToTypeID( "Clrt" );
+                    list32.putObject( idClrt, desc1690 );
+                desc1687.putList( idClrs, list32 );
+                var idTrns = charIDToTypeID( "Trns" );
+                    var list33 = new ActionList();
+                        var desc1692 = new ActionDescriptor();
+                        var idOpct = charIDToTypeID( "Opct" );
+                        var idPrc = charIDToTypeID( "#Prc" );
+                        desc1692.putUnitDouble( idOpct, idPrc, 100.000000 );
+                        var idLctn = charIDToTypeID( "Lctn" );
+                        desc1692.putInteger( idLctn, 0 );
+                        var idMdpn = charIDToTypeID( "Mdpn" );
+                        desc1692.putInteger( idMdpn, 50 );
+                    var idTrnS = charIDToTypeID( "TrnS" );
+                    list33.putObject( idTrnS, desc1692 );
+                        var desc1693 = new ActionDescriptor();
+                        var idOpct = charIDToTypeID( "Opct" );
+                        var idPrc = charIDToTypeID( "#Prc" );
+                        desc1693.putUnitDouble( idOpct, idPrc, 0.000000 );
+                        var idLctn = charIDToTypeID( "Lctn" );
+                        desc1693.putInteger( idLctn, 4096 );
+                        var idMdpn = charIDToTypeID( "Mdpn" );
+                        desc1693.putInteger( idMdpn, 50 );
+                    var idTrnS = charIDToTypeID( "TrnS" );
+                    list33.putObject( idTrnS, desc1693 );
+                desc1687.putList( idTrns, list33 );
+            var idGrdn = charIDToTypeID( "Grdn" );
+            desc1686.putObject( idGrad, idGrdn, desc1687 );
+            var idAngl = charIDToTypeID( "Angl" );
+            var idAng = charIDToTypeID( "#Ang" );
+            desc1686.putUnitDouble( idAngl, idAng, 90.000000 );
+            var idType = charIDToTypeID( "Type" );
+            var idGrdT = charIDToTypeID( "GrdT" );
+            var idLnr = charIDToTypeID( "Lnr " );
+            desc1686.putEnumerated( idType, idGrdT, idLnr );
+            var idRvrs = charIDToTypeID( "Rvrs" );
+            desc1686.putBoolean( idRvrs, false );
+            var idDthr = charIDToTypeID( "Dthr" );
+            desc1686.putBoolean( idDthr, false );
+            var idAlgn = charIDToTypeID( "Algn" );
+            desc1686.putBoolean( idAlgn, true );
+            var idScl = charIDToTypeID( "Scl " );
+            var idPrc = charIDToTypeID( "#Prc" );
+            desc1686.putUnitDouble( idScl, idPrc, 100.000000 );
+            var idOfst = charIDToTypeID( "Ofst" );
+                var desc1694 = new ActionDescriptor();
+                var idHrzn = charIDToTypeID( "Hrzn" );
+                var idPrc = charIDToTypeID( "#Prc" );
+                desc1694.putUnitDouble( idHrzn, idPrc, 0.000000 );
+                var idVrtc = charIDToTypeID( "Vrtc" );
+                var idPrc = charIDToTypeID( "#Prc" );
+                desc1694.putUnitDouble( idVrtc, idPrc, 0.000000 );
+            var idPnt = charIDToTypeID( "Pnt " );
+            desc1686.putObject( idOfst, idPnt, desc1694 );
+        var idGrFl = charIDToTypeID( "GrFl" );
+        desc1685.putObject( idGrFl, idGrFl, desc1686 );
+    var idLefx = charIDToTypeID( "Lefx" );
+    desc1684.putObject( idT, idLefx, desc1685 );
+executeAction( idsetd, desc1684, DialogModes.NO );
+
+// =======================================================
+var idmove = charIDToTypeID( "move" );
+    var desc1706 = new ActionDescriptor();
+    var idnull = charIDToTypeID( "null" );
+        var ref282 = new ActionReference();
+        var idLyr = charIDToTypeID( "Lyr " );
+        var idOrdn = charIDToTypeID( "Ordn" );
+        var idTrgt = charIDToTypeID( "Trgt" );
+        ref282.putEnumerated( idLyr, idOrdn, idTrgt );
+    desc1706.putReference( idnull, ref282 );
+    var idT = charIDToTypeID( "T   " );
+        var ref283 = new ActionReference();
+        var idLyr = charIDToTypeID( "Lyr " );
+        ref283.putIndex( idLyr, 0 );
+    desc1706.putReference( idT, ref283 );
+    var idAdjs = charIDToTypeID( "Adjs" );
+    desc1706.putBoolean( idAdjs, false );
+    var idVrsn = charIDToTypeID( "Vrsn" );
+    desc1706.putInteger( idVrsn, 5 );
+executeAction( idmove, desc1706, DialogModes.NO );
+
+}
+
+function putCustomSettingsImp( obj )
+{
+	var desc2MW = new ActionDescriptor();
+	desc2MW.putString(0, obj.toSource()); 
+	app.putCustomOptions('276ce320-c10a-11e6-9598-0800200c9a66', desc2MW, true );
+}
+
+function getCustomSettingsImp(){
+	tret = {path:"", sfile:"", smask:"", distribute:false, distributeVal:0};
+	try{
+		var desc1Proc = app.getCustomOptions('276ce320-c10a-11e6-9598-0800200c9a66');
+		mb_Procc = desc1Proc.getString(0);
+		eval('tret = '+mb_Procc);
+	}catch(err){}
+	return tret
+}

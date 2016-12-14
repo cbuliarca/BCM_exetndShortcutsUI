@@ -952,3 +952,68 @@ function getTheBigestID(){
   return theBigID;
 
 }
+
+function getActiveDocumentIDX0(){//get index
+    var ref = new ActionReference();
+    ref.putProperty( charIDToTypeID("Prpr") , charIDToTypeID( "ItmI" ));
+    ref.putEnumerated( charIDToTypeID("Dcmn"), charIDToTypeID("Ordn"), charIDToTypeID("Trgt") );
+    return executeActionGet(ref).getInteger(charIDToTypeID( "ItmI" ));
+}
+
+function getNbOfDocs(){//get number of documents
+    var ref = new ActionReference();
+    ref.putProperty( charIDToTypeID("Prpr") , charIDToTypeID( "NmbD" ));
+    ref.putEnumerated( charIDToTypeID("capp"), charIDToTypeID("Ordn"), charIDToTypeID("Trgt") );
+    return executeActionGet(ref).getInteger(charIDToTypeID( "NmbD" ));
+}
+function getCountOfDocs(){//get index
+    var ref = new ActionReference();
+    ref.putProperty( charIDToTypeID("Prpr") , charIDToTypeID( "Cnt " ));
+    ref.putEnumerated( charIDToTypeID("Dcmn"), charIDToTypeID("Ordn"), charIDToTypeID("Trgt") );
+    return executeActionGet(ref).getInteger(charIDToTypeID( "Cnt " ));
+}
+function getActiveDocumentIDX(){//get index taking into account the 3d documents
+    theDocs = getNbOfDocs();
+    theDocIDX = getActiveDocumentIDX0();
+    theRet = theDocIDX;
+    theCount = getCountOfDocs();
+    var q = 1;
+    if(theCount > theDocs){//this means that there are hidden documents like 3d textures
+        for(i=1;i<=theDocs;i++){
+            var ref = new ActionReference();
+            ref.putIndex( charIDToTypeID( 'Dcmn' ), i );
+            var desc = executeActionGet(ref);
+            var itemNB = desc.getInteger(charIDToTypeID( 'ItmI' ));
+            if( itemNB == theDocIDX){
+                theRet = q;
+                break;
+            }
+            q++;
+        }
+    }
+    return theRet;
+}
+function getActiveDocumentID(){// get DocumentID
+    var ref = new ActionReference();
+    ref.putProperty( charIDToTypeID("Prpr") , charIDToTypeID( "DocI" ));
+    ref.putEnumerated( charIDToTypeID("Dcmn"), charIDToTypeID("Ordn"), charIDToTypeID("Trgt") );
+    return executeActionGet(ref).getInteger(charIDToTypeID( "DocI" ));
+}
+function selectDocumentByIDX( idx ){//select by Index it doesn't work if you have 3d document
+      var desc = new ActionDescriptor();
+          var ref = new ActionReference();
+          ref.putIndex( charIDToTypeID( "Dcmn" ), idx );
+      desc.putReference( charIDToTypeID( "null" ), ref );
+  executeAction( charIDToTypeID( "slct" ), desc, DialogModes.NO );
+}
+function selectDocumentByID( id ){//select by documentID
+  var idslct = charIDToTypeID( "slct" );
+      var desc50 = new ActionDescriptor();
+      var idnull = charIDToTypeID( "null" );
+          var ref33 = new ActionReference();
+          var idDcmn = charIDToTypeID( "Dcmn" );
+          // ref33.putOffset( idDcmn, -3 );
+          ref33.putIdentifier( idDcmn, id );
+      desc50.putReference( idnull, ref33 );
+  executeAction( idslct, desc50, DialogModes.NO );
+}

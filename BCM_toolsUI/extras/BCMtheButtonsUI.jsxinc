@@ -18,7 +18,7 @@ BCMtheButtonsUI[14]={image:"grpClipLayers.png", shortcut:"G", label:"grpClipLaye
 BCMtheButtonsUI[15]={image:"solidColor.png", shortcut:"Q", label:"solidColor", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/~bcm_solidColor.jsx;;\" );", toolTip:"", x:550, y:330, isGroup:false};
 BCMtheButtonsUI[16]={image:"", shortcut:"U", label:"openMayaUvs", command:"var desc3 = new ActionDescriptor();\
     var idnull = charIDToTypeID( \"null\" );\
-    desc3.putPath( idnull, new File( \"C:/Users/MAN/Documents/maya/projects/default/images/outUV.tga\" ) );\
+    desc3.putPath( idnull, new File( Folder.myDocuments +\"/maya/projects/default/images/outUV.tga\" ) );\
 executeAction( charIDToTypeID( \"Opn \" ) , desc3, DialogModes.NO );\
 ", toolTip:"open the exported maya uvs", x:550, y:0, isGroup:false};
 BCMtheButtonsUI[17]={image:"TglVis Main Parent.png", shortcut:"Z", label:"TglVis\nMain Parent", command:"runScript_Fnct_Arguments(_gCurrentESHui.path + \"/extras/scripts/~BCM18_ hideBigParent.jsx;;\" );", toolTip:"", x:220, y:110, isGroup:false};

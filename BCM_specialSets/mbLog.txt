@@ -1,2 +1,2 @@
 
-firstPressAnyButton :: false
+compare initWin1::false :: false
