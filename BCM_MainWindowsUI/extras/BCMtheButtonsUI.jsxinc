@@ -9,7 +9,7 @@ BCMtheButtonsUI[3]={image:"", shortcut:"C", label:"Change Color", command:"runSc
 BCMtheButtonsUI[4]={image:"", shortcut:"P", label:"Presentation", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_Presentation/BCM_Presentation.jsxinc;;\" );", toolTip:"", x:660, y:110, isGroup:false};
 BCMtheButtonsUI[5]={image:"", shortcut:"S", label:"Saves", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_saves/BCM_savesUI.jsx;;\" );\
 ", toolTip:"", x:550, y:0, isGroup:true};
-BCMtheButtonsUI[6]={image:"", shortcut:"Q", label:"Select\nby color", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_selectByColorUI/BCM_searchLayerByColorsUI.jsxinc;;\" );\
+BCMtheButtonsUI[6]={image:"", shortcut:"Q", label:"Select Layers\nby color", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_selectByColorUI/BCM_searchLayerByColorsUI.jsxinc;;\" );\
 ", toolTip:"select layers by the color they have in the layer palette", x:660, y:0, isGroup:true};
 BCMtheButtonsUI[7]={image:"", shortcut:"ACCENT", label:"Special Layers", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_specialLayers/BCM_specialLayers.jsx;;\" );\
 ", toolTip:"", x:770, y:0, isGroup:true};
