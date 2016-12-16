@@ -89,13 +89,7 @@ Scripts in the collection:
   * **ImportFolder**: import files from a folder, adding a mask. Ex: if there is a folder with some renders named BPR_Render1.jpg and BPR_Mask1.jpg, the tool will copy the BPR_Mask1.jpg into the mask for BPR_Render1.jpg, the condition is that the first two fileds in the ui should be _Render and _Mask. If there is not specified the mask filed, it will make a mask from the Alpha1 channel. Done to use it for charater sheet presentation
 
 12. **Other's scripts from the WEB**: -not my scripts, I can't take credit for them. You can contribute with your scripts   here.
-  * **Materials Masks by passerby**: cool scripts used basically for duplicating and updating layers from one main group(Material) to another, for games texturing. 
-  *   Created by Chris Cunningham
-  *   http://polycount.com/discussion/135456/psmasksync-photoshop-script
-  * **Corner Editor** - cool script to adjust the corner of a shape, works only with 4 corners. 
-  *   Created by David Jensen @
-  *   http://photoshopscripts.wordpress.com/
-  * **Split To Layers**: This script will separate each contiguous group of pixels to its own layer.
-  *   Created by David Jensen @
-  *   http://photoshopscripts.wordpress.com/
+  * **Materials Masks by passerby**: cool scripts used basically for duplicating and updating layers from one main group(Material) to another, for games texturing. Created by Chris Cunningham http://polycount.com/discussion/135456/psmasksync-photoshop-script
+  * **Corner Editor** - cool script to adjust the corner of a shape, works only with 4 corners. Created by David Jensen @ http://photoshopscripts.wordpress.com/
+  * **Split To Layers**: This script will separate each contiguous group of pixels to its own layer.Created by David Jensen @ http://photoshopscripts.wordpress.com/
 
