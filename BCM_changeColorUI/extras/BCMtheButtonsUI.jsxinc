@@ -1,15 +1,15 @@
 var BCMtheButtonsUI = new Array();
-BCMtheButtonsUI[0]={image:"", shortcut:"B", label:"ch: Bright", command:"chColor( 'brightness', mb_Procc);", toolTip:"", x:330, y:0, isGroup:false };
-BCMtheButtonsUI[1]={image:"", shortcut:"S", label:"ch: Saturation", command:"chColor( 'saturation', mb_Procc);", toolTip:"", x:550, y:110, isGroup:false };
-BCMtheButtonsUI[2]={image:"", shortcut:"H", label:"ch: Hue", command:"chColor( 'hue', mb_Procc)", toolTip:"", x:660, y:330, isGroup:false };
-BCMtheButtonsUI[3]={image:"", shortcut:"Alt + B", label:"ch: -Bright", command:"chColor( 'brightness', 0 - parseInt(mb_Procc));", toolTip:"", x:330, y:110, isGroup:false };
-BCMtheButtonsUI[4]={image:"", shortcut:"Alt + S", label:"ch: -Saturation", command:"chColor( 'saturation', 0 - parseInt(mb_Procc));", toolTip:"", x:440, y:220, isGroup:false };
-BCMtheButtonsUI[5]={image:"", shortcut:"Alt + H", label:"ch: -Hue", command:"chColor( 'hue', 0 - parseInt(mb_Procc));", toolTip:"", x:550, y:330, isGroup:false };
-BCMtheButtonsUI[6]={image:"", shortcut:"1", label:"chProc", command:"mainChProcUI()", toolTip:"", x:550, y:550, isGroup:false };
-BCMtheButtonsUI[7]={image:"", shortcut:"R", label:"ch:Red", command:"chColor( 'red', mb_Procc);", toolTip:"", x:110, y:110, isGroup:false };
-BCMtheButtonsUI[8]={image:"", shortcut:"Alt + R", label:"ch:-Red", command:"chColor( 'red', 0 - parseInt(mb_Procc));", toolTip:"", x:220, y:220, isGroup:false };
-BCMtheButtonsUI[9]={image:"", shortcut:"Alt + G", label:"ch:-Green", command:"chColor( 'green',0- mb_Procc);", toolTip:"", x:110, y:330, isGroup:false };
-BCMtheButtonsUI[10]={image:"", shortcut:"G", label:"ch:Green", command:"chColor( 'green', mb_Procc);", toolTip:"", x:0, y:330, isGroup:false };
+BCMtheButtonsUI[0]={image:"", shortcut:"B", label:"ch: Bright", command:"chColor( 'brightness', mb_Procc);", toolTip:"", x:330, y:0, isGroup:false};
+BCMtheButtonsUI[1]={image:"", shortcut:"S", label:"ch: Saturation", command:"chColor( 'saturation', mb_Procc);", toolTip:"", x:550, y:110, isGroup:false};
+BCMtheButtonsUI[2]={image:"", shortcut:"H", label:"ch: Hue", command:"chColor( 'hue', mb_Procc)", toolTip:"", x:660, y:330, isGroup:false};
+BCMtheButtonsUI[3]={image:"", shortcut:"Alt + B", label:"ch: -Bright", command:"chColor( 'brightness', 0 - parseInt(mb_Procc));", toolTip:"", x:330, y:110, isGroup:false};
+BCMtheButtonsUI[4]={image:"", shortcut:"Alt + S", label:"ch: -Saturation", command:"chColor( 'saturation', 0 - parseInt(mb_Procc));", toolTip:"", x:440, y:220, isGroup:false};
+BCMtheButtonsUI[5]={image:"", shortcut:"Alt + H", label:"ch: -Hue", command:"chColor( 'hue', 0 - parseInt(mb_Procc));", toolTip:"", x:550, y:330, isGroup:false};
+BCMtheButtonsUI[6]={image:"", shortcut:"1", label:"chProc", command:"mainChProcUI()", toolTip:"", x:550, y:550, isGroup:false};
+BCMtheButtonsUI[7]={image:"", shortcut:"R", label:"ch:Red", command:"chColor( 'red', mb_Procc);", toolTip:"", x:110, y:110, isGroup:false};
+BCMtheButtonsUI[8]={image:"", shortcut:"Alt + R", label:"ch:-Red", command:"chColor( 'red', 0 - parseInt(mb_Procc));", toolTip:"", x:220, y:220, isGroup:false};
+BCMtheButtonsUI[9]={image:"", shortcut:"Alt + G", label:"ch:-Green", command:"chColor( 'green',0- mb_Procc);", toolTip:"", x:110, y:330, isGroup:false};
+BCMtheButtonsUI[10]={image:"", shortcut:"G", label:"ch:Green", command:"chColor( 'green', mb_Procc);", toolTip:"", x:0, y:330, isGroup:false};
 BCMtheButtonsUI[11]={image:"", shortcut:"", label:"AUTOHOTKEY", command:"var htmlFIle0 = new File(Folder.temp + \"/autohotkey.html\");\
 var srHTM0 = '<html xmlns=\"http://www.w3.org/1999/xhtml\"><head></head><body onLoad = \"window.location = \\'http://www.autohotkey.com/\\'\"></body></html>';\
 htmlFIle0.open('w');\
@@ -32,8 +32,8 @@ Gestures:\
     LeftDown    ---- change color's blue\
     \
 If you have the Left Backslash pressed when making the gesture it will substract.\
-", x:330, y:660, isGroup:false };
-BCMtheButtonsUI[12]={image:"", shortcut:"V", label:"ch:Blue", command:"chColor( 'blue', mb_Procc);", toolTip:"", x:110, y:550, isGroup:false };
-BCMtheButtonsUI[13]={image:"", shortcut:"Alt + V", label:"ch:-Blue", command:"chColor( 'blue', 0-mb_Procc);", toolTip:"", x:220, y:440, isGroup:false };
-BCMtheButtonsUI[14]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:440, y:440, isGroup:false };
-BCMtheButtonsUI[15]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:330, y:550, isGroup:false };
+", x:330, y:660, isGroup:false};
+BCMtheButtonsUI[12]={image:"", shortcut:"V", label:"ch:Blue", command:"chColor( 'blue', mb_Procc);", toolTip:"", x:110, y:550, isGroup:false};
+BCMtheButtonsUI[13]={image:"", shortcut:"Alt + V", label:"ch:-Blue", command:"chColor( 'blue', 0-mb_Procc);", toolTip:"", x:220, y:440, isGroup:false};
+BCMtheButtonsUI[14]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:440, y:440, isGroup:false};
+BCMtheButtonsUI[15]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:330, y:550, isGroup:false};

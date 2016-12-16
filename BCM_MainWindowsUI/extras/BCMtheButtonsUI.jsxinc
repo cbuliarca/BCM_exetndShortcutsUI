@@ -33,7 +33,7 @@ the magic wand will work like it suposed to. The user can also use the Alt or Sh
        Also if the user press the Divide key and clicks with the magic wand selected anywhere on the document it will set the selected layer as a hotLayer\
        Pressing CapsLock when clicking with the magic wand the user can toggle visibilty for the hotLayer.", x:550, y:110, isGroup:true};
 BCMtheButtonsUI[17]={image:"", shortcut:"", label:"", command:"", toolTip:"", x:440, y:0, isGroup:false};
-BCMtheButtonsUI[18]={image:"", shortcut:"BACKSLASH", label:"OTHER's\nscripts from \nWEB", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_from the NET/BCM_from the NET.jsxinc;;\" );", toolTip:"", x:990, y:110, isGroup:true};
+BCMtheButtonsUI[18]={image:"", shortcut:"TAB", label:"OTHER's\nscripts from \nWEB", command:"runScript_Fnct_Arguments(_gESHFolder + \"/BCM_from the NET/BCM_from the NET.jsxinc;;\" );", toolTip:"", x:990, y:110, isGroup:true};
 BCMtheButtonsUI[19]={image:"", shortcut:"F1", label:"HELP", command:"openHTML( \"https://www.youtube.com/watch?v=2_x1LerZfek\");\
 $.sleep(500);\
 openHTML( \"https://www.youtube.com/watch?v=EkQXvMXDdX4\");", toolTip:"", x:1100, y:110, isGroup:false};
