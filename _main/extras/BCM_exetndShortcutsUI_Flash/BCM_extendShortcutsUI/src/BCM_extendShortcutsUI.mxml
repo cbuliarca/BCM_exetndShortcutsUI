@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				xmlns:ns1="*"
+				minWidth="100" minHeight="100" applicationComplete="init()" backgroundAlpha="0.0"
+				backgroundColor="#191919" borderColor="#000000" color="#000000" layout="absolute"
+				themeColor="#000000">
+	<mx:Script>
+		<![CDATA[
+			import flash.display.Bitmap;
+			import flash.display.BitmapData;
+			import flash.external.ExternalInterface;
+			import flash.system.Capabilities;
+			import flash.text.TextLineMetrics;
+			
+			import mx.controls.Button;
+			import mx.controls.Image;
+			import mx.controls.Label;
+			import mx.controls.Text;
+			import mx.controls.TextArea;
+			import mx.core.DragSource;
+			import mx.events.DragEvent;
+			import mx.events.ResizeEvent;
+			import mx.events.ScrollEvent;
+			import mx.managers.DragManager;
+
+			public var firstHelp:Text = new Text();
+			public var buttons:Array;
+			public var scrPath:String;
+			private var matrix:Matrix = new Matrix();
+			private var btnColors:Array = [0x3e3e3e, 0x1c1c1c];
+			private var btnAlphas:Array = [1, 1];
+			private var btnRatios:Array = [ 0, 255];
+			private var btnSpread:String = 'reflect';
+			private var btnGrType:String = 'linear';
+			private var lineOverC:Number = 0x6898c0;
+			private var lbPos:Array = [0, 75];
+			private var shPos:Array = [5, 5];
+			private var loaded:Boolean = false;
+			private var timer:Timer = null;
+			private var timerSC:Timer = null;
+			private var firstClick:Boolean = false;
+			private var btnSize:Number = 100;
+			private var clickedBtn:Canvas;
+			private var clickedStgX:Number;
+			private var clickedStgY:Number;
+			private var clickedX:Number;
+			private var clickedY:Number;
+			private var mouseDragOffset:Array;
+			private var downPressed:Array;
+			private var upPressed:Array;
+			private var BCMtheButtonsUI:Array;
+			private var myShape:Shape;
+			private var myCircle:Shape;
+			private var toStopActivate:Boolean = false;
+
+			public function init():void{
+				cvs.addEventListener(ScrollEvent.SCROLL,onScroll);
+				
+				
+				cvs.addEventListener(DragEvent.DRAG_ENTER, dragAccept);
+				cvs.addEventListener(DragEvent.DRAG_DROP, dragDrop);
+				application.doubleClickEnabled = true;
+				addEventListener(MouseEvent.DOUBLE_CLICK, mcDblClick);
+				application.addEventListener(MouseEvent.MOUSE_DOWN, msDownMain);
+				application.addEventListener(MouseEvent.MOUSE_UP, msUpMain);
+				
+				application.contextMenu.addEventListener(ContextMenuEvent.MENU_SELECT, rghtClick);
+
+				timer = new Timer(200, 1);
+				timer.addEventListener(TimerEvent.TIMER, onTimerComplete);
+				timerSC = new Timer(1000);
+				timerSC.addEventListener(TimerEvent.TIMER, scrollStop);
+				timerSC.start();
+				matrix.createGradientBox(100, 70, (Math.PI/180)*90, 0, 00);// the gradient for the buttons
+				
+				ExternalInterface.addCallback('receveUpdateBtn', receveUpdateBtn);
+				ExternalInterface.addCallback('receveBtns', receveBtns);
+				ExternalInterface.addCallback('reinit', reinit);
+				ExternalInterface.addCallback('receveFirstLook', receveFirstLook);
+				ExternalInterface.addCallback('stopActivTimer', stopActvTimer);
+				ExternalInterface.addCallback('startActvTimer', startActvTimer);
+				ExternalInterface.call("getBtns", 1);
+
+				cvs.addEventListener(DragEvent.DRAG_ENTER, dragAccept);
+				cvs.addEventListener(DragEvent.DRAG_DROP, dragDrop);
+				if( cvs.getChildren().length == 0){
+					ExternalInterface.call("getFirstLook");
+				}
+				
+			}
+			private function whiteBoxCheck(event:Event):void { 
+				if (event.target.name == "whiteBox") { 
+					cvs.rawChildren.getChildByName('whiteBox').alpha = 0;
+				} 
+			} 
+			public function reinit():void{
+				callAlert('reinitializing ==================');
+				cvs.removeAllChildren();
+				init();
+			}
+			public function receveFirstLook(str:String):void{
+				cvs.addEventListener(ResizeEvent.RESIZE, reszText);
+
+				firstHelp.text = str;
+				firstHelp.selectable = false;
+	
+//				firstHelp.accessibilityEnabled = false;
+				firstHelp.setStyle('color', 0x474747);
+				firstHelp.setStyle('textAlign','center');
+				firstHelp.setStyle('fontSize', 20);
+				firstHelp.setStyle('fontFamily', 'Verdana');
+				firstHelp.y = (cvs.height / 2)- 100;
+				firstHelp.width = cvs.width;
+				cvs.addChild(firstHelp);
+
+				
+			}
+			public function reszText(evt:ResizeEvent):void{
+				firstHelp.y = (cvs.height / 2)- 100;
+				if(firstHelp.y <= 0){
+					firstHelp.y = 0;
+				}
+				firstHelp.width = cvs.width;
+			}
+			public function receveBtns(etrt:Array, scrName:String):void{
+				callAlert('buttons receved: ' + etrt);	
+				callAlert('scr receved: ' + scrName);
+				
+				//if (scrName.substring(0, 1) != '~') {//for windows paths
+					//scrName = scrName.substring(1, scrName.length);
+					//scrName = scrName.replace("/", ":/");
+				//}
+				scrPath = scrName;
+				buttons = etrt;
+				
+				BCMtheButtonsUI = etrt;
+				for( var i:int = 0; i<buttons.length; i++){
+					var btnO:Object = buttons[i];
+					addButton( i, btnO );
+				}
+				cvs.addEventListener(Event.ADDED, whiteBoxCheck);// the scroller white box
+			}
+			public function receveUpdateBtn( rcvt:Array ):void{
+					if(cvs.getChildren().length != rcvt[0].idx){// it means that it will add
+						cvs.removeChildAt(rcvt[0].idx);
+					}
+					addButton(rcvt[0].idx, rcvt[1]);
+					BCMtheButtonsUI[rcvt[0].idx] = rcvt[1];
+			}
+			public function addButton( idxAt:Number, btObj:Object ):void{
+				callAlert('addBtn: '+ btObj.label);
+				var btn:Canvas = new Canvas();
+				btn.doubleClickEnabled = true;
+				
+				btn.x = btObj.x;
+				btn.y = btObj.y;
+				
+				btn.toolTip = btObj.toolTip;
+				var lb:Text  = new Text();
+				//var lb:Label  = new Label();
+				lb.text = btObj.label;
+				lb.setStyle('color', 0xffffff);
+				lb.x = lbPos[0];
+				lb.y = lbPos[1];
+				lb.width = 100;
+				lb.selectable = false;
+				lb.setStyle('textAlign','center');
+				lb.setStyle('fontSize', 12);
+				lb.setStyle('fontFamily', 'Verdana');
+				var textN:Array = lb.text.split("\n");//if there are more then one lines in the text label
+				if (textN.length > 1) {
+					lb.y = lb.y -(((textN.length-1) * 10)+((textN.length-1)*6));
+				}
+				
+				var sh:Label = new Label();
+				sh.text = btObj.shortcut;
+				sh.setStyle('color', 0xffffff);
+				sh.x = shPos[0];
+				sh.y = shPos[1];
+				sh.width = 100;
+				sh.setStyle('textAlign','left');
+				sh.setStyle('fontSize', 12);
+				sh.setStyle('fontFamily', 'Verdana');
+
+				var shpA:Shape = new Shape();
+				shpA.graphics.beginGradientFill(btnGrType, btnColors, btnAlphas, btnRatios, matrix, btnSpread);
+				shpA.graphics.drawRoundRect(0, 0, btnSize, btnSize, 10);
+				shpA.graphics.endFill();
+
+				btn.rawChildren.addChild(shpA);
+				
+				btn.addChild( lb );
+				btn.addChild( sh );
+				callAlert("btn image: " + btObj.image);
+				if( btObj.image != ""){
+					callAlert("adding image: " + btObj.image);
+					var loader:Loader = new Loader();
+					loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imageLoaded0(btn, lb, sh));
+					loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,loadingError);
+					
+					var swfFl:String = application.loaderInfo.url.toString();
+					var swfPth:String = swfFl.substr(0,swfFl.lastIndexOf("/")+1);
+					var imgPth:String = scrPath + "/extras/icons/" + btObj.image;
+					//var imgPth:String = btObj.image;
+					callAlert('Absoute URL: '+ imgPth);
+					
+					var url:URLRequest= new URLRequest(imgPth);
+					loader.load(new URLRequest(imgPth));
+				}
+				
+
+				
+				btn.addEventListener(MouseEvent.MOUSE_OVER, mcOver);
+				btn.addEventListener(MouseEvent.MOUSE_OUT, mcOut);
+//				btn.addEventListener(MouseEvent.DOUBLE_CLICK, mcDblClick);
+				btn.addEventListener(MouseEvent.MOUSE_DOWN, mcClick);
+				
+				cvs.addChildAt(btn, idxAt);
+				
+				callAlert('added btn: '+ btObj.label);
+			}
+			function loadingError(e:IOErrorEvent):void {
+				callAlert(application.loaderInfo.url);
+				callAlert(e.toString());
+
+			}
+			public function mcOver(evt:MouseEvent):void{
+				var mc:Canvas = evt.currentTarget as Canvas;
+				var shp0:Shape = mc.rawChildren.getChildAt(1) as Shape;
+				shp0.graphics.beginGradientFill(btnGrType, btnColors, btnAlphas, btnRatios, matrix, btnSpread);
+				shp0.graphics.lineStyle(null, lineOverC);
+				shp0.graphics.drawRoundRect(0, 0, btnSize, btnSize, 10);
+				shp0.graphics.endFill();
+			}
+			public function mcOut(evt:MouseEvent):void{
+				var mc:Canvas = evt.currentTarget as Canvas;
+				mc.rawChildren.removeChildAt(1);
+				var shp1:Shape = new Shape();
+				shp1.graphics.beginGradientFill(btnGrType, btnColors, btnAlphas, btnRatios, matrix, btnSpread);
+				shp1.graphics.drawRoundRect(0, 0, btnSize, btnSize, 10);
+				shp1.graphics.endFill();
+				mc.rawChildren.addChildAt(shp1,0);
+				
+			}
+			private function mcClick(evt:MouseEvent):void {
+				if(evt.altKey != true){
+					if(evt.ctrlKey != true){
+						timer.reset();
+						timer.start();
+						clickedBtn = evt.currentTarget as Canvas;
+						clickedStgX = evt.stageX;
+						clickedStgY = evt.stageY;
+						clickedX = evt.localX;
+						clickedY = evt.localY;
+					}else{
+						doDrag(evt);
+					}
+				}
+			}
+			
+			private function onTimerComplete(evt:TimerEvent):void {// for single click
+				callAlert('one click');
+					var mc:Canvas = clickedBtn as Canvas;
+					var idx:Number = cvs.getChildIndex(mc);
+					ExternalInterface.call("btnClikc", idx);
+			}
+
+			public function mcDblClick(evt:MouseEvent):void{	
+				callAlert('double click');
+				if(evt.currentTarget == application){
+					rghtClick(evt);
+				}else{
+					if(evt.altKey != true){
+						if(evt.ctrlKey != true){
+							timer.reset();
+							var mc:Canvas = clickedBtn as Canvas;
+							var idx:Number = cvs.getChildIndex(mc);
+							ExternalInterface.call("rghtClick", [idx, clickedStgX, clickedStgY, clickedX, clickedY]);
+						}
+					}
+				}
+
+
+				
+			}
+			public function imageLoaded0(mc:Canvas, lb:Label, sh:Label):Function {
+				return function(event:Event):void {
+					//callAlert("image loaded: " + event.target.content.bitmapData.width);
+					var bitmapWidth:int = event.target.content.bitmapData.width;
+					var bitmapHeight:int = event.target.content.bitmapData.height;	
+					var BtmData:BitmapData = new BitmapData(bitmapWidth, bitmapHeight, false, 0x00FF00);
+					BtmData = event.target.content.bitmapData;
+					var lbMatrix:Matrix= new Matrix();
+						lbMatrix.tx = lb.x;
+						lbMatrix.ty = lb.y;
+					BtmData.draw(lb, lbMatrix);
+					var shMatrix:Matrix= new Matrix();
+						shMatrix.tx = shPos[0];
+						shMatrix.ty = shPos[1];
+					BtmData.draw(sh, shMatrix);
+					var shpB:Shape = new Shape();
+					shpB.graphics.beginBitmapFill(BtmData);
+					shpB.graphics.drawRoundRect(0, 0, 100, 100, 10);
+					shpB.graphics.endFill();
+					mc.rawChildren.addChild(shpB);
+				};
+			}
+
+			public function doDrag(event:MouseEvent){
+				var btn:Canvas = event.currentTarget as Canvas;
+				mouseDragOffset = [event.localX, event.localY];
+				var dsource:DragSource = new DragSource();
+				dsource.addData(btn, 'btn');
+				
+				DragManager.doDrag(btn, dsource, event);
+			}
+			
+			private function dragAccept(event:DragEvent):void
+			{
+				DragManager.acceptDragDrop(cvs);
+			}
+			
+			private function dragDrop(event:DragEvent):void
+			{
+				callAlert('dragDrop');
+				var pt1:Point = new Point( cvs.contentMouseX, cvs.contentMouseY );
+				var btn:Canvas = event.dragSource.dataForFormat('btn') as Canvas;
+				
+				var pt:Point = new Point( this.contentMouseX, this.contentMouseY );
+				var ss:Object = this.getObjectsUnderPoint(pt);
+				if( ss.length > 3){
+					callAlert("you can't move one button over another!");
+					ExternalInterface.call('activeTempB');
+				}else{
+					changePos(btn, pt1.x, pt1.y );
+				}	
+			}
+			private function changePos(btn:Canvas, x:Number, y:Number):void{
+				callAlert('chPos');
+				var retPos:Object = {x:x - mouseDragOffset[0], y:y - mouseDragOffset[1]};
+				var idealPos:Object = {x:(Math.round(retPos.x / (btnSize + 10)))*(btnSize + 10), y:(Math.round(retPos.y / (btnSize + 10)))*(btnSize + 10)};
+				btn.x = idealPos.x;
+				btn.y = idealPos.y;
+				var tIDX:Number = cvs.getChildIndex(btn) as Number;
+				var sent1:Array = [tIDX, idealPos.x, idealPos.y];
+				ExternalInterface.call("changePos", sent1);
+			}
+
+			public function rghtClick(evt:Event):void{
+				var pt:Point = new Point( this.contentMouseX, this.contentMouseY );
+				var global:Point = Application.application.localToGlobal( pt );
+				var glX:Number = global.x;
+				var glY:Number = global.y;
+				var ptX:Number = pt.x;
+				var ptY:Number = pt.y;
+				var ss:Object = this.getObjectsUnderPoint(global);
+//				callAlert(' right clicked:: '+ ss[ss.length -1].parent + '\n\r firstHelp:: '+ this.firstHelp);
+				var sentArr:Array;
+				if( ss.length > 3){
+					if( ss[ss.length -1 ].parent == firstHelp){// right click on the first help text
+						callAlert('my text');
+						var pt1:Point = new Point( cvs.contentMouseX, cvs.contentMouseY );
+						var pt1X:Number = pt1.x;
+						var pt1Y:Number = pt1.y;
+						sentArr = [null, glX, glY, pt1X, pt1Y];
+					}else{
+						var mc:Canvas;
+						if(ss[ss.length -1].hasOwnProperty("graphics")){// if is shape
+							var shp:Shape = ss[ss.length -1] as Shape;
+							mc = shp.parent as Canvas;
+						}else{//is the text from the label
+							mc = ss[ss.length -1].parent.parent;
+						}
+						var idx:Number = cvs.getChildIndex(mc);
+						sentArr = [idx, glX, glY, mc.x, mc.y];
+						mc.removeEventListener(MouseEvent.MOUSE_OUT, mcOut);// to keep the button with focus
+					}
+
+				}else{
+					var idx1:Number = cvs.getChildren().length as Number;
+					var pt1:Point = new Point( cvs.contentMouseX, cvs.contentMouseY );
+					var pt1X:Number = pt1.x;
+					var pt1Y:Number = pt1.y;
+					sentArr = [null, glX, glY, pt1X, pt1Y];
+				}
+
+				rghtClick1(sentArr);
+			}
+			public function rghtClick1(arr:Array):void{
+				ExternalInterface.call("rghtClick", arr);
+			}
+			public function msDownMain(evt:MouseEvent):void{
+				if(evt.altKey == true && evt.shiftKey== false && evt.ctrlKey== false){
+					downPressed = [evt.localX, evt.localY];
+					var offset:Array = [application.width/2 - evt.localX, application.height/2 - evt.localY];
+					ExternalInterface.call("chWInPos", offset);
+					application.addEventListener(MouseEvent.MOUSE_MOVE, msMvMain);
+					myCircle = new Shape();
+						myCircle.graphics.beginFill(0x444444, 1);
+						myCircle.graphics.drawCircle(application.width/2, application.height/2, 5);
+						myCircle.graphics.endFill();
+					cvs.rawChildren.addChild(myCircle);
+						
+					myShape = new Shape();
+				}
+			}
+			public function msUpMain(evt:MouseEvent):void{
+					if(downPressed.length != 0){
+						upPressed = [application.contentMouseX, application.contentMouseY];
+//						var vector:Array = [(downPressed[0] - upPressed[0]), (downPressed[1] - upPressed[1])];
+						var vector:Array = [(application.width/2 - upPressed[0]), (application.height/2 - upPressed[1])];
+						var btnAtAng:Number = getButton0( getVAngle(vector) );
+						downPressed = [];
+						ExternalInterface.call("btnClikc", btnAtAng);
+						application.removeEventListener(MouseEvent.MOUSE_MOVE, msMvMain);
+						cvs.rawChildren.removeChild(myShape);
+						cvs.rawChildren.removeChild(myCircle);
+						
+					}else{
+						timer.reset();
+						timer.start();
+					}
+			}
+			public function msMvMain(evt:MouseEvent):void{// for drawing the line when gesture is on
+				myShape.graphics.clear();
+				myShape.graphics.lineStyle(2,0x444444,1);
+				myShape.graphics.moveTo(application.width/2,application.height/2);
+				myShape.graphics.lineTo(this.contentMouseX, this.contentMouseY);
+				cvs.rawChildren.addChild(myShape);
+			}
+			public function getVAngle( arr:Array ):Number{
+				var radA:Number = (Math.atan2(arr[1], arr[0]));
+				var degA:Number = radA / Math.PI * 180;
+				if( degA < 0){
+					degA = 360 + degA;
+				}
+				return degA;
+			}
+			public function getVLength( arr:Array ):Number{
+				return Math.sqrt(arr[0] * arr[0] + arr[1] * arr[1]);
+			}
+			public function getButton0( angle:Number ):Number{
+				var g1CenterX:Number = (application.width /2);
+				var g1CenterY:Number = (application.height /2);
+				var closestPnl:Number = 0;
+				var sdd:Number = (btnSize/2) + 5;
+				var closestPnlAngl:Number = getVAngle([(g1CenterX - (BCMtheButtonsUI[0].x + sdd)),(g1CenterY - (BCMtheButtonsUI[0].y + sdd))]);
+				var closestPnlAnglMinus:Number = Math.abs(closestPnlAngl - angle);
+				for( var asr:int = 1; asr<BCMtheButtonsUI.length; asr++){
+					var cPnl:Object = BCMtheButtonsUI[asr];
+					var closestPnlAnglD:Number = getVAngle([(g1CenterX - (cPnl.x + sdd)),(g1CenterY - (cPnl.y + sdd))]);
+					var closestPnlAnglMinusD:Number = Math.abs(closestPnlAnglD - angle);
+					if( closestPnlAnglMinusD < closestPnlAnglMinus){
+						closestPnlAnglMinus = closestPnlAnglMinusD;
+						closestPnl = asr;
+					}
+				}
+				return closestPnl;
+			}
+			
+			private function onScroll(e:Event):void{
+				timerSC.stop();
+				timerSC.start();
+			}
+			private function scrollStop(e:Event):void{
+				callAlert('onScrollStop');
+//				callAlert(reportType());
+				if(toStopActivate != true){
+					ExternalInterface.call("activeTempB");
+				}
+
+			}
+			private function stopActvTimer():void{
+				toStopActivate = true;
+				callAlert('stop activate Timer');
+			}
+			private function startActvTimer():void{
+				toStopActivate = false;
+				callAlert('start activate Timer');
+			}
+			public function callAlert(str):void{// function to show an alert window
+				var str1:String = "FLEX:: "+str.toString();
+				ExternalInterface.call("CAlert", str1);
+			}
+			private function reportVersion():String {
+				if (Capabilities.isDebugger) {
+					return "Debugger version of Flash Player";
+				} else {
+					return "Flash Player";
+				}
+			}
+			private function reportType():String {
+				return Capabilities.playerType + " (" + Capabilities.version + ")";
+			}
+		]]>
+	</mx:Script>
+	<mx:Style>
+		ScrollBar
+		{
+			track-skin: Embed(source='assets/track.png',
+				scaleGridLeft="2", scaleGridTop="6",
+				scaleGridRight="7", scaleGridBottom="9");
+			
+			up-arrow-skin: Embed(source='assets/track.png',				
+				scaleGridLeft="1", scaleGridTop="1",
+				scaleGridRight="2", scaleGridBottom="2");
+			
+			down-arrow-skin:  Embed(source='assets/track.png',				
+				scaleGridLeft="1", scaleGridTop="1",
+				scaleGridRight="2", scaleGridBottom="2");
+			
+			thumb-up-skin: Embed(source='assets/thumb_down.png',
+				scaleGridLeft="3", scaleGridTop="3",
+				scaleGridRight="10", scaleGridBottom="11");
+			
+			thumb-over-skin: Embed(source='assets/thumb_down.png',
+				scaleGridLeft="3", scaleGridTop="3",
+				scaleGridRight="10", scaleGridBottom="11");
+			
+			thumb-down-skin: Embed(source='assets/thumb_down.png',
+				scaleGridLeft="3", scaleGridTop="3",
+				scaleGridRight="10", scaleGridBottom="11");
+
+			
+		}
+	</mx:Style>
+	<mx:Canvas id="cvs" x="0" y="0" width="100%" height="100%" backgroundColor="#191919"
+			   dragDrop="dragDrop" dragEnter="dragAccept" themeColor="#FFFFFF">
+	</mx:Canvas>
+</mx:Application>
